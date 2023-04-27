@@ -26,8 +26,9 @@
 
 <body>
   <noscript>
-    <strong>We're sorry but Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template doesn't work properly without
-      JavaScript enabled. Please enable it to continue.</strong>
+    <strong>Lo sentimos, si puede ver esta pantalla comuniquese con su proveedor a este correo: info@donjuanbymelida.com
+
+.</strong>
   </noscript>
   <div id="loading-bg">
     <div class="loading-logo">

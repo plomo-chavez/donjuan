@@ -37,6 +37,22 @@ export default [
     },
   },
   {
+    path: '/trabajadores',
+    name: 'trabajadores',
+    component: () => import('@/views/Home.vue'),
+    meta: {
+      pageTitle: 'Trabajadores',
+    },
+  },
+  {
+    path: '/inicio',
+    name: 'inicio',
+    component: () => import('@/views/out/inicio.vue'),
+    meta: {
+      layout: 'full',
+    },
+  },
+  {
     path: '/factory',
     name: 'factory',
     component: () => import('@/views/useFactory.vue'),

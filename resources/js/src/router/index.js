@@ -32,7 +32,7 @@ const router = new VueRouter({
     // ...pages,
     // ...chartsMaps,
     // ...formsTable,
-    // ...uiElements,
+    ...uiElements,
     // ...others,
     {
       path: '*',
