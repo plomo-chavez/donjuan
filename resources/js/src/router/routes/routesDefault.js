@@ -1,4 +1,45 @@
 export default [
+
+  {
+    path: '/',
+    name: 'inicio',
+    component: () => import('@/views/out/inicio.vue'),
+    meta: {
+      layout: 'full',
+      resource: 'Auth',
+      action: 'read',
+    },
+  },
+  {
+    path: '/reservar',
+    name: 'reservar',
+    component: () => import('@/views/out/reservar.vue'),
+    meta: {
+      layout: 'full',
+      resource: 'Auth',
+      action: 'read',
+    },
+  },
+  {
+    path: '/nosotros',
+    name: 'nosotros',
+    component: () => import('@/views/out/nosotros.vue'),
+    meta: {
+      layout: 'full',
+      resource: 'Auth',
+      action: 'read',
+    },
+  },
+  {
+    path: '/contacto',
+    name: 'contacto',
+    component: () => import('@/views/out/contacto.vue'),
+    meta: {
+      layout: 'full',
+      resource: 'Auth',
+      action: 'read',
+    },
+  },
   {
     path: '/home',
     name: 'home',
@@ -42,14 +83,6 @@ export default [
     component: () => import('@/views/Home.vue'),
     meta: {
       pageTitle: 'Trabajadores',
-    },
-  },
-  {
-    path: '/inicio',
-    name: 'inicio',
-    component: () => import('@/views/out/inicio.vue'),
-    meta: {
-      layout: 'full',
     },
   },
   {

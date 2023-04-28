@@ -2,12 +2,13 @@
     <div>
         <LinkCSS />
         <Navbar />
-        <Jumbo />
-        <About />
-        <Services />
-        <Habitaciones />
-        <Booking />
-        <Steps />
+
+        <div class="text-center py-4 wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="display-4 txtTitle">Reservaciones</h6>
+        </div>
+        <Calendar
+            class=" col-11 mx-auto "
+        />
         <Pie />
     </div>
 
@@ -22,6 +23,7 @@
     import Booking from './components/booking.vue'
     import Steps from './components/steps.vue'
     import Pie from './components/footer.vue'
+    import Calendar from '@/views/apps/calendar/Calendar.vue'
     import { BNavbar, BBadge, BNavbarBrand, BNavbarToggle, BNavbarNav, BNavItem, BCollapse, BNavForm, BFormInput, BButton, BNavItemDropdown, BDropdownItem } from 'bootstrap-vue'
     import 'bootstrap/dist/css/bootstrap.css'
     import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -40,7 +42,7 @@
                 Habitaciones,
                 Booking,
                 Steps,
-                Pie,
+                Calendar,
             },
             mounted() {
                 const jqueryScript = document.createElement('script');
