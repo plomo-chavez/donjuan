@@ -1,5 +1,6 @@
-<template>    <div class="container-xxl py-5">
-    <div class="container">
+<template>
+<div class="container-xxl py-5">
+    <div class="container-md">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
             <h6 class="section-title bg-white text-center text-primary px-3">Services</h6>
             <h1 class="mb-5">Our Services</h1>

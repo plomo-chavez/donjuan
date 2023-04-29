@@ -1,7 +1,7 @@
 <template>
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5">
+        <div class="container-md py-5">
             <div class="row g-5 col-10 mx-auto">
                 <div class="col-lg-4 col-sm-12 text-rigth" >
                     <h4 class="text-white mb-3">Mapa del sitio</h4>
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container-md">
             <div class="copyright">
                 <div class="row">
                     <div class="col-10 col-md-12 mx-auto text-center mb-3">

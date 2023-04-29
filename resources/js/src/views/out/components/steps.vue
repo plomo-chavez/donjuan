@@ -1,7 +1,7 @@
 <template>
     <!-- Process Start -->
     <div class="container-xxl py-5">
-        <div class="container">
+        <div class="container-md">
             <div class="text-center pb-4 wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center text-primary px-3">Process</h6>
                 <h1 class="mb-2">3 pasos para disfrutar</h1>
