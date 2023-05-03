@@ -23,18 +23,18 @@ export default [
       pageTitle: 'Habitaciones',
     },
   },
+//   {
+//     path: '/reservaciones',
+//     name: 'admin-reservaciones',
+//     component: () => import('@/views/Home.vue'),
+//     meta: {
+//       pageTitle: 'Reservaciones',
+//     },
+//   },
   {
     path: '/reservaciones',
     name: 'admin-reservaciones',
-    component: () => import('@/views/Home.vue'),
-    meta: {
-      pageTitle: 'Reservaciones',
-    },
-  },
-  {
-    path: '/calendario',
-    name: 'admin-calendario',
-    component: () => import('@/views/components/calendar/Calendar.vue'),
+    component: () => import('@/views/administracion/reservaciones/Reservaciones.vue'),
     meta: {
       pageTitle: 'Reservaciones',
     },
