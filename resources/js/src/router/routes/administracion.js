@@ -18,7 +18,7 @@ export default [
   {
     path: '/habitaciones',
     name: 'admin-habitaciones',
-    component: () => import('@/views/useFactory.vue'),
+    component: () => import('@/views/administracion/habitaciones/Habitaciones.vue'),
     meta: {
       pageTitle: 'Habitaciones',
     },

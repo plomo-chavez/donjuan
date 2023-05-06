@@ -307,6 +307,7 @@ export default {
                 store.commit('app/UPDATE_USERDATA', userData)
                 localStorage.setItem('tk', data.data.user.token)
                 this.$ability.update(userData.ability)
+                console.log(getHomeRouteForLoggedInUser(userData.role))
                 this.$router.replace(getHomeRouteForLoggedInUser(userData.role)).then(() => {
                   this.$toast({
                     component: ToastificationContent,
@@ -319,7 +320,7 @@ export default {
                       text: `You have successfully logged in as ${userData.role}. Now you can start to explore!`,
                     },
                   })
-                })  
+                })
               }else{
                   this.$toast({
                     component: ToastificationContent,
