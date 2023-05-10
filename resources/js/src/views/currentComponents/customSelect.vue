@@ -8,7 +8,7 @@
             <!-- Label -->
             <p
                 :for="input.name"
-                :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bolder p-0 m-0' "
             >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
             <!-- input -->
             <b-form-group>
@@ -78,11 +78,13 @@ export default {
     this.getCatalogo()
   },
   methods: {
-    formatoToCatalogo(data){
+    formatoToCatalogo(data,all = false){
         let tmp = []
         data.map((item, index) => {
-            console.log(item)
-            tmp.push({ 'label': item?.nombre ?? '','value': item?.id ?? '',})
+            if(all)
+                tmp.push({...item, 'label': item?.nombre ?? '','value': item?.id ?? '',})
+            else
+                tmp.push({ 'label': item?.nombre ?? '','value': item?.id ?? '',})
         })
         return tmp
     },
@@ -97,10 +99,33 @@ export default {
                         .tiposUsuarios({})
                         .then(response => {
                             this.opciones = this.formatoToCatalogo(response.data.data)
-                            console.log('this.opciones', this.opciones)
                         })
                         .catch(error   => { console.log(error); })
                     break;
+                case 'estatusHabitaciones':
+                    catalogos
+                        .estatusHabitaciones({})
+                        .then(response => {
+                            this.opciones = this.formatoToCatalogo(response.data.data)
+                        })
+                        .catch(error   => { console.log(error); })
+                    break;
+                case 'habitaciones':
+                    catalogos
+                        .habitaciones({})
+                        .then(response => {
+                            this.opciones = this.formatoToCatalogo(response.data.data)
+                        })
+                        .catch(error   => { console.log(error); })
+                break;
+                case 'customPersons':
+                    catalogos
+                        .customPersons({})
+                        .then(response => {
+                            this.opciones = this.formatoToCatalogo(response.data.data,true)
+                        })
+                        .catch(error   => { console.log(error); })
+                break;
 
                 default:
                     this.errorCatalogo = 'No se encontro ningun catalogo';

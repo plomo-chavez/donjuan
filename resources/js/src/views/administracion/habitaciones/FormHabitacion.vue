@@ -117,7 +117,6 @@
     },
     data() {
       return {
-        accion: 1,
         screenWidth: window.innerWidth,
         screenHeight: window.innerHeight,
         activeRow : null,
@@ -128,11 +127,10 @@
         schemaMain : null,
         showForm : true,
         modalAmenidad : false,
-        data:[],
         formSchema: [
             {
                 classContainer:' col-md-6 col-lg-6 col-12 ',
-                type        : 'text',
+                type        : 'input-text',
                 name        : 'nombre',
                 value       : 'nombre',
                 label       : 'Nombre',
@@ -176,7 +174,8 @@
                 name        : 'estatus',
                 value       : 'estatus',
                 // rules       : 'required',
-                label       : 'Estatus'
+                label       : 'Estatus',
+                catalogo    : 'estatusHabitaciones',
             },
             {
                 classContainer:'col-12',
@@ -245,8 +244,24 @@
         ],
       }
     },
+    props: {
+        info: {
+            type: Object,
+            default: () => null,
+        },
+        accion: {
+            type: Number,
+            default: () => 1,
+        },
+    },
     mixins : [customHelpers],
     beforeMount() {
+        if (this.info != null && Object.keys(this.info).length > 0){
+            console.log('info -> ', this.info)
+            this.activeRow =  this.copyObject(this.info)
+            this.camas =  this.copyObject(this.info.camas)
+            this.amenidades =  this.copyObject(this.info.amenidades)
+        }
     },
     mounted() {
         // Escuchamos el evento de cambio de tamaño de ventana
@@ -274,7 +289,7 @@
         handleCancelar(){
             this.activeAmenidad = {}
             this.$refs.modalForm.toggleModal()
-            this.openModal = false;
+            this.modalAmenidad = false;
         },
         handleEditar(data){
             this.activeAmenidad = this.copyObject(data)
@@ -295,9 +310,10 @@
             payload.camas = JSON.stringify(this.$refs.formCamas.getForm())
             payload.amenidades = JSON.stringify(this.amenidades)
             if (this.accion == 2) {
-                payload.id = this.data.id
+                payload.id = this.info.id
             }
             payload.accion = this.accion
+            payload.estatus_id = payload.estatus?.value ?? null
            this.peticionAdministrar(payload)
         },
         peticionAdministrar(payload){
@@ -306,11 +322,14 @@
                     'payload' : payload,
                 })
                 .then(response => {
+
                     this.messageSweet({
                         message: response.data.message,
                         icon: response.data.result ? 'success' : 'error',
                     });
-                    this.resetForm();
+                    if (response.data.result ) {
+                        this.handleAtras()
+                    }
                 })
                 .catch(error   => { console.log(error); })
         },

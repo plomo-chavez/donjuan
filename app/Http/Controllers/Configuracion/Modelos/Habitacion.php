@@ -15,11 +15,16 @@ class Habitacion extends Model
         'nombre',
         'descripcion',
         'tarifa',
-        'estatus',
+        'estatus_id',
         'amenidades',
         'camas',
+        'capacidad',
         'puedeFumar',
     ];
+
+    public function estatus() {
+        return $this->hasOne(HabitacionEstatus::class,'id','estatus_id');
+    }
 
 
 }

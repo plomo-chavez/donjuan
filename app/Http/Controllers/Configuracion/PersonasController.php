@@ -1,8 +1,7 @@
 <?php
-
 namespace App\Http\Controllers\Configuracion;
 
-use App\Http\Controllers\Configuracion\Modelos\Habitacion as Modelo;
+use App\Http\Controllers\Configuracion\Modelos\Persona as Modelo;
 use App\Http\Controllers\BaseController;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\Controller;
@@ -10,8 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
-
-class HabitacionesController extends BaseController
+class PersonasController extends BaseController
 {
     public function handleAdministrar(Request $request){
         $payload = $request->all();
@@ -28,5 +26,4 @@ class HabitacionesController extends BaseController
             $data,
         );
     }
-
 }

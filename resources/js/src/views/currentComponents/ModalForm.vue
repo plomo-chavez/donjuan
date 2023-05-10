@@ -7,6 +7,7 @@
       no-close-on-backdrop
       :title="title"
     >
+    <pre>{{ formSchema }}</pre>
         <FormFactory
             class="col-12 mx-auto"
             :data = 'data'

@@ -15,7 +15,16 @@ export default class apiPeticiones {
   adminUsuarios(...args) {
     return this.axiosIns.post(this.apisConfig.apiAdminUsuarios, ...args)
   }
+  getHabitaciones(...args) {
+    return this.axiosIns.post(this.apisConfig.apiGetHabitaciones, ...args)
+  }
   administrarHabitaciones(...args) {
     return this.axiosIns.post(this.apisConfig.apiAdminHabitaciones, ...args)
+  }
+  getPersonas(...args) {
+    return this.axiosIns.post(this.apisConfig.apiGetPersonas, ...args)
+  }
+  administrarPersonas(...args) {
+    return this.axiosIns.post(this.apisConfig.apiAdminPersonas, ...args)
   }
 }

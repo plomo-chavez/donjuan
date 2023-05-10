@@ -1,5 +1,5 @@
 <template>
-    <component v-bind:is="withCard ? 'b-card' : 'div'" class="p-1">
+    <component v-bind:is="withCard ? 'b-card' : 'div'" :class="classForm">
         <!-- Title & SubTitle -->
         <div v-if="title || subtitle" class="mb-2 col-12 p-0">
             <component v-bind:is="withCard ? 'b-card-title' : 'h1'" v-if="title">{{ title }}</component>
@@ -14,7 +14,7 @@
                       :class="(typeof input.classContainer != 'undefined'? input.classContainer : ' col-12 ' ) + ' mb-1' "
                   >
                   <!-- input text -->
-                      <div v-if="input.type === 'text'">
+                      <div v-if="input.type === 'input-text'">
                         <validation-provider
                             #default="{ errors }"
                             :name=" (typeof input.name  != 'undefined'?input.name:'')"
@@ -22,7 +22,7 @@
                         >
                         <p
                             :for="input.name"
-                            :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                            :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bolder p-0 m-0' "
                         >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
                             <b-form-group
                             class=" p-0 m-0"
@@ -50,7 +50,7 @@
                                 </b-input-group-append>
                             </b-input-group>
                             </b-form-group>
-                            <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger">{{ errors[0] }}</small></p>
+                            <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bolder text-danger">{{ errors[0] }}</small></p>
                         </validation-provider>
                       </div>
                   <!-- input password -->
@@ -62,7 +62,7 @@
                         >
                         <p
                             :for="input.name"
-                            :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                            :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bolder p-0 m-0' "
                         >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
                             <b-form-group
                             class=" p-0 m-0"
@@ -91,7 +91,7 @@
                                 </b-input-group-append>
                             </b-input-group>
                             </b-form-group>
-                            <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger">{{ errors[0] }}</small></p>
+                            <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bolder text-danger">{{ errors[0] }}</small></p>
                         </validation-provider>
                       </div>
                   <!-- input email -->
@@ -103,7 +103,7 @@
                         >
                         <p
                             :for="input.name"
-                            :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                            :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bolder p-0 m-0' "
                         >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
                             <b-form-group
                             class=" p-0 m-0"
@@ -133,7 +133,7 @@
                                 </b-input-group-append>
                             </b-input-group>
                             </b-form-group>
-                            <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger">{{ errors[0] }}</small></p>
+                            <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bolder text-danger">{{ errors[0] }}</small></p>
                         </validation-provider>
                       </div>
                   <!-- input text-area -->
@@ -147,7 +147,7 @@
                         <!-- Label -->
                         <p
                             :for="input.name"
-                            :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                            :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bolder p-0 m-0' "
                         >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
                         <!-- Input -->
                         <b-form-textarea
@@ -168,7 +168,7 @@
                             class="textarea-counter-value float-right"
                         ><span class="char-count">{{   form[input.value].length }}</span></small>
                         <!-- Errores de validación -->
-                        <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger">{{ errors[0] }}</small></p>
+                        <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bolder text-danger">{{ errors[0] }}</small></p>
                         </validation-provider>
                       </div>
                   <!-- input flat-pickr -->
@@ -182,7 +182,7 @@
                         <!-- Label -->
                         <p
                             :for="input.name"
-                            :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                            :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bolder p-0 m-0' "
                         >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
                         <!-- input -->
                         <b-input-group class="mb-3 bg-white ">
@@ -214,7 +214,7 @@
                             />
                         </b-input-group>
                         <!-- Errores de validación -->
-                        <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger">{{ errors[0] }}</small></p>
+                        <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bolder text-danger">{{ errors[0] }}</small></p>
                         </validation-provider>
                       </div>
                   <!-- input input-phone -->
@@ -228,7 +228,7 @@
                             <!-- Label -->
                         <p
                             :for="input.name"
-                            :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                            :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bolder p-0 m-0' "
                         >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
                         <!-- input -->
                         <VuePhoneNumberInput
@@ -251,8 +251,8 @@
                             }"
                         />
                         <!-- Errores de validación -->
-                        <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger col-12">{{ errors[0] }}</small></p>
-                        <p class="m-0 p-0"><small v-if="errorsPersonalizados[input.name]" class="m-0 p-0 font-weight-bold text-danger col-12">{{ errorsPersonalizados[input.name] }}</small></p>
+                        <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bolder text-danger col-12">{{ errors[0] }}</small></p>
+                        <p class="m-0 p-0"><small v-if="errorsPersonalizados[input.name]" class="m-0 p-0 font-weight-bolder text-danger col-12">{{ errorsPersonalizados[input.name] }}</small></p>
                         </validation-provider>
                       </div>
                   <!-- input input-money -->
@@ -265,7 +265,7 @@
                           >                <!-- Label -->
                               <p
                                   :for="input.name"
-                                  :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                                  :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bolder p-0 m-0' "
                               >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
                               <!-- input -->
 
@@ -283,8 +283,8 @@
                             />
 
                               <!-- Errores de validación -->
-                              <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger col-12">{{ errors[0] }}</small></p>
-                              <p class="m-0 p-0"><small v-if="errorsPersonalizados[input.name]" class="m-0 p-0 font-weight-bold text-danger col-12">{{ errorsPersonalizados[input.name] }}</small></p>
+                              <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bolder text-danger col-12">{{ errors[0] }}</small></p>
+                              <p class="m-0 p-0"><small v-if="errorsPersonalizados[input.name]" class="m-0 p-0 font-weight-bolder text-danger col-12">{{ errorsPersonalizados[input.name] }}</small></p>
                           </validation-provider>
                       </div>
 
@@ -298,7 +298,7 @@
                           >                <!-- Label -->
                               <p
                                   :for="input.name"
-                                  :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                                  :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bolder p-0 m-0' "
                               >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
                               <!-- input -->
 
@@ -316,8 +316,8 @@
                             />
 
                               <!-- Errores de validación -->
-                              <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger col-12">{{ errors[0] }}</small></p>
-                              <p class="m-0 p-0"><small v-if="errorsPersonalizados[input.name]" class="m-0 p-0 font-weight-bold text-danger col-12">{{ errorsPersonalizados[input.name] }}</small></p>
+                              <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bolder text-danger col-12">{{ errors[0] }}</small></p>
+                              <p class="m-0 p-0"><small v-if="errorsPersonalizados[input.name]" class="m-0 p-0 font-weight-bolder text-danger col-12">{{ errorsPersonalizados[input.name] }}</small></p>
                           </validation-provider>
                       </div>
                   <!-- input input-select -->
@@ -343,7 +343,7 @@
                               <!-- Label -->
                               <p
                                   :for="input.name"
-                                  :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                                  :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bolder p-0 m-0' "
                               >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
                               <!-- input -->
                               <div>
@@ -358,7 +358,7 @@
                                   />
                               </div>
                               <!-- Errores de validación -->
-                              <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bold text-danger col-12">{{ errors[0] }}</small></p>
+                              <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bolder text-danger col-12">{{ errors[0] }}</small></p>
                           </validation-provider>
                       </div>
                   <!-- input input-switch -->
@@ -372,7 +372,7 @@
                               <!-- Label -->
                               <p
                                   :for="input.name"
-                                  :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bold p-0 m-0' "
+                                  :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bolder p-0 m-0' "
                               >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
                               <!-- input -->
                               <div>
@@ -381,7 +381,7 @@
                                   v-model="form[input.value]"
                                   @change="changeData(input.value, form[input.value])"
                                   >
-                                  <label class=" font-weight-bold ">{{ getLabelSwitch(form[input.value],input.labels) }}</label>
+                                  <label class=" font-weight-bolder ">{{ getLabelSwitch(form[input.value],input.labels) }}</label>
                                   </b-form-checkbox>
 
                               </div>
@@ -392,7 +392,7 @@
               </b-row>
             </validation-observer>
             <!-- Botones de acción -->
-            <div v-if="btnsAccion" class="col-12 m-0 p-0 mt-4 d-flex justify-content-end">
+            <div v-if="btnsAccion" class="col-12 m-0 p-0 mt-1 d-flex justify-content-end">
               <b-button
                 v-if="formDisabled"
                 class=""
@@ -414,7 +414,7 @@
                 variant="relief-primary"
                 type="submit"
                 @click.prevent="validationForm"
-              >Guardar</b-button>
+              >{{ btnLblSubmit }}</b-button>
             </div>
         </div>
     </component>
@@ -532,6 +532,10 @@
         type    : String,
         default : null
       },
+      classForm: {
+        type    : String,
+        default : ' p-1 '
+      },
       withCard:{
         type    : Boolean,
         default : false,
@@ -548,6 +552,10 @@
         type    : Boolean,
         default : true,
       },
+      btnLblSubmit : {
+        type: String,
+        default : 'Guardar'
+      }
     },
     mixins : [customHelpers],
     created() {},

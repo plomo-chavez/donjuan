@@ -34,7 +34,7 @@ export default [
   {
     path: '/reservaciones',
     name: 'admin-reservaciones',
-    component: () => import('@/views/administracion/reservaciones/Reservaciones.vue'),
+    component: () => import('@/views/administracion/reservaciones/StepsReservacion.vue'),
     meta: {
       pageTitle: 'Reservaciones',
     },
