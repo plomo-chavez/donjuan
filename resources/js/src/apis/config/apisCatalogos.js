@@ -21,4 +21,7 @@ export default class apisCatalogos {
   customPersons(...args) {
     return this.axiosIns.post(this.apisConfig.customPersonsApi, ...args)
   }
+  roomsAvailable(...args) {
+    return this.axiosIns.post(this.apisConfig.roomsAvailableApi, ...args)
+  }
 }

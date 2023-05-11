@@ -7,11 +7,12 @@
                 :ranges="false"
                 :locale-data="locate"
                 v-model="dateRange"
-                @input="changeValue"
                 :min-date="new Date()"
             />
         </div>
         <customPerson
+            :reservacion="reservacion"
+            @changeReservacion="handleChangeReservacion"
         />
     </div>
   </template>
@@ -20,8 +21,7 @@
   import DateRangePicker from 'vue2-daterange-picker'
   import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
   import customPerson from '@currentComponents/customPerson.vue'
-import { methods } from 'vue-echarts'
-
+  import customHelpers  from '@helpers/customHelpers'
   export default {
     components: {
       DateRangePicker,
@@ -44,17 +44,30 @@ import { methods } from 'vue-echarts'
             dateRange: {},
         }
     },
+    mixins : [customHelpers],
     props: {
         reservacion: {
             type    : Object,
             default : {}
         },
     },
+    watch:{
+        dateRange(value){
+            console.log(value)
+            this.$emit('changeReservacion', {
+                ...this.reservacion,
+                fechaInicio : this.formatoFechaYMD(value.startDate),
+                fechaFin    : this.formatoFechaYMD(value.endDate),
+            })
+        },
+    },
     methods: {
+        handleChangeReservacion(data){
+            this.$emit('changeReservacion', data);
+        },
         changeValue(data){
             let payload = this.copyObject(this.reservacion)
             console.log(data)
-            this.$emit('changeReservacion', payload)
         },
     },
   }

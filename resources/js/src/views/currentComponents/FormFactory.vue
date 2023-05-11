@@ -574,22 +574,15 @@
     methods: {
         getOptions(input) {
             let options;
-console.log(input)
             if (input?.prefix ?? false) {
-            // Si input existe y su propiedad optionsInputMoney está definida,
-            // verificamos que optionsInputMoney sea una matriz antes de usarla.
                 options = {...this.optionsInputMoney, prefix : input.prefix}
             } else {
-            // Si input no existe o su propiedad optionsInputMoney es null o undefined,
-            // utilizamos la variable optionsInputMoney (si está definida).
                 options = this.optionsInputMoney ?? null; // o un valor predeterminado
             }
-
             return options;
         },
         getOptionsMoney(input){
             let tmp = this.copyObject(this.optionsInputMoney)
-            console.log(tmp)
             return tmp
         },
         changeValueSelect(data){
@@ -614,16 +607,14 @@ console.log(input)
             return this.form
         },
         onContext(ctx) {
-            // The date formatted in the locale, or the `label-no-date-selected` string
             this.formatted = ctx.selectedFormatted
-            // The following will be an empty string until a valid date is entered
             this.selected = ctx.selectedYMD
         },
         cancelar(){
             if( this.disabledForm ){
-            this.formDisabled = true;
+                this.formDisabled = true;
             }else{
-            this.$emit('cancelar');
+                this.$emit('cancelar');
             }
         },
         inicializar(){
@@ -639,7 +630,7 @@ console.log(input)
                 }else{
                     valor = this.data == null ? null : ( this.data.hasOwnProperty(item.value) ? this.data[item.value] : null )
                 }
-            tmp[item.value] = valor;
+                tmp[item.value] = valor;
             })
             this.$set(this,'form',tmp);
         },
@@ -650,7 +641,6 @@ console.log(input)
                     if (field.type == 'input-phone') {
                         if (!this.$refs[field.name][0].isValid) {
                                 this.errorsPersonalizados[field.name] = 'El ' + field.label.toLowerCase() + ' debe de ser valido.'
-                                console.log(this.errorsPersonalizados)
                                 hayErrores = true
                         } else {
                             delete(this.errorsPersonalizados[field.name])
@@ -666,7 +656,6 @@ console.log(input)
             this.$refs.simpleRules.validate().then(success => {
                 let hayErrores = this.validacionesExternas();
                 if (hayErrores == false && success) {
-                    console.log('Guardando')
                     this.$emit('formExport',this.form);
                 } else {
                     this.messageSweet({

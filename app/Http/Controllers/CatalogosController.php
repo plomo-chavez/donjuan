@@ -53,4 +53,16 @@ class CatalogosController extends BaseController
             $data,
         );
     }
+    public function roomsAvailable(Request $request){
+        $excludedIds = [];
+        $data = Habitacion::whereNotIn('id', $excludedIds)
+                ->orderBy('nombre',"asc")
+                ->with('estatus')
+                ->get();
+        return self::responsee(
+            'Consulta realizada con exito.',
+            true,
+            $data,
+        );
+    }
 }

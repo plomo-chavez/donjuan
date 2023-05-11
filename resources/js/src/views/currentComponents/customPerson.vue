@@ -151,8 +151,22 @@ export default {
             type    : String,
             default : '¿Quien reserva?'
         },
+        reservacion: {
+            type    : Object,
+            default : {}
+        },
     },
     watch:{
+        person(value){
+            console.log('customPersona -> ',value)
+            if (value != null) {
+                this.$emit('changeReservacion', {
+                    ...this.reservacion,
+                    person:value,
+                    person_id:value.id,
+                })
+            }
+        },
     },
     beforeMount(){
     },

@@ -4,4 +4,5 @@ export default {
   estatusHabitacionesApi: '/api/catalogo/estatusHabitaciones',
   habitacionesApi: '/api/catalogo/habitaciones',
   customPersonsApi: '/api/catalogo/customPersons',
+  roomsAvailableApi: '/api/catalogo/roomsAvailable',
 }

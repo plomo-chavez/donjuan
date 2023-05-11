@@ -38,6 +38,7 @@ Route::post('/catalogo/tiposUsuarios',          [CatalogosController::class, 'ge
 Route::post('/catalogo/estatusHabitaciones',    [CatalogosController::class, 'getEstatusHabitaciones']);
 Route::post('/catalogo/habitaciones',           [CatalogosController::class, 'getHabitaciones']);
 Route::post('/catalogo/customPersons',          [CatalogosController::class, 'customPersons']);
+Route::post('/catalogo/roomsAvailable',         [CatalogosController::class, 'roomsAvailable']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
