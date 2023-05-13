@@ -55,7 +55,8 @@ export default {
         confirmButtonText= 'Si, eliminar',
         cancelButtonText= 'No, cancelar',
         cancelFunction = null,
-        confirmFunction = null
+        confirmFunction = null,
+        messageCancel = true
     }){
 
         console.log(message)
@@ -82,15 +83,18 @@ export default {
                 if (typeof cancelFunction == 'function'){
                     cancelFunction()
                 } else {
-                    this.$swal({
-                        title: 'Proceso cancelado',
-                        text: 'Cancelo correctamente el proceso',
-                        icon: 'error',
-                        timer: 3000,
-                        customClass: {
-                          confirmButton: 'btn btn-success',
-                        },
-                    })
+                    if (messageCancel) {
+
+                        this.$swal({
+                            title: 'Proceso cancelado',
+                            text: 'Cancelo correctamente el proceso',
+                            icon: 'error',
+                            timer: 3000,
+                            customClass: {
+                            confirmButton: 'btn btn-success',
+                            },
+                        })
+                    }
                 }
             }
           })

@@ -39,4 +39,12 @@ export default [
       pageTitle: 'Reservaciones',
     },
   },
+  {
+    path: '/reservacioness',
+    name: 'admin-reservacioness',
+    component: () => import('@/views/administracion/reservaciones/Reservaciones.vue'),
+    meta: {
+      pageTitle: 'Reservaciones',
+    },
+  },
 ]

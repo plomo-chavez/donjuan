@@ -7,4 +7,6 @@ export default {
   apiAdminHabitaciones  : '/api/habitaciones/administrar',
   apiGetPersonas        : '/api/personas/listar',
   apiAdminPersonas      : '/api/personas/administrar',
+  apiGetReservaciones   : '/api/reservaciones/listar',
+  apiAdminReservaciones : '/api/reservaciones/administrar',
 }

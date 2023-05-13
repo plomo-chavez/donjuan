@@ -1,7 +1,7 @@
 <template>
     <div >
         <detailsRoom
-            class="col-4"
+            class="ww-300"
             v-for="(habitacion, index) in habitaciones"
             :key="'hab' + index"
             :habitacion="habitacion"

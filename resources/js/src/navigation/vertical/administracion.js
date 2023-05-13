@@ -1,7 +1,12 @@
 export default [
     {
       title: 'Reservaciones',
-      route: 'admin-reservaciones',
+      route: 'admin-reservacionesss',
+      icon: 'CalendarIcon',
+    },
+    {
+      title: 'Reservacionessssss',
+      route: 'admin-reservacioness',
       icon: 'CalendarIcon',
     },
   {

@@ -9,6 +9,7 @@ use App\Http\Controllers\CatalogosController;
 use App\Http\Controllers\Configuracion\UsuariosController;
 use App\Http\Controllers\Configuracion\HabitacionesController;
 use App\Http\Controllers\Configuracion\PersonasController;
+use App\Http\Controllers\Configuracion\ReservacionesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,6 +34,8 @@ Route::middleware([UserAuthentication::class])->post('/habitaciones/administrar'
 Route::middleware([UserAuthentication::class])->post('/habitaciones/listar',        [HabitacionesController::class, 'handleListar']);
 Route::middleware([UserAuthentication::class])->post('/personas/administrar',       [PersonasController::class, 'handleAdministrar']);
 Route::middleware([UserAuthentication::class])->post('/personas/listar',            [PersonasController::class, 'handleListar']);
+Route::middleware([UserAuthentication::class])->post('/reservaciones/administrar',  [ReservacionesController::class, 'handleAdministrar']);
+Route::middleware([UserAuthentication::class])->post('/reservaciones/listar',       [ReservacionesController::class, 'handleListar']);
 // Route::middleware([UserAuthentication::class])->post('/auth/verificar',    [AuthController::class, 'verificar']);
 Route::post('/catalogo/tiposUsuarios',          [CatalogosController::class, 'getTiposUsuarios']);
 Route::post('/catalogo/estatusHabitaciones',    [CatalogosController::class, 'getEstatusHabitaciones']);
