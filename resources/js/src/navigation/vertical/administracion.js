@@ -5,28 +5,33 @@ export default [
       icon: 'CalendarIcon',
     },
     {
-      title: 'Reservacionessssss',
-      route: 'admin-reservacioness',
-      icon: 'CalendarIcon',
+        title: 'Administración',
+        icon: 'SettingsIcon',
+        children: [
+            {
+            title: 'Habitaciones',
+            route: 'admin-habitaciones',
+            },
+            {
+            title: 'Trabajadores',
+            route: 'admin-trabajadores',
+            },
+        ],
     },
-  {
-    title: 'Administración',
-    icon: 'SettingsIcon',
-    children: [
-        {
-          title: 'Habitaciones',
-          route: 'admin-habitaciones',
-        },
-        {
-          title: 'Trabajadores',
-          route: 'admin-trabajadores',
-        },
-        {
-          title: 'Usuarios',
-          route: 'admin-usuarios',
-        },
-    ],
-  },
+    {
+        title: 'Configuración',
+        icon: 'SettingsIcon',
+        children: [
+            {
+                title: 'Plantillas de correo',
+                route: 'admin-template-email',
+            },
+            {
+                title: 'Usuarios',
+                route: 'admin-usuarios',
+            },
+        ],
+    },
   // {
   //   title: 'Form Wizard',
   //   route: 'form-wizard',

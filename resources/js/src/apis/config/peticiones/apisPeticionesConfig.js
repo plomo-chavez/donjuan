@@ -9,4 +9,6 @@ export default {
   apiAdminPersonas      : '/api/personas/administrar',
   apiGetReservaciones   : '/api/reservaciones/listar',
   apiAdminReservaciones : '/api/reservaciones/administrar',
+  apiGetTemplatesEmail   : '/api/templates-email/listar',
+  apiAdminTemplatesEmail : '/api/templates-email/administrar',
 }
