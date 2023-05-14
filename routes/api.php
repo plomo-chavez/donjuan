@@ -11,6 +11,7 @@ use App\Http\Controllers\Configuracion\HabitacionesController;
 use App\Http\Controllers\Configuracion\PersonasController;
 use App\Http\Controllers\Configuracion\ReservacionesController;
 use App\Http\Controllers\Configuracion\TemplateEmailController;
+use App\Http\Controllers\Email\MailController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -38,7 +39,8 @@ Route::middleware([UserAuthentication::class])->post('/personas/listar',        
 Route::middleware([UserAuthentication::class])->post('/reservaciones/administrar',  [ReservacionesController::class, 'handleAdministrar']);
 Route::middleware([UserAuthentication::class])->post('/reservaciones/listar',       [ReservacionesController::class, 'handleListar']);
 Route::middleware([UserAuthentication::class])->post('/templates-email/administrar',  [TemplateEmailController::class, 'handleAdministrar']);
-Route::middleware([UserAuthentication::class])->post('/templates-email/listar',       [TemplateEmailController::class, 'handleListar']);
+Route::middleware([UserAuthentication::class])->post('/templates-email/listar',     [TemplateEmailController::class, 'handleListar']);
+Route::middleware([UserAuthentication::class])->post('/send/email',                 [MailController::class, 'enviar']);
 // Route::middleware([UserAuthentication::class])->post('/auth/verificar',    [AuthController::class, 'verificar']);
 Route::post('/catalogo/tiposUsuarios',          [CatalogosController::class, 'getTiposUsuarios']);
 Route::post('/catalogo/estatusHabitaciones',    [CatalogosController::class, 'getEstatusHabitaciones']);
@@ -46,6 +48,4 @@ Route::post('/catalogo/habitaciones',           [CatalogosController::class, 'ge
 Route::post('/catalogo/customPersons',          [CatalogosController::class, 'customPersons']);
 Route::post('/catalogo/roomsAvailable',         [CatalogosController::class, 'roomsAvailable']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {return $request->user();});

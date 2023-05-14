@@ -60,6 +60,7 @@
         BButton
     } from 'bootstrap-vue'
 
+    import sendEmails from '@/apis/useSendEmails'
   export default {
     name: "app",
     mixins : [customHelpers],
@@ -105,12 +106,21 @@
             {
                 classContainer:'col-lg-5 col-md-5 col-12',
                 type        : 'input-text',
-                name        : 'slug',
+                name        : 'clave',
                 value       : 'slug',
                 label       : 'Clave',
                 placeholder : 'Introduce un clave',
                 rules       : 'required',
                 prefixIcon  : 'UserIcon',
+            },
+            {
+                classContainer:'col-12',
+                type        : 'input-text',
+                name        : 'titulo',
+                value       : 'title',
+                label       : 'Titulo',
+                placeholder : 'Introduce un titulo',
+                rules       : 'required',
             },
         ],
       };
@@ -123,11 +133,24 @@
     mounted(){
     },
     methods: {
-        handleCancel(){
-
-        },
+        handleCancel(){},
         handleProbar(){
-
+            sendEmails
+                .sendEmail({})
+                .then(response => {
+                    console.log(response)
+                    this.messageSweet({
+                        message: 'Se envio correctamente el correo.',
+                        icon: 'success',
+                    });
+                })
+                .catch(error   => {
+                    this.messageSweet({
+                        message: 'Ups... ocurrio un problema, lo siento, intente de nuevo.',
+                        icon: 'error',
+                    });
+                    console.log(error);
+                })
         },
         handleCancelForm(){
             this.$emit('cancelar')
@@ -260,7 +283,6 @@
             schemaVersion: 6,
             }
             let tmp = this.data != null ? JSON.parse(this.data.config) : tempDesign
-            console.log(tmp)
             this.$refs.emailEditor.editor.loadDesign(tmp)
         },
         peticionAdministrar(payload){
@@ -280,39 +302,6 @@
                 })
                 .catch(error   => { console.log(error); })
         },
-
-
-
-      saveDesign() {
-        this.$refs.emailEditor.editor.saveDesign((design) => {
-          console.log("saveDesign", design);
-        });
-      },
-      exportHtml() {
-        this.$refs.emailEditor.editor.exportHtml((data) => {
-          console.log("exportHtml", data);
-        });
-      },
-      undo() {
-        this.$refs.emailEditor.editor.undo();
-      },
-      redo() {
-        this.$refs.emailEditor.editor.redo();
-      },
-      canUndo() {
-        this.$refs.emailEditor.editor.canUndo(
-          console.log("There is something to UNDO")
-        );
-      },
-      canRedo() {
-        this.$refs.emailEditor.editor.canRedo(
-          console.log("There is something to REDO")
-        );
-      },
-
-        editorMounted() {
-        console.log('El componente de vue-email-editor se ha cargado completamente.');
-        }
     },
   };
   </script>

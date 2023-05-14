@@ -15,5 +15,6 @@ class TemplateEmail extends Model
         'config',
         'html',
         'slug',
+        'title',
     ];
 }

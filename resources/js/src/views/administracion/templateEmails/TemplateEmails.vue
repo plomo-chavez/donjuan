@@ -45,9 +45,27 @@
             },
             {
                 type    : 'text',
+                key     : 'title',
+                label   : 'Titulo',
+                sortable: true
+            },
+            {
+                type    : 'text',
                 key     : 'slug',
                 label   : 'Clave',
                 sortable: true
+            },
+            {
+                type    : 'dateYMD',
+                key     : 'updated_at',
+                label   : 'Ùlt. Modificaciòn',
+                sortable: true,
+            },
+            {
+                type    : 'dateYMD',
+                key     : 'created_at',
+                label   : 'Fecha creación',
+                sortable: true,
             },
         ]
       }

@@ -77,6 +77,9 @@
                 <small clas="text-sm" v-for="(value) in item">{{ capitalize(key) }}: {{ value }}</small>
             </div>
         </div>
+        <div v-else-if="field.type === 'dateYMD'">
+            <small>{{formatoFechaBD(data.item[field.key])}}</small>
+        </div>
         <div v-else-if="field.type === 'money'">
             <small>{{data.item[field.key]}}</small>
         </div>

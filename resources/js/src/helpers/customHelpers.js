@@ -104,6 +104,15 @@ export default {
         const fechaFormateada = fecha.toISOString().slice(0,10).replace(/-/g,"/");
         return fechaFormateada
     },
+    formatoFechaBD(value){
+        var date = new Date(value);
+        var formattedDate = date.toLocaleString('es-ES', {
+            timeZone: 'UTC',
+            hour12: true
+        });
+        return formattedDate;
+    },
+
     formatoMoney(amount, signal = true){
         let tmp = parseInt(amount).toLocaleString("es-ES", { style: "currency", currency: "MXN" });
         return (signal? '$ ' : '') + tmp
