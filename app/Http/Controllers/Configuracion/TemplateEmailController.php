@@ -17,7 +17,7 @@ class TemplateEmailController extends BaseController
     }
 
     public function handleListar(Request $request){
-        $data = Modelo::orderBy('id',"asc")
+        $data = Modelo                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ::orderBy('id',"asc")
             // ->with('estatus')
             ->get();
         return self::responsee(

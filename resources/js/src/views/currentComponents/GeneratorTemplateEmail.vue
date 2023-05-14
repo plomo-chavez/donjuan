@@ -1,14 +1,13 @@
 <template>
     <div class="parent">
-        <BCard :class="screenWidth > 1000 ? ' ww-1000 mx-auto' : ' col-12 '" class="p-2">
+        <BCard :class="' col-12 '" class="p-2">
             <FormFactory
                 ref="formFactoryRef"
                 class="col-12 mx-auto"
                 :btnsAccion="false"
-                :data = 'activeRow'
+                :data = 'data == null ? {} : data'
                 :schema="formSchema"
                 @formExport="handleSubmit"
-                @cancelar="handleCancel"
             />
             <div class=" col-12 d-flex flex-wrap justify-content-between">
                 <div>
@@ -41,7 +40,6 @@
                 :tools="tools"
                 :options="options"
                 v-on:load="editorLoaded"
-                @mounted="editorMounted"
             />
         </BCard>
     </div>
@@ -117,9 +115,18 @@
         ],
       };
     },
+    props: {
+        data: {
+            required: true,
+        },
+    },
+    mounted(){
+    },
     methods: {
-
         handleCancel(){
+
+        },
+        handleProbar(){
 
         },
         handleCancelForm(){
@@ -129,147 +136,150 @@
             this.$refs.formFactoryRef.validationForm()
         },
         handleSubmit(formValues){
-        this.$refs.emailEditor.editor.exportHtml((data) => {
-          let payload = this.copyObject(formValues);
-            if (this.accion == 2) {
-                payload.id = this.activeRow.id
-            }
+            this.$refs.emailEditor.editor.exportHtml((data) => {
+            let payload = this.copyObject(formValues);
             payload.accion  = this.accion
+            if (this.data != null) {
+                payload.id = this.data.id
+                payload.accion = 2
+            }
             payload.config  = JSON.stringify(data.design)
             payload.html    = JSON.stringify(data.html)
             this.peticionAdministrar(payload)
-        });
+            });
         },
-      editorLoaded() {
-        var tempDesign = {
-          counters: {
-            u_row: 1,
-            u_column: 1,
-            u_content_text: 2,
-          },
-          body: {
-            rows: [
-              {
-                cells: [1],
-                columns: [
-                  {
-                    contents: [
-                      {
-                        type: "text",
-                        values: {
-                          containerPadding: "10px",
-                          textAlign: "left",
-                          lineHeight: "140%",
-                          linkStyle: {
-                            inherit: true,
-                            linkColor: "#0000ee",
-                            linkHoverColor: "#0000ee",
-                            linkUnderline: true,
-                            linkHoverUnderline: true,
-                          },
-                          _meta: {
-                            htmlID: "u_content_text_2",
-                            htmlClassNames: "u_content_text",
-                          },
-                          selectable: true,
-                          draggable: true,
-                          duplicatable: true,
-                          deletable: true,
-                          hideable: true,
-                          text:
-                            '<p style="font-size: 14px; line-height: 140%;"><span style="font-size: 48px; line-height: 67.2px;">This is an example template. Replace the JSON with your own.</span></p>',
+        editorLoaded(data) {
+            var tempDesign = {
+            counters: {
+                u_row: 1,
+                u_column: 1,
+                u_content_text: 2,
+            },
+            body: {
+                rows: [
+                {
+                    cells: [1],
+                    columns: [
+                    {
+                        contents: [
+                        {
+                            type: "text",
+                            values: {
+                            containerPadding: "10px",
+                            textAlign: "left",
+                            lineHeight: "140%",
+                            linkStyle: {
+                                inherit: true,
+                                linkColor: "#0000ee",
+                                linkHoverColor: "#0000ee",
+                                linkUnderline: true,
+                                linkHoverUnderline: true,
+                            },
+                            _meta: {
+                                htmlID: "u_content_text_2",
+                                htmlClassNames: "u_content_text",
+                            },
+                            selectable: true,
+                            draggable: true,
+                            duplicatable: true,
+                            deletable: true,
+                            hideable: true,
+                            text:
+                                '<p style="font-size: 14px; line-height: 140%;"><span style="font-size: 48px; line-height: 67.2px;">This is an example template. Replace the JSON with your own.</span></p>',
+                            },
                         },
-                      },
+                        ],
+                        values: {
+                        _meta: {
+                            htmlID: "u_column_1",
+                            htmlClassNames: "u_column",
+                        },
+                        border: {},
+                        padding: "0px",
+                        backgroundColor: "",
+                        },
+                    },
                     ],
                     values: {
-                      _meta: {
-                        htmlID: "u_column_1",
-                        htmlClassNames: "u_column",
-                      },
-                      border: {},
-                      padding: "0px",
-                      backgroundColor: "",
+                    displayCondition: null,
+                    columns: false,
+                    backgroundColor: "",
+                    columnsBackgroundColor: "",
+                    backgroundImage: {
+                        url: "",
+                        fullWidth: true,
+                        repeat: false,
+                        center: true,
+                        cover: false,
                     },
-                  },
+                    padding: "0px",
+                    hideDesktop: false,
+                    _meta: {
+                        htmlID: "u_row_1",
+                        htmlClassNames: "u_row",
+                    },
+                    selectable: true,
+                    draggable: true,
+                    duplicatable: true,
+                    deletable: true,
+                    hideable: true,
+                    },
+                },
                 ],
                 values: {
-                  displayCondition: null,
-                  columns: false,
-                  backgroundColor: "",
-                  columnsBackgroundColor: "",
-                  backgroundImage: {
+                textColor: "#000000",
+                backgroundColor: "#e7e7e7",
+                backgroundImage: {
                     url: "",
                     fullWidth: true,
                     repeat: false,
                     center: true,
                     cover: false,
-                  },
-                  padding: "0px",
-                  hideDesktop: false,
-                  _meta: {
-                    htmlID: "u_row_1",
-                    htmlClassNames: "u_row",
-                  },
-                  selectable: true,
-                  draggable: true,
-                  duplicatable: true,
-                  deletable: true,
-                  hideable: true,
                 },
-              },
-            ],
-            values: {
-              textColor: "#000000",
-              backgroundColor: "#e7e7e7",
-              backgroundImage: {
-                url: "",
-                fullWidth: true,
-                repeat: false,
-                center: true,
-                cover: false,
-              },
-              contentWidth: "500px",
-              contentAlign: "center",
-              fontFamily: {
-                label: "Arial",
-                value: "arial,helvetica,sans-serif",
-              },
-              preheaderText: "",
-              linkStyle: {
-                body: true,
-                linkColor: "#e67e23",
-                linkHoverColor: "#0000ee",
-                linkUnderline: true,
-                linkHoverUnderline: true,
-                inherit: false,
-              },
-              _meta: {
-                htmlID: "u_body",
-                htmlClassNames: "u_body",
-              },
+                contentWidth: "500px",
+                contentAlign: "center",
+                fontFamily: {
+                    label: "Arial",
+                    value: "arial,helvetica,sans-serif",
+                },
+                preheaderText: "",
+                linkStyle: {
+                    body: true,
+                    linkColor: "#e67e23",
+                    linkHoverColor: "#0000ee",
+                    linkUnderline: true,
+                    linkHoverUnderline: true,
+                    inherit: false,
+                },
+                _meta: {
+                    htmlID: "u_body",
+                    htmlClassNames: "u_body",
+                },
+                },
             },
-          },
-          schemaVersion: 6,
-        }; // Pass your template JSON here
-        this.$refs.emailEditor.editor.loadDesign(tempDesign);
-      },
-    peticionAdministrar(payload){
-        peticiones
-            .administrarTemplatesEmail({
-                'payload' : payload,
-            })
-            .then(response => {
+            schemaVersion: 6,
+            }
+            let tmp = this.data != null ? JSON.parse(this.data.config) : tempDesign
+            console.log(tmp)
+            this.$refs.emailEditor.editor.loadDesign(tmp)
+        },
+        peticionAdministrar(payload){
+            peticiones
+                .administrarTemplatesEmail({
+                    'payload' : payload,
+                })
+                .then(response => {
 
-                this.messageSweet({
-                    message: response.data.message,
-                    icon: response.data.result ? 'success' : 'error',
-                });
-                if (response.data.result ) {
-                    this.handleAtras()
-                }
-            })
-            .catch(error   => { console.log(error); })
-    },
+                    this.messageSweet({
+                        message: response.data.message,
+                        icon: response.data.result ? 'success' : 'error',
+                    });
+                    if (response.data.result ) {
+                        this.handleCancelForm()
+                    }
+                })
+                .catch(error   => { console.log(error); })
+        },
 
 
 

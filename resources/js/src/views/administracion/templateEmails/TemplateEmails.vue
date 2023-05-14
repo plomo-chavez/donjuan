@@ -13,6 +13,7 @@
         </div>
         <div v-if="showForm">
             <GeneratorTemplateEmail
+                :data="activeRow"
                 @cancelar="handleCancelar"
             />
         </div>
@@ -73,17 +74,9 @@
             this.activeRow = null
             this.reload();
         },
-        save(data){
-            let payload = this.copyObject(data);
-            if (this.accion == 2) {
-                payload.id = this.activeRow.id
-            }
-            payload.accion = this.accion
-           this.peticionAdministrar(payload)
-        },
         peticionAdministrar(payload){
             peticiones
-                .adminUsuarios({
+                .administrarTemplatesEmail({
                     'payload' : payload,
                 })
                 .then(response => {
@@ -91,12 +84,12 @@
                         message: response.data.message,
                         icon: response.data.result ? 'success' : 'error',
                     });
-                    this.resetForm();
+                    this.handleCancelar();
                 })
                 .catch(error   => { console.log(error); })
         },
         nuevoRegistro () {
-            this.activeRow = {};
+            this.activeRow = null;
             setTimeout(() => { this.showForm = true; }, 10);
         },
         editar (data) {
