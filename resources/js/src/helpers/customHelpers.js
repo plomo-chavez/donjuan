@@ -20,6 +20,11 @@ export default {
         },
       })
     },
+
+    capitalize(value) {
+        if (!value) return "";
+        return value.charAt(0).toUpperCase() + value.slice(1);
+    },
     messageSweet ({
         message='',
         color='success',
@@ -50,7 +55,8 @@ export default {
         confirmButtonText= 'Si, eliminar',
         cancelButtonText= 'No, cancelar',
         cancelFunction = null,
-        confirmFunction = null
+        confirmFunction = null,
+        messageCancel = true
     }){
 
         console.log(message)
@@ -77,19 +83,40 @@ export default {
                 if (typeof cancelFunction == 'function'){
                     cancelFunction()
                 } else {
-                    this.$swal({
-                        title: 'Proceso cancelado',
-                        text: 'Cancelo correctamente el proceso',
-                        icon: 'error',
-                        timer: 3000,
-                        customClass: {
-                          confirmButton: 'btn btn-success',
-                        },
-                    })
+                    if (messageCancel) {
+
+                        this.$swal({
+                            title: 'Proceso cancelado',
+                            text: 'Cancelo correctamente el proceso',
+                            icon: 'error',
+                            timer: 3000,
+                            customClass: {
+                            confirmButton: 'btn btn-success',
+                            },
+                        })
+                    }
                 }
             }
           })
-    }
+    },
+    formatoFechaYMD(value){
+        const fecha = new Date(value);
+        const fechaFormateada = fecha.toISOString().slice(0,10).replace(/-/g,"/");
+        return fechaFormateada
+    },
+    formatoFechaBD(value){
+        var date = new Date(value);
+        var formattedDate = date.toLocaleString('es-ES', {
+            timeZone: 'UTC',
+            hour12: true
+        });
+        return formattedDate;
+    },
+
+    formatoMoney(amount, signal = true){
+        let tmp = parseInt(amount).toLocaleString("es-ES", { style: "currency", currency: "MXN" });
+        return (signal? '$ ' : '') + tmp
+    },
   }
 }
 

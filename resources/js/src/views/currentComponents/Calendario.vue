@@ -6,7 +6,7 @@
             ...config,
             viewRender: handleChangeMonth
         }"
-        :events="events"
+        :events="eventos"
         @viewRender="handleChangeMonth"
     />
   </div>
@@ -21,61 +21,65 @@ import 'fullcalendar/dist/locale/es'
 
 import 'fullcalendar/dist/fullcalendar.css'
 
+import peticiones from '@/apis/usePeticiones'
+import customHelpers  from '@helpers/customHelpers'
 
 export default {
     name: 'CalendarComponent',
+    mixins : [customHelpers],
     components: {
         FullCalendar
     },
     mounted() {},
     data() {
         return {
-			events: [
-				{
-					title: 'test',
-					allDay: true,
-					start: moment(),
-					end: moment().add(1, 'd'),
-				},
-				{
-					title: 'test',
-					allDay: true,
-					start: moment(),
-					end: moment().add(1, 'd'),
-				},
-				{
-					title: 'test',
-					allDay: true,
-					start: moment(),
-					end: moment().add(1, 'd'),
-				},
-				{
-					title: 'test',
-					allDay: true,
-					start: moment(),
-					end: moment().add(1, 'd'),
-				},
-				{
-					title: 'test',
-					allDay: true,
-					start: moment(),
-					end: moment().add(1, 'd'),
-				},
-				{
-					title: 'test',
-					allDay: true,
-					start: moment(),
-					end: moment().add(1, 'd'),
-				},
-				{
-					title: 'another test',
-					start: moment().add(2,'d'),
-					end: moment().add(2, 'd').add(2, 'h'),
-				},
-			],
+			// events: [
+			// 	{
+			// 		title: 'test',
+			// 		allDay: true,
+			// 		start: moment(),
+			// 		end: moment().add(1, 'd'),
+			// 	},
+			// 	{
+			// 		title: 'test',
+			// 		allDay: true,
+			// 		start: moment(),
+			// 		end: moment().add(1, 'd'),
+			// 	},
+			// 	{
+			// 		title: 'test',
+			// 		allDay: true,
+			// 		start: moment(),
+			// 		end: moment().add(1, 'd'),
+			// 	},
+			// 	{
+			// 		title: 'test',
+			// 		allDay: true,
+			// 		start: moment(),
+			// 		end: moment().add(1, 'd'),
+			// 	},
+			// 	{
+			// 		title: 'test',
+			// 		allDay: true,
+			// 		start: moment(),
+			// 		end: moment().add(1, 'd'),
+			// 	},
+			// 	{
+			// 		title: 'test',
+			// 		allDay: true,
+			// 		start: moment(),
+			// 		end: moment().add(1, 'd'),
+			// 	},
+			// 	{
+			// 		title: 'another test',
+			// 		start: moment().add(2,'d'),
+			// 		end: moment().add(2, 'd').add(2, 'h'),
+			// 	},
+			// ],
+            eventos:[],
 			config: {
                 locale: 'es',
-                defaultDate: new Date(2020, 4, 15),
+                defaultDate: new Date(),
                 defaultView: 'month',
 			    eventRender: function(event, element) {
             	    console.log(event)
@@ -89,6 +93,26 @@ export default {
     		    // }
             },
         }
+    },
+    beforeMount() {
+        peticiones
+        .getReservaciones({ })
+        .then(response => {
+            console.log(response)
+            let tmp =  response.data.data
+            let eventsTmp = []
+            tmp.map((item) => {
+                eventsTmp.push({
+                    id:item.id,
+					title: 'Reservacion',
+					allDay: true,
+					start: item.fechaInicio,
+					end: item.fechaFin,
+                })
+            })
+            this.eventos = this.copyObject(eventsTmp)
+        })
+        .catch(error   => { console.log(error); })
     },
     methods:{
         handleChangeMonth(e){

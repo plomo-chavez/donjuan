@@ -66,11 +66,22 @@
     >
     <template v-for="(field, index, item) in fields" v-slot:[`cell(${field.key})`]="data">
         <div v-if="field.type === 'switch'">
-            <feather-icon v-if="data.item[field.key]"  size="21" icon="CheckIcon" class="ml-5 text-success" />
-            <feather-icon v-if="!data.item[field.key]" size="21" icon="SlashIcon" class="ml-5 text-danger" />
+            <feather-icon v-if="data.item[field.key]"  size="21" icon="CheckIcon" class="text-success" />
+            <feather-icon v-if="!data.item[field.key]" size="21" icon="SlashIcon" class="text-danger" />
         </div>
         <div v-else-if="field.type === 'index'">
-        #
+            <p class="fw-bolder">{{ data.index + 1 }}</p>
+        </div>
+        <div v-else-if="field.type === 'object'">
+            <div v-for="(item,key) in data.item[field.key] ">
+                <small clas="text-sm" v-for="(value) in item">{{ capitalize(key) }}: {{ value }}</small>
+            </div>
+        </div>
+        <div v-else-if="field.type === 'dateYMD'">
+            <small>{{formatoFechaBD(data.item[field.key])}}</small>
+        </div>
+        <div v-else-if="field.type === 'money'">
+            <small>{{data.item[field.key]}}</small>
         </div>
         <div v-else-if="field.type === 'actions'" class="d-flex flex-wrap">
             <div style="padding-left: 5px;" class="text-warning fw-bolder" v-if="(typeof config.cellActions.btnEditar   == 'undefined' ? true : config.cellActions.btnEditar )"   @click=" emitirInfo('mdoEditar', data.item)"><feather-icon size="16" icon="EditIcon" /></div>

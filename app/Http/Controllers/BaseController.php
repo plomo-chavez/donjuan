@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -43,7 +42,10 @@ class BaseController extends Controller
 
     public function eliminar($payload, $modelo) {
         if($payload['id']){
-            $modelo::whereIn('id', [$payload['id']])->delete();
+            $tmp = $modelo::where('id', $payload['id'])->get();
+            foreach ($tmp as $key => $value) {
+                $value->delete();
+            }
             return self::responsee('Registro eliminado corrrectamente.');
         } else {
             return self::responsee('Para poder eliminar se requiere el id.', false);
