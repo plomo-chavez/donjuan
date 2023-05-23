@@ -11,12 +11,56 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
 
 class ReservacionesController extends BaseController
 {
     public function handleAdministrar(Request $request){
         $payload = $request->all();
         return self::administrar($payload['payload'], new Modelo());
+    }
+
+    public function handleReservacionesCalendario(Request $request){
+        // Obtén la fecha de inicio (un mes antes de la fecha actual)
+        $fechaInicio = Carbon::now()->subMonth();
+
+        // Obtén la fecha de fin (4 meses después de la fecha actual)
+        $fechaFin = Carbon::now()->addMonths(4);
+
+        // Realiza la consulta utilizando whereBetween en ambas columnas de fecha
+        $data = Modelo::where(function ($query) use ($fechaInicio, $fechaFin) {
+            $query->whereBetween('fechaInicio', [$fechaInicio, $fechaFin])
+                ->orWhereBetween('fechafin', [$fechaInicio, $fechaFin]);
+        })
+        ->with([
+            'reserva' => function ($query) {
+                $query->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo');
+            },
+            'habitaciones' => function ($query) {
+                $query->select('habitacion_id', 'reservacion_id', 'id');
+            },
+            'habitaciones.habitacion' => function ($query) {
+                $query->select('id', 'nombre', 'descripcion', 'tarifa', 'amenidades', 'camas', 'puedeFumar', 'capacidad');
+            },
+            'acompaniantes' => function ($query) {
+                $query->select('id', 'reservacion_id', 'persona_id');
+            },
+            'acompaniantes.persona' => function ($query) {
+                $query->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo');
+            },
+        ])
+        ->get();
+
+
+        // $data = Modelo::orderBy('id',"asc")
+        //     // ->with('estatus')
+        //     ->get();
+        return self::responsee(
+            'Consulta realizada con exito.',
+            true,
+            $data,
+        );
     }
 
     public function handleListar(Request $request){

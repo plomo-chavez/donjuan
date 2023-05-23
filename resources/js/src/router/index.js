@@ -32,25 +32,25 @@ router.beforeEach((to, _, next) => {
   const isLoggedIn = isUserLoggedIn()
   let validateUser = false;
 
-  if(isLoggedIn){
-    useJwt
-    .validateUser({ tk   : store.state.app.userData.token, })
-    .then(response => {
-      validateUser = response.data.data;
-      console.log('response.data.data -> ', response.data.data)
-      store.commit('app/UPDATE_USERVALIDATION', response.data.data)
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  }
+//   if(isLoggedIn){
+//     useJwt
+//     .validateUser({ tk   : store.state.app.userData.token, })
+//     .then(response => {
+//       validateUser = response.data.data;
+//       console.log('response.data.data -> ', response.data.data)
+//       store.commit('app/UPDATE_USERVALIDATION', response.data.data)
+//     })
+//     .catch(error => {
+//       console.log(error);
+//     })
+//   }
 
-  if (!canNavigate(to)) {
-    // Redirect to login if not logged in
-    if (!isLoggedIn) return next({ name: 'auth-login' })
-    // If logged in => not authorized
-    return next({ name: 'misc-not-authorized' })
-  }
+//   if (!canNavigate(to)) {
+//     // Redirect to login if not logged in
+//     if (!isLoggedIn) return next({ name: 'auth-login' })
+//     // If logged in => not authorized
+//     return next({ name: 'misc-not-authorized' })
+//   }
 
   // Redirect if logged in
   if (to.meta.redirectIfLoggedIn && isLoggedIn) {

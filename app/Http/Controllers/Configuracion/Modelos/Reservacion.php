@@ -15,4 +15,17 @@ class Reservacion extends Model
         'fechaInicio',
         'fechaFin',
     ];
+
+    public function reserva() {
+        return $this->hasOne(Persona::class,'id','persona_id');
+    }
+
+    public function acompaniantes() {
+        return $this->hasMany(ReservacionAcompañantes::class,'reservacion_id','id');
+        // return $this->hasOne(ReservacionAcompañantes::class,'persona_id','id');
+    }
+
+    public function habitaciones() {
+        return $this->hasMany(ReservacionHabitaciones::class,'reservacion_id','id');
+    }
 }

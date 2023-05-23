@@ -37,8 +37,9 @@ Route::middleware([UserAuthentication::class])->post('/habitaciones/listar',    
 Route::middleware([UserAuthentication::class])->post('/personas/administrar',       [PersonasController::class, 'handleAdministrar']);
 Route::middleware([UserAuthentication::class])->post('/personas/listar',            [PersonasController::class, 'handleListar']);
 Route::middleware([UserAuthentication::class])->post('/reservaciones/administrar',  [ReservacionesController::class, 'handleAdministrar']);
+Route::middleware([UserAuthentication::class])->post('/reservaciones/calendario',   [ReservacionesController::class, 'handleReservacionesCalendario']);
 Route::middleware([UserAuthentication::class])->post('/reservaciones/listar',       [ReservacionesController::class, 'handleListar']);
-Route::middleware([UserAuthentication::class])->post('/templates-email/administrar',  [TemplateEmailController::class, 'handleAdministrar']);
+Route::middleware([UserAuthentication::class])->post('/templates-email/administrar',[TemplateEmailController::class, 'handleAdministrar']);
 Route::middleware([UserAuthentication::class])->post('/templates-email/listar',     [TemplateEmailController::class, 'handleListar']);
 Route::middleware([UserAuthentication::class])->post('/send/email',                 [MailController::class, 'enviar']);
 // Route::middleware([UserAuthentication::class])->post('/auth/verificar',    [AuthController::class, 'verificar']);

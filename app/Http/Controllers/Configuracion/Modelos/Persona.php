@@ -19,4 +19,10 @@ class Persona extends Model
         'telefono',
         'correo',
     ];
+
+    public function getNombreCompletoAttribute()
+    {
+        $nombres = implode(' ', array_filter([$this->nombre, $this->primerApellido, $this->segundoApellido]));
+        return $nombres;
+    }
 }

@@ -4,7 +4,7 @@
     :class="[layoutClasses]"
     :data-col="isNavMenuHidden ? '1-column' : null"
   >
-    <ModalValidSession :openModal="openModal" />
+    <!-- <ModalValidSession :openModal="openModal" /> -->
     <!-- Navbar -->
     <b-navbar
       :toggleable="false"
@@ -88,7 +88,7 @@
 
 <script>
 
-import ModalValidSession from '@currentComponents/ModalValidSession.vue'
+// import ModalValidSession from '@currentComponents/ModalValidSession.vue'
 import { onUnmounted } from '@vue/composition-api'
 import AppNavbarVerticalLayout from '@core/layouts/components/app-navbar/AppNavbarVerticalLayout.vue'
 import AppFooter from '@core/layouts/components/AppFooter.vue'
@@ -103,7 +103,7 @@ import mixinVerticalLayout from './mixinVerticalLayout'
 import store              from '@/store'
 
 export default {
-  
+
   data() {
     return {
       openModal:false,
@@ -111,7 +111,7 @@ export default {
   },
   components: {
     // AppBreadcrumb,
-    ModalValidSession,
+    // ModalValidSession,
     AppNavbarVerticalLayout,
     AppFooter,
     VerticalNavMenu,

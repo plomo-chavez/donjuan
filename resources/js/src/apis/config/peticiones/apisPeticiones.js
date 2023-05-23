@@ -30,6 +30,9 @@ export default class apiPeticiones {
   getReservaciones(...args) {
     return this.axiosIns.post(this.apisConfig.apiGetReservaciones, ...args)
   }
+  getReservacionesCalendario(...args) {
+    return this.axiosIns.post(this.apisConfig.apiGetReservacionesCalendario, ...args)
+  }
   administrarReservaciones(...args) {
     return this.axiosIns.post(this.apisConfig.apiAdminReservaciones, ...args)
   }

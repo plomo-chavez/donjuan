@@ -18,16 +18,39 @@
 
     <!-- Left Col -->
     <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex">
+        <!-- Bookmarks Container -->
 
-      <!-- Bookmarks Container -->
-      <bookmarks />
+        <b-navbar-nav class="nav">
+            <b-nav-item
+                to="/"
+            >
+                <feather-icon size="21" :icon="`CalendarIcon`" />
+            </b-nav-item>
+        </b-navbar-nav>
+        <!-- <b-nav-item
+        v-for="(bookmark, index) in bookmarks"
+        :id="`bookmark-${index}`"
+        :key="index"
+        :to="bookmark.route"
+        >
+        <feather-icon
+            :icon="bookmark.icon"
+            size="21"
+        />
+        <b-tooltip
+            triggers="hover"
+            :target="`bookmark-${index}`"
+            :title="bookmark.title"
+            :delay="{ show: 1000, hide: 50 }"
+        />
+        </b-nav-item> -->
     </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
-      <locale />
+      <!-- <locale />
       <dark-Toggler class="d-none d-lg-block" />
       <search-bar />
-      <cart-dropdown />
+      <cart-dropdown /> -->
       <notification-dropdown />
       <user-dropdown />
     </b-navbar-nav>
@@ -36,7 +59,7 @@
 
 <script>
 import {
-  BLink, BNavbarNav,
+  BLink, BNavbarNav,BNavItem,
 } from 'bootstrap-vue'
 import Bookmarks from './components/Bookmarks.vue'
 import Locale from './components/Locale.vue'
@@ -52,7 +75,7 @@ export default {
 
     // Navbar Components
     BNavbarNav,
-    Bookmarks,
+    Bookmarks,BNavItem,
     Locale,
     SearchBar,
     DarkToggler,

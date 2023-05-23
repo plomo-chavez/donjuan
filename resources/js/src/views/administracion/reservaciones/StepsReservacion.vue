@@ -118,12 +118,12 @@
 
         BButton,
         FormWizard,
+        TabContent,
         BCard,
         tabDetalles,
         BCardTitle,
         BCardSubTitle,
         BCardBody,
-        TabContent,
         BRow,
         BCol,
         BFormGroup,

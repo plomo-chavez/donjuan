@@ -14,4 +14,7 @@ class ReservacionAcompañantes extends Model
         'persona_id',
         'reservacion_id',
     ];
+    public function persona() {
+        return $this->hasOne(Persona::class,'id','persona_id');
+    }
 }

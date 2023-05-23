@@ -16,4 +16,8 @@ class ReservacionHabitaciones extends Model
         'fechaInicio',
         'fechaFin',
     ];
+
+    public function habitacion() {
+        return $this->hasOne(Habitacion::class,'id','habitacion_id');
+    }
 }
