@@ -31,14 +31,42 @@
 .</strong>
   </noscript>
   <div id="loading-bg">
-    <div class="loading-logo">
-      <img src="{{ asset('logo.png') }}" alt="Logo" />
+    <div class="loading-logo"
+        style="
+            left:   calc(50% - 80px);
+            top:    calc(50% - 70px);
+        "
+    >
+        <div style="
+            width:100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        ">
+            <img src="{{ asset('logo.png') }}" alt="Logo" />
+        </div>
+        <div style="
+            width:100%;
+            margin-top:60px;
+        ">
+            <div class="loading">
+            <div class="effect-1 effects"></div>
+            <div class="effect-2 effects"></div>
+            <div class="effect-3 effects"></div>
+        </div>
+        </div>
+        <div style="
+            width:100%;
+            margin-top:20px;
+        ">
+            <h1 style="color:white"><strong>CARGANDO ...!!</strong></h1>
+        </div>
     </div>
-    <div class="loading">
+    <!-- <div class="loading">
       <div class="effect-1 effects"></div>
       <div class="effect-2 effects"></div>
       <div class="effect-3 effects"></div>
-    </div>
+    </div> -->
     <div class="loading-back"></div>
   </div>
   <div id="app">

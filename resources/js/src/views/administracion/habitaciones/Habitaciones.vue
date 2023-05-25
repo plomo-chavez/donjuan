@@ -87,6 +87,7 @@
         handleAtras(){ this.showForm = false; },
         inicializar(){ this.reload() },
         reload () {
+            this.loading();
             peticiones
                 .getHabitaciones({})
                 .then(response => {
@@ -97,6 +98,7 @@
                         item.amenidades = typeof item.amenidades == 'string' ? item.amenidades : JSON.parse(item.amenidades)
                     })
                     this.data = this.copyObject(tmpData)
+                    this.loading(false);
                 })
                 .catch(error   => { console.log(error); })
         },

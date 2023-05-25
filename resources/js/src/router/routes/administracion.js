@@ -32,7 +32,7 @@ export default [
     },
   },
   {
-    path: '/reservacioness',
+    path: '/calendario',
     name: 'admin-reservacioness',
     component: () => import('@/views/administracion/reservaciones/Reservaciones.vue'),
     meta: {

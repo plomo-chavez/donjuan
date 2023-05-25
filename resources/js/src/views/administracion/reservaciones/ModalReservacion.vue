@@ -12,7 +12,7 @@
         <div v-if="data != null">
             <div class="d-flex">
                 <h6 class="ww-200 font-weight-bolder">Quien reservo:</h6>
-                <h6 class="ww-200A">{{ data.reserva.nombre + '' + data.reserva.primerApellido + '' + data.reserva.segundoApellido }}</h6>
+                <h6 class="ww-200A">{{ data.reserva.nombre + ' ' + data.reserva.primerApellido + ' ' + data.reserva.segundoApellido }}</h6>
             </div>
             <div class="d-flex">
                 <h6 class="col-3 font-weight-bolder">Teléfono:</h6>
@@ -34,7 +34,7 @@
             <div class="">
                 <h6 class="col-12 font-weight-bolder mb-1">Acompañantes:</h6>
                 <h6 v-if="data.acompaniantes.length == 0" class="col-12 text-center font-weight-bolder">No se registraron acompañantes</h6>
-                <h6 class="col-12" v-for="(item,index) in data.acompaniantes" ># {{index + 1}} - {{ item.persona.nombre + '' + item.persona.primerApellido + '' + item.persona.segundoApellido }}</h6>
+                <h6 class="col-12" v-for="(item,index) in data.acompaniantes" ># {{index + 1}} - {{ item.persona.nombre + ' ' + item.persona.primerApellido + ' ' + item.persona.segundoApellido }}</h6>
             </div>
         </div>
         </b-modal>

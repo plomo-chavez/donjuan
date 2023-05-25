@@ -100,36 +100,40 @@ class ReservacionesController extends BaseController
             'persona_id' => $payload['person']['id'],
         );
         $reservacion = $modelo::create($reservacionPayload);
-        foreach ($payload['habitaciones'] as $key => $value) {
-            Habs::create(array(
-                'fechaInicio' => $payload['fechaInicio'] ,
-                'fechaFin' => $payload['fechaFin'] ,
-                'habitacion_id' => $value['id'],
-                'reservacion_id' => $reservacion->id,
-            ));
-        }
-        foreach ($payload['acompaniantes'] as $key => $value) {
-            $count = DB::table('personas')
-                ->orWhere('telefono', '=', $value['telefono'])
-                ->orWhere('correo', '=', $value['correo'])
-                ->count();
-            if ($count == 0) {
-                $persona = Persona::create($value);
-            } else {
 
-                $tmp = DB::table('personas')
-                ->orWhere('telefono', '=', $value['telefono'])
-                ->orWhere('correo', '=', $value['correo'])
-                ->get();
-
-                if (sizeof($tmp) == 1) {
-                    $persona = $tmp[0];
-                }
+        if (isset($payload['habitaciones'] )) {
+            foreach ($payload['habitaciones'] as $key => $value) {
+                Habs::create(array(
+                    'fechaInicio' => $payload['fechaInicio'] ,
+                    'fechaFin' => $payload['fechaFin'] ,
+                    'habitacion_id' => $value['id'],
+                    'reservacion_id' => $reservacion->id,
+                ));
             }
-            Acompaniantes::create(array(
-                'persona_id' => $persona->id,
-                'reservacion_id' => $reservacion->id,
-            ));
+        }
+        if (isset($payload['acompaniantes'] )) {
+            foreach ($payload['acompaniantes'] as $key => $value) {
+                $count = DB::table('personas')
+                    ->orWhere('telefono', '=', $value['telefono'])
+                    ->orWhere('correo', '=', $value['correo'])
+                    ->count();
+                if ($count == 0) {
+                    $persona = Persona::create($value);
+                } else {
+                    $tmp = DB::table('personas')
+                    ->orWhere('telefono', '=', $value['telefono'])
+                    ->orWhere('correo', '=', $value['correo'])
+                    ->get();
+
+                    if (sizeof($tmp) == 1) {
+                        $persona = $tmp[0];
+                    }
+                }
+                Acompaniantes::create(array(
+                    'persona_id' => $persona->id,
+                    'reservacion_id' => $reservacion->id,
+                ));
+            }
         }
         return self::responsee('Reservación registrado con exito.', true);
     }

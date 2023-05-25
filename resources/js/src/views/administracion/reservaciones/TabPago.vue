@@ -9,7 +9,6 @@
                     class="my-auto fw-bolder"
                     variant="success"
                     disabled
-                    @click="handleAgregar"
                 >
                     <feather-icon icon="CreditCardIcon" size="16" />
                     <span>Hacer el pago en linea</span>

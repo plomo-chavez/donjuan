@@ -4,9 +4,6 @@
             <!-- <pre>{{ reservacion }}</pre> -->
             <b-card-title>Registro de reservación</b-card-title>
             <b-card-body class="p-0 m-0">
-                <!-- color="#7367F0" -->
-                <!-- <pre>Step: {{ step }}</pre>
-                <pre>{{ reservacion }}</pre> -->
                 <form-wizard
                     ref="wizard"
                     :hideButtons="true"
@@ -72,18 +69,20 @@
                 <div class="col-12 d-flex justify-content-between">
                     <b-button
                         v-if="step != 0"
-                        variant="outline-secondary"
+                        size="sm"
                         class="mr-auto"
+                        variant="outline-secondary"
                         @click="prevStep"
                     >
-                        Atrás
+                        <span class="mr-25 align-middle">Atrás</span>
                     </b-button>
                     <b-button
+                        size="sm"
                         class="ml-auto"
                         variant="primary"
                         @click="nextStep"
                     >
-                        {{ step < 3 ? 'Siguiente' : 'Reservar' }}
+                        <span class="mr-25 align-middle">{{ step < 3 ? 'Siguiente' : 'Reservar' }}</span>
                     </b-button>
                 </div>
             </b-card-body>
@@ -190,14 +189,9 @@
                 }
                 if (this.step == 2) {
                     let response = await this.$refs.tabAcompaniantes.getAcompaniantes();
-                    console.log('response -> ', response )
                     if (response != false) {
                         this.reservacion.acompaniantes = response
                     }
-                    console.log('this.reservacion', this.reservacion)
-                    // console.log('this.reservacion.acompaniantes.length', this.reservacion.acompaniantes.length)
-                    console.log((typeof this.reservacion.acompaniantes == 'undefined'))
-                    console.log((typeof this.reservacion.acompaniantes == 'undefined' ? 0 : this.reservacion.acompaniantes.length) == 0)
                     if ((typeof this.reservacion.acompaniantes == 'undefined' ? 0 : this.reservacion.acompaniantes.length) == 0) {
                         this.messageConfirm({
                             message:'No hay acompañastes registrados',
@@ -224,10 +218,6 @@
             this.handleChangeStep();
         },
         handleChangeStep(data = null){
-            console.log('handleChangeStep')
-            console.log('data -> ', data)
-            console.log('data -> ', typeof data)
-            console.log( "typeof  data == 'object' ? this.$refs.wizard.activeTabIndex : data    ->",typeof  data == 'object' ? this.$refs.wizard.activeTabIndex : data)
             this.step = typeof  data == 'object' ? this.$refs.wizard.activeTabIndex : data;
         },
         handleSubmit(){
@@ -246,6 +236,7 @@
                     });
                     if (response.data.result ) {
                         this.handleAtras()
+                        this.$emit('handleCancel')
                     }
                 })
                 .catch(error   => { console.log(error); })

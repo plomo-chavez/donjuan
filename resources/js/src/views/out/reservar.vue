@@ -23,7 +23,7 @@
     import Booking from './components/booking.vue'
     import Steps from './components/steps.vue'
     import Pie from './components/footer.vue'
-    import Calendar from '@/views/apps/calendar/Calendar.vue'
+    import Calendar from '@currentComponents/Calendario.vue'
     import { BNavbar, BBadge, BNavbarBrand, BNavbarToggle, BNavbarNav, BNavItem, BCollapse, BNavForm, BFormInput, BButton, BNavItemDropdown, BDropdownItem } from 'bootstrap-vue'
     import 'bootstrap/dist/css/bootstrap.css'
     import 'bootstrap-vue/dist/bootstrap-vue.css'

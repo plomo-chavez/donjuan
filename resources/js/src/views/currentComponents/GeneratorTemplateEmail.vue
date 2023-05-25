@@ -62,7 +62,7 @@
 
     import sendEmails from '@/apis/useSendEmails'
   export default {
-    name: "app",
+    name: "currentComponents",
     mixins : [customHelpers],
     components: {
         FormFactory,

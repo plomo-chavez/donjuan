@@ -1,7 +1,12 @@
 export default [
+    // {
+    //   title: 'Reservaciones',
+    //   route: 'admin-reservacionesss',
+    //   icon: 'CalendarIcon',
+    // },
     {
       title: 'Reservaciones',
-      route: 'admin-reservacionesss',
+      route: 'admin-reservacioness',
       icon: 'CalendarIcon',
     },
     {
@@ -9,12 +14,12 @@ export default [
         icon: 'SettingsIcon',
         children: [
             {
-            title: 'Habitaciones',
-            route: 'admin-habitaciones',
+                title: 'Habitaciones',
+                route: 'admin-habitaciones',
             },
             {
-            title: 'Trabajadores',
-            route: 'admin-trabajadores',
+                title: 'Trabajadores',
+                route: 'admin-trabajadores',
             },
         ],
     },

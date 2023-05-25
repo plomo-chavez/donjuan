@@ -7,9 +7,9 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav class="ml-auto">
-                <b-nav-item href="/">Inicio</b-nav-item>
-                <b-nav-item href="/nosotros">Nosotros</b-nav-item>
-                <b-nav-item href="/contacto">Contactanos</b-nav-item>
+                <b-nav-item style="margin-top: 5px;" href="/">Inicio</b-nav-item>
+                <b-nav-item style="margin-top: 5px;" href="/nosotros">Nosotros</b-nav-item>
+                <b-nav-item style="margin-top: 5px;" href="/contacto">Contactanos</b-nav-item>
                 <b-nav-form>
                     <a class="btn btn-secondary p-2" href="/reservar">Reservar</a>
                 </b-nav-form>

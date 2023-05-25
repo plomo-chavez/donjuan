@@ -209,10 +209,12 @@
             this.reload()
         },
         reload () {
+            this.loading();
             peticiones
                 .getUsuarios({})
                 .then(response => {
                     this.data = response.data.data
+                    this.loading(false);
                 })
                 .catch(error   => { console.log(error); })
         },

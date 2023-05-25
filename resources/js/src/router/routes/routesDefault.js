@@ -14,7 +14,9 @@ export default [
   {
     path: '/reservar',
     name: 'reservar',
-    component: () => import('@/views/administracion/reservaciones/Reservaciones.vue'),
+
+    component: () => import('@/views/out/reservar.vue'),
+    // component: () => import('@/views/administracion/reservaciones/Reservaciones.vue'),
     meta: {
       layout: 'full',
       resource: 'Auth',
