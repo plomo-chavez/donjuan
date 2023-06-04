@@ -2,19 +2,17 @@
     <b-modal
       ref="my-modal"
       hide-footer
-
       ok-only
       no-close-on-backdrop
       :title="title"
     >
-    <pre>{{ formSchema }}</pre>
-        <FormFactory
-            class="col-12 mx-auto"
-            :data = 'data'
-            :schema="formSchema"
-            @formExport="handleSubmit"
-            @cancelar="handleCancelar"
-        />
+      <FormFactory
+        class="col-12 mx-auto"
+        :data = 'data'
+        :schema="formSchema"
+        @formExport="handleSubmit"
+        @cancelar="handleCancelar"
+      />
     </b-modal>
 </template>
 
@@ -81,7 +79,6 @@ export default {
   },
   watch:{
     openModal(value){
-        console.log(value)
       if(value){
         this.showModal();
       }
@@ -96,7 +93,6 @@ export default {
         this.$emit('handleSubmit',data)
     },
     handleCancelar(){
-        console.log('handleCancelar')
         this.$emit('handleCancelar');
     },
     async goToRefreshSession(){
@@ -135,12 +131,9 @@ export default {
               password: this.password,
             })
             .then(response => {
-              console.log('response',response)
               let data = response.data;
-              console.log('data',data)
               if(data.result){
                 const userData = data.data.user
-                console.log('userData',userData)
                 localStorage.setItem('userData', JSON.stringify(userData))
                 store.commit('app/UPDATE_USERDATA', userData)
                 localStorage.setItem('tk', data.data.user.token)

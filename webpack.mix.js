@@ -101,4 +101,5 @@ mix.webpackConfig({
  */
 
 // mix.browserSync('https://dev-cabo.com')
-mix.browserSync('http://donjuan.local.com')
+// mix.browserSync('http://donjuan.local.com')
+mix.browserSync('http://localhost:8888/donjuan')

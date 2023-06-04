@@ -84,7 +84,7 @@
         this.inicializar()
     },
     methods: {
-        handleAtras(){ this.showForm = false; },
+        handleAtras(){ this.resetForm(); },
         inicializar(){ this.reload() },
         reload () {
             this.loading();
@@ -115,9 +115,6 @@
         editar (data) {
             this.accion = 2;
             let tmp = this.copyObject(data)
-            console.log(typeof tmp.amenidades)
-            console.log(typeof tmp.amenidades == 'string')
-            console.log(typeof tmp.amenidades == 'string' ? JSON.parse(tmp.amenidades) : tmp.amenidades)
             tmp.amenidades = typeof tmp.amenidades == 'string' ? JSON.parse(tmp.amenidades) : tmp.amenidades
             tmp.camas = typeof tmp.camas == 'string' ? JSON.parse(tmp.camas) : tmp.camas
             tmp.puedeFumar = tmp.puedeFumar ? true:false

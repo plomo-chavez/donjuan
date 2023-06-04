@@ -58,8 +58,6 @@ export default {
         confirmFunction = null,
         messageCancel = true
     }){
-
-        console.log(message)
         this.$swal({
             title: title,
             text: message,

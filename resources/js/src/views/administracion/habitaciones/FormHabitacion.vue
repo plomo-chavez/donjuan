@@ -233,7 +233,7 @@
         ],
         formAmenidad: [
             {
-                classContainer:' col-6',
+                classContainer:' col-12',
                 type        : 'input-text',
                 name        : 'nombre',
                 value       : 'nombre',
@@ -257,7 +257,6 @@
     mixins : [customHelpers],
     beforeMount() {
         if (this.info != null && Object.keys(this.info).length > 0){
-            console.log('info -> ', this.info)
             this.activeRow =  this.copyObject(this.info)
             this.camas =  this.copyObject(this.info.camas)
             this.amenidades =  this.copyObject(this.info.amenidades)
@@ -293,7 +292,7 @@
         },
         handleEditar(data){
             this.activeAmenidad = this.copyObject(data)
-            this.openModal = true;
+            this.modalAmenidad = true;
         },
         handleEliminar(index){
             this.messageConfirm({

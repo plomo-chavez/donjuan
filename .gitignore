@@ -6,8 +6,6 @@
 /public/fonts
 /public/images
 /storage/*.key
-.env
-.env.backup
 .phpunit.result.cache
 docker-compose.override.yml
 Homestead.json
@@ -21,9 +19,6 @@ supervisord.pid
 node_modules
 /dist
 
-# local env files
-.env.local
-.env.*.local
 
 # Log files
 npm-debug.log*
