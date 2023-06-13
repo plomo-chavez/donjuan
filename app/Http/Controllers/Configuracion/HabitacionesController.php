@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Configuracion;
 
 use App\Http\Controllers\Configuracion\Modelos\Habitacion as Modelo;

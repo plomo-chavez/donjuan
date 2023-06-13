@@ -11,6 +11,7 @@ use App\Http\Controllers\Configuracion\HabitacionesController;
 use App\Http\Controllers\Configuracion\PersonasController;
 use App\Http\Controllers\Configuracion\ReservacionesController;
 use App\Http\Controllers\Configuracion\TemplateEmailController;
+use App\Http\Controllers\Configuracion\OutController;
 use App\Http\Controllers\Email\MailController;
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::post('/auth/login',      [AuthController::class, 'loginUser']);
 Route::post('/auth/details',    [AuthController::class, 'detailsUser']);
 Route::post('/auth/pruebas',    [AuthController::class, 'verificar']);
 Route::post('/auth/verificar',  [AuthController::class, 'verificar']);
+Route::post('/out',             [OutController::class, 'getResources']);
 Route::middleware([UserAuthentication::class])->post('/auth/pruebas2',              [AuthController::class, 'verificar']);
 Route::middleware([UserAuthentication::class])->post('/get/usuarios',               [UsuariosController::class, 'getUsuarios']);
 Route::middleware([UserAuthentication::class])->post('/usuarios/listar',            [UsuariosController::class, 'listarUsuarios']);

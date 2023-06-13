@@ -8,71 +8,85 @@
     <div class="container-xxl py-5">
         <div class="container-md">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Contact Us</h6>
-                <h1 class="mb-5">Contact For Any Query</h1>
+                <h6 class="section-title bg-white text-center text-primary px-3">Contactanos</h6>
+                <h1 class="mb-1">Queremos escucharte</h1>
+                <h3 class="mb-5">Puedes visitarnos en nuestras instalaciones o manda un correo con tu inquietud</h3>
+                <div class="row g-4">
             </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <h5>Get In Touch</h5>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos</p>
+            <div class="row">
+                <div :class="screenWidth < 1200 ? 'col-12' : 'col-6'" class="mb-3 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="d-flex align-items-center mb-4">
                         <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary" style="width: 50px; height: 50px;">
                             <i class="fa fa-map-marker-alt text-white"></i>
                         </div>
-                        <div class="ms-3">
-                            <h5 class="text-primary">Office</h5>
-                            <p class="mb-0">123 Street, New York, USA</p>
+                        <div class="ms-3 ml-2">
+                            <h5 class="text-primary text-left">Ubicación</h5>
+                            <p class="mb-0">Matamoros y Niños Héroes No. 12, Cabo San Lucas, Mexico</p>
                         </div>
                     </div>
                     <div class="d-flex align-items-center mb-4">
                         <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary" style="width: 50px; height: 50px;">
                             <i class="fa fa-phone-alt text-white"></i>
                         </div>
-                        <div class="ms-3">
-                            <h5 class="text-primary">Mobile</h5>
-                            <p class="mb-0">+012 345 67890</p>
+                        <div class="ms-3 ml-2">
+                            <h5 class="text-primary text-left">Telefono</h5>
+                            <p class="mb-0">+52 624 143 7395</p>
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
                         <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary" style="width: 50px; height: 50px;">
                             <i class="fa fa-envelope-open text-white"></i>
                         </div>
-                        <div class="ms-3">
-                            <h5 class="text-primary">Email</h5>
-                            <p class="mb-0">info@example.com</p>
+                        <div class="ms-3 ml-2">
+                            <h5 class="text-primary text-left">Correo</h5>
+                            <p class="mb-0">info@donjuanbymelida.com</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <iframe class="position-relative rounded w-100 h-100"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd"
-                        frameborder="0" style="min-height: 300px; border:0;" allowfullscreen="" aria-hidden="false"
-                        tabindex="0"></iframe>
+                <div :class="screenWidth < 1200 ? 'col-12' : 'col-6'" class="mb-3 text-center wow fadeInUp" data-wow-delay="0.3s">
+                        <iframe class="position-relative rounded responsive"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3675.752999746238!2d-109.91736485902601!3d22.885581021510447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86af4aefee6ca401%3A0xe9e9a9d9cab46bc6!2sDonjuan%20By%20Melida%20Hotel!5e0!3m2!1ses-419!2smx!4v1686648518211!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-                <div class="col-lg-4 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                    <form>
-                        <div class="row g-3">
+                <div :class="screenWidth < 1200 ? 'col-12' : 'col-8 mx-auto'" class="mb-3 wow fadeInUp" data-wow-delay="0.5s">
+                    <h2>Envianos un correo con tus comentarios:</h2>
+                    <form @submit.prevent="enviarCorreo">
+                        <div class=" col-12 row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                    <input 
+                                        type="text" 
+                                        v-model="mail['persona']"
+                                        class="form-control" 
+                                        id="name" 
+                                        placeholder="Your Name">
                                     <label for="name">Your Name</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email">
+                                    <input type="email" 
+                                        v-model="mail['correo']" class="form-control" id="email" placeholder="Your Email">
                                     <label for="email">Your Email</label>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-md-12 col-lg-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                    <input type="phone" 
+                                        v-model="mail['telefono']" class="form-control" id="phone" placeholder="Your CellPhone">
+                                    <label for="email">Your CellPhone</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-floating">
+                                    <input type="text" 
+                                        v-model="mail['asunto']" class="form-control" id="subject" placeholder="Subject">
                                     <label for="subject">Subject</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 100px"></textarea>
+                                    <textarea class="form-control" 
+                                        v-model="mail['mensaje']"  placeholder="Leave a message here" id="message" style="height: 100px"></textarea>
                                     <label for="message">Message</label>
                                 </div>
                             </div>
@@ -82,6 +96,7 @@
                         </div>
                     </form>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -106,6 +121,8 @@
     import './lib/animate/animate.min.css';
     import './lib/owlcarousel/assets/owl.carousel.min.css';
     import './css/myStyle.css';
+    import peticiones from '@/apis/usePeticiones'
+    import customHelpers  from '@helpers/customHelpers'
 
         export default {
             name: 'Inicio',
@@ -121,6 +138,8 @@
                 Pie,
             },
             mounted() {
+                // Escuchamos el evento de cambio de tamaño de ventana
+                window.addEventListener('resize', this.onResize);
                 const jqueryScript = document.createElement('script');
                 jqueryScript.src = 'https://code.jquery.com/jquery-3.4.1.min.js';
                 document.body.appendChild(jqueryScript);
@@ -160,7 +179,48 @@
                 const tempusdominusScript = document.createElement('script');
                 tempusdominusScript.src = 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js';
                 document.body.appendChild(tempusdominusScript);
-            }
+            },
+            data() {
+                return {
+                    mail:{
+                        persona : null,
+                    },
+                    screenWidth: window.innerWidth,
+                    screenHeight: window.innerHeight,
+                }
+            },
+            beforeDestroy() {
+                // Eliminamos el evento de cambio de tamaño de ventana
+                window.removeEventListener('resize', this.onResize);
+            },
+            mixins : [customHelpers],
+            methods: {
+                onResize() {
+                    this.screenWidth = window.innerWidth;
+                    this.screenHeight = window.innerHeight;
+                },
+                enviarCorreo () {
+                    this.loading();
+                    peticiones
+                        .resourcesOut({
+                            resources: 'sendMail',
+                            payload: this.mail,
+                        })
+                        .then(response => {
+                            this.loading(false);
+                            if (response.data.result) {
+                                this.mail = {}
+                            }
+                            setTimeout(() => {
+                                this.messageSweet({
+                                    message: response.data.message,
+                                    icon: response.data.result ? 'success' : 'error',
+                                });
+                            }, 100);
+                        })
+                        .catch(error   => { console.log(error); })
+                },
+            },
         }
     </script>
 

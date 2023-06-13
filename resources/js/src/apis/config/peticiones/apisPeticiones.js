@@ -42,4 +42,7 @@ export default class apiPeticiones {
   administrarTemplatesEmail(...args) {
     return this.axiosIns.post(this.apisConfig.apiAdminTemplatesEmail, ...args)
   }
+  resourcesOut(...args) {
+    return this.axiosIns.post(this.apisConfig.apiResourcesOut, ...args)
+  }
 }

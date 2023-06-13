@@ -8,8 +8,9 @@ export default {
   apiGetPersonas        : '/api/personas/listar',
   apiAdminPersonas      : '/api/personas/administrar',
   apiGetReservacionesCalendario   : '/api/reservaciones/calendario',
-  apiGetReservaciones   : '/api/reservaciones/listar',
-  apiAdminReservaciones : '/api/reservaciones/administrar',
-  apiGetTemplatesEmail   : '/api/templates-email/listar',
-  apiAdminTemplatesEmail : '/api/templates-email/administrar',
+  apiGetReservaciones     : '/api/reservaciones/listar',
+  apiAdminReservaciones   : '/api/reservaciones/administrar',
+  apiGetTemplatesEmail    : '/api/templates-email/listar',
+  apiAdminTemplatesEmail  : '/api/templates-email/administrar',
+  apiResourcesOut        : '/api/out',
 }

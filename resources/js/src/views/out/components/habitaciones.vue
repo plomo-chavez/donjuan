@@ -125,7 +125,9 @@
             reload () {
                 this.loading();
                 peticiones
-                    .getHabitaciones({})
+                    .resourcesOut({
+                        resources: 'getHabitaciones'
+                    })
                     .then(response => {
                         let tmpData = this.copyObject(response.data.data)
                         tmpData.map((item) => {
