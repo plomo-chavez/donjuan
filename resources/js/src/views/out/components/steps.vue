@@ -3,7 +3,7 @@
     <div class="container-xxl py-5">
         <div class="container-md">
             <div class="text-center pb-4 wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Process</h6>
+                <h6 class="section-title bg-white text-center text-primary px-3">Como reservar</h6>
                 <h1 class="mb-2">3 pasos para disfrutar</h1>
             </div>
             <div class="row gy-5 gx-4 justify-content-center">
@@ -15,7 +15,7 @@
                         <h5 class="mt-4">Reservar</h5>
                         <hr class="w-25 mx-auto bg-primary mb-1">
                         <hr class="w-50 mx-auto bg-primary mt-0">
-                        <p class="mb-0">Tempor erat elitr rebum clita dolor diam ipsum sit diam amet diam eos erat ipsum et lorem et sit sed stet lorem sit</p>
+                        <p class="mb-0">Identifica los dias que necesitas para tu estadia, y reserva las habitaciones necesarias</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.3s">
@@ -26,7 +26,7 @@
                         <h5 class="mt-4">Pagar</h5>
                         <hr class="w-25 mx-auto bg-primary mb-1">
                         <hr class="w-50 mx-auto bg-primary mt-0">
-                        <p class="mb-0">Tempor erat elitr rebum clita dolor diam ipsum sit diam amet diam eos erat ipsum et lorem et sit sed stet lorem sit</p>
+                        <p class="mb-0">Utiliza cualquiera de nuestras formas de pago para realizar el cobro de tu reservación</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.5s">
@@ -37,7 +37,7 @@
                         <h5 class="mt-4">Disfrutar</h5>
                         <hr class="w-25 mx-auto bg-primary mb-1">
                         <hr class="w-50 mx-auto bg-primary mt-0">
-                        <p class="mb-0">Tempor erat elitr rebum clita dolor diam ipsum sit diam amet diam eos erat ipsum et lorem et sit sed stet lorem sit</p>
+                        <p class="mb-0">Presentate en el hotel para canjear tu reservación y disfruta del las instalaciones y de Cabos San Lucas</p>
                     </div>
                 </div>
             </div>

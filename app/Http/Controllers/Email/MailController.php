@@ -26,20 +26,24 @@ class MailController extends BaseController
             return self::responsee( 'No se encontro la plantilla',false);
         }
     }
-    public static function sendEmailContactanos($payload){
-        $template = TemplateEmail::where('slug', 'emailContacto')->get()[0] ?? null;
-        if($template != null) {
-            $plantilla = self::prepararHTML($template->html,$payload);
-            $data = array(
-                'template' => array(
-                    'title' => $template->title ?? 'Titulo del correo',
-                    'html' => $plantilla,
-                ),
-                "correos"   => ['jesus.r.chavez.q.94@gmail.com']
-            );
-            return self::sendEmail($data);
+    public static function sendMailWithTemplate($payload,$template){
+        if ($template != null) {
+            $plantilla = TemplateEmail::where('slug', $template)->get()[0] ?? null;
+            if($plantilla != null) {
+                $plantillaHTML = self::prepararHTML($plantilla->html,$payload);
+                $data = array(
+                    'template' => array(
+                        'title' => $plantilla->title ?? 'Titulo del correo',
+                        'html' => $plantillaHTML,
+                    ),
+                    "correos"   => ['jesus.r.chavez.q.94@gmail.com']
+                );
+                return self::sendEmail($data);
+            } else {
+                return self::responsee( 'No se encontro la plantilla',false);
+            }
         } else {
-            return self::responsee( 'No se encontro la plantilla',false);
+            return self::responsee( 'Falta slug de plantilla.',false);
         }
     }
     

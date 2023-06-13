@@ -20,7 +20,10 @@ class OutController extends BaseController
                     return self::getHabitaciones();
                     break;
                 case 'sendMail':
-                    return MailController::sendEmailContactanos($request['payload']);
+                    return MailController::sendMailWithTemplate($request['payload'],'mailSeccionContacto');
+                    break;
+                case 'sendMailInicio':
+                    return MailController::sendMailWithTemplate($request['payload'],'mailSeccionInicio');
                     break;
                 
                 default:

@@ -6,24 +6,24 @@
                 <div class="row g-5 align-items-center">
                     <div class="col-md-6 text-white">
                         <h1 class="text-white mb-4">¿Quieres reservar?</h1>
-                        <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                        <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+                        <p class="mb-4">Sin ya tienes todo preparado para reservar, puedes hacerlo dandole click en el siguiente botón</p>
+                        <p class="mb-4">De lo contrario si no tienes nada y te gustaria que te apoyaramos, rellena el siguiente formulario pra que nos manden un correo con todas tus necesidades y nosotros hacer toda la chamba.</p>
                         <a class="btn btn-outline-light py-3 px-5 mt-2" href="">Ver disponibilidad</a>
                     </div>
                     <div class="col-md-6">
                         <h1 class="text-white mb-4">Dejanos la chamba</h1>
-                        <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+                        <b-form @submit="enviarCorreo" @reset="onReset"  >
                             <label class="col-12 text-white fw-bolder">Nombre:</label>
                             <b-form-input
                                 id="input-2"
-                                v-model="form.name"
+                                v-model="mail.nombre"
                                 placeholder="Introduce tu nombre"
                                 required
                             />
                             <label class="col-12 text-white fw-bolder">Correo electronico:</label>
                             <b-form-input
                                 id="input-1"
-                                v-model="form.email"
+                                v-model="mail.correo"
                                 type="email"
                                 placeholder="Introduce un correo valido"
                                 required
@@ -31,22 +31,22 @@
                             <label class="col-12 text-white fw-bolder">Telefono:</label>
                             <b-form-input
                                 id="input-1"
-                                v-model="form.email"
-                                type="email"
+                                v-model="mail.phone"
+                                type="tel"
                                 placeholder="Introduce un correo valido"
                                 required
                             />
                             <label class="col-12 text-white fw-bolder">Necesidades:</label>
                             <b-form-textarea
                                 id="textarea"
-                                v-model="text"
+                                v-model="mail.mensaje"
                                 placeholder="Descripbe todo lo que requieras ..."
                                 rows="3"
                                 max-rows="6"
                             />
                             <div class=" mt-4 d-flex justify-content-between">
-                                <b-button variant="outline-light">Enviar información</b-button>
-                                <b-button variant="outline-danger">Reiniciar</b-button>
+                                <b-button variant="outline-light" @click="enviarCorreo">Enviar información</b-button>
+                                <b-button variant="outline-danger" @click="onReset">Reiniciar</b-button>
                             </div>
                             </b-form>
                     </div>
@@ -67,6 +67,8 @@
         BFormCheckbox,
         BButton
      } from 'bootstrap-vue'
+    import peticiones from '@/apis/usePeticiones'
+    import customHelpers  from '@helpers/customHelpers'
 
     export default {
         name: 'Booking',
@@ -81,35 +83,40 @@
         },
         data() {
             return {
-                form: {
-                email: '',
-                name: '',
-                text: '',
-                food: null,
-                checked: []
-                },
-                foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-                show: true
+                mail:{},
             }
         },
+        mixins : [customHelpers],
         methods: {
             onSubmit(event) {
                 event.preventDefault()
-                alert(JSON.stringify(this.form))
+                this.enviarCorreo();
             },
             onReset(event) {
-                event.preventDefault()
-                // Reset our form values
-                this.form.email = ''
-                this.form.name = ''
-                this.form.food = null
-                this.form.checked = []
-                // Trick to reset/clear native browser form validation state
-                this.show = false
-                this.$nextTick(() => {
-                this.show = true
-                })
-            }
+                this.mail = {}
+            },
+
+            enviarCorreo () {
+                    this.loading();
+                    peticiones
+                        .resourcesOut({
+                            resources: 'sendMailInicio',
+                            payload: this.mail,
+                        })
+                        .then(response => {
+                            this.loading(false);
+                            if (response.data.result) {
+                                this.mail = {}
+                            }
+                            setTimeout(() => {
+                                this.messageSweet({
+                                    message: response.data.message,
+                                    icon: response.data.result ? 'success' : 'error',
+                                });
+                            }, 100);
+                        })
+                        .catch(error   => { console.log(error); })
+                },
         }
     }
 </script>
