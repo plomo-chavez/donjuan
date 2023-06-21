@@ -11,6 +11,7 @@ use App\Http\Controllers\Configuracion\HabitacionesController;
 use App\Http\Controllers\Configuracion\PersonasController;
 use App\Http\Controllers\Configuracion\ReservacionesController;
 use App\Http\Controllers\Configuracion\TemplateEmailController;
+use App\Http\Controllers\PruebasController;
 use App\Http\Controllers\Configuracion\OutController;
 use App\Http\Controllers\Email\MailController;
 /*
@@ -44,6 +45,7 @@ Route::middleware([UserAuthentication::class])->post('/reservaciones/listar',   
 Route::middleware([UserAuthentication::class])->post('/templates-email/administrar',[TemplateEmailController::class, 'handleAdministrar']);
 Route::middleware([UserAuthentication::class])->post('/templates-email/listar',     [TemplateEmailController::class, 'handleListar']);
 Route::middleware([UserAuthentication::class])->post('/send/email',                 [MailController::class, 'enviar']);
+Route::post('/generate/pruebas',           [PruebasController::class, 'generatePDF']);
 // Route::middleware([UserAuthentication::class])->post('/auth/verificar',    [AuthController::class, 'verificar']);
 Route::post('/catalogo/tiposUsuarios',          [CatalogosController::class, 'getTiposUsuarios']);
 Route::post('/catalogo/estatusHabitaciones',    [CatalogosController::class, 'getEstatusHabitaciones']);

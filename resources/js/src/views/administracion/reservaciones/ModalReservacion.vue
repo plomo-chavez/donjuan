@@ -17,8 +17,10 @@
             <div class="d-flex">
                 <h6 class="col-3 font-weight-bolder">Teléfono:</h6>
                 <h6 class="col-3">{{ data.reserva.telefono }}</h6>
+            </div>
+            <div class="d-flex">
                 <h6 class="col-3 font-weight-bolder">Correo electrónico:</h6>
-                <h6 class="col-3">{{ data.reserva.correo }}</h6>
+                <h6 class="col-8">{{ data.reserva.correo }}</h6>
             </div>
             <div class="d-flex mb-2">
                 <h6 class="col-3 font-weight-bolder">Check-in:</h6>
@@ -36,6 +38,17 @@
                 <h6 v-if="data.acompaniantes.length == 0" class="col-12 text-center font-weight-bolder">No se registraron acompañantes</h6>
                 <h6 class="col-12" v-for="(item,index) in data.acompaniantes" ># {{index + 1}} - {{ item.persona.nombre + ' ' + item.persona.primerApellido + ' ' + item.persona.segundoApellido }}</h6>
             </div>
+            <div class="">
+
+                <b-button
+                size="sm"
+                class="mb-2"
+                variant="primary"
+                @click="generatePapeleta"
+                >
+                <span class="mr-25 align-middle">Generar papeleta</span>
+                </b-button>
+            </div>
         </div>
         </b-modal>
     </div>
@@ -50,6 +63,7 @@
         BCol,
         BFormGroup,
     }                         from 'bootstrap-vue'
+    import axios from 'axios';
 
     import { FormWizard, TabContent } from 'vue-form-wizard'
     import vSelect from 'vue-select'
@@ -62,6 +76,7 @@
     import { getHomeRouteForLoggedInUser } from '@/auth/utils'
 
     import apis from '@/apis/useApis'
+    import generatePDF from '@/apis/useGeneratePDF'
     import useJwt             from '@/auth/jwt/useJwt'
 import { useNetwork } from '@vueuse/core'
     export default {
@@ -79,6 +94,7 @@ import { useNetwork } from '@vueuse/core'
             BCardText,
             FormWizard,
             TabContent,
+            axios, 
         },
         mounted() {},
         data() {
@@ -133,7 +149,43 @@ import { useNetwork } from '@vueuse/core'
             mdoHideModal() {
                 this.$refs['my-modal'].hide()
             },
+            // generatePDF() {
+            //     window.open('/api/generate/pruebas', '_blank');
+                
+            // },
+            generatePapeleta(){
+                // axios({
+                //     url: '/api/generate/pruebas',
+                //     responseType: 'blob', // important
+                // }).then((response) => {
+                //     const url = window.URL.createObjectURL(new Blob([response.data]));
+                //     const link = document.createElement('a');
+                //     link.href = url;
+                //     link.setAttribute('download', 'file.pdf');
+                //     document.body.appendChild(link);
+                //     link.click();
+                // });
 
+                
+                axios.post('/api/generate/pruebas', {
+                    responseType: 'blob',
+                })
+                .then(response => {
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'archivo.pdf');
+                    document.body.appendChild(link);
+                    link.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(link);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
+
+            },
         }
     }
 </script>
