@@ -159,19 +159,7 @@ import { useNetwork } from '@vueuse/core'
                 .pruebas({reservacion_id : this.data.id })
                 .then(response => {
                     if (response.data.type == 'application/json'){
-                        this.loading(false)
-                        console.log(response)
-                        const reader = new FileReader();
-                        reader.onload = (event) => {
-                            const result = event.target.result;
-                            const obj = JSON.parse(result);
-                            this.messageSweet({
-                                message: obj.message,
-                                icon: 'warning',
-                            });
-                        };
-
-                        reader.readAsText(response.data);
+                        
                     } else{
                         this.descargarPDF(response,this.data.id)
                     }
