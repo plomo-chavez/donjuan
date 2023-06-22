@@ -9,9 +9,11 @@ use App\Http\Controllers\BaseController;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use PDF;
 
 
 class ReservacionesController extends BaseController
@@ -29,28 +31,7 @@ class ReservacionesController extends BaseController
         $fechaFin = Carbon::now()->addMonths(4);
 
         // Realiza la consulta utilizando whereBetween en ambas columnas de fecha
-        $data = Modelo::where(function ($query) use ($fechaInicio, $fechaFin) {
-            $query->whereBetween('fechaInicio', [$fechaInicio, $fechaFin])
-                ->orWhereBetween('fechafin', [$fechaInicio, $fechaFin]);
-        })
-        ->with([
-            'reserva' => function ($query) {
-                $query->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo');
-            },
-            'habitaciones' => function ($query) {
-                $query->select('habitacion_id', 'reservacion_id', 'id');
-            },
-            'habitaciones.habitacion' => function ($query) {
-                $query->select('id', 'nombre', 'descripcion', 'tarifa', 'amenidades', 'camas', 'puedeFumar', 'capacidad');
-            },
-            'acompaniantes' => function ($query) {
-                $query->select('id', 'reservacion_id', 'persona_id');
-            },
-            'acompaniantes.persona' => function ($query) {
-                $query->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo');
-            },
-        ])
-        ->get();
+        $data = self::select(array('fechaInicio' => $fechaInicio,'fechaFin' => $fechaFin,));
 
 
         // $data = Modelo::orderBy('id',"asc")
@@ -61,6 +42,35 @@ class ReservacionesController extends BaseController
             true,
             $data,
         );
+    }
+    public static function select($filtro){
+        $data = Modelo::where('id',20)->get();
+        $data = Modelo::where(function ($query) use ($filtro) {
+            if ($filtro['reservacion_id'] ?? false) {
+                $query->where('id', $filtro['reservacion_id']);
+            } else {
+                $query->whereBetween('fechaInicio', [$filtro['fechaInicio'],$filtro['fechaFin']])
+                    ->orWhereBetween('fechafin', [$filtro['fechaInicio'],$filtro['fechaFin']]);
+            }
+        });
+        $data->with([
+                'reserva' => function ($query) {
+                    $query->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo');
+                },
+                'habitaciones' => function ($query) {
+                    $query->select('habitacion_id', 'reservacion_id', 'id');
+                },
+                'habitaciones.habitacion' => function ($query) {
+                    $query->select('id', 'nombre', 'descripcion', 'tarifa', 'amenidades', 'camas', 'puedeFumar', 'capacidad');
+                },
+                'acompaniantes' => function ($query) {
+                    $query->select('id', 'reservacion_id', 'persona_id');
+                },
+                'acompaniantes.persona' => function ($query) {
+                    $query->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo');
+                },
+            ]);
+        return $data->get();
     }
 
     public function handleListar(Request $request){
@@ -136,5 +146,74 @@ class ReservacionesController extends BaseController
             }
         }
         return self::responsee('Reservación registrado con exito.', true);
+    }
+    public static function generarPapeleta($payload) {
+        \Carbon\Carbon::setLocale('es');
+        if (!($payload['reservacion_id'] ?? false)) {
+            return array(
+                'file'      => null,
+                'nombre'    => null,
+                'status'    => false,
+                'message'   => 'Falta reservacion_id',
+            );
+        } else {
+            $data = self::select(array('reservacion_id' => $payload['reservacion_id']))->toArray();
+            if (sizeof($data) == 1){
+                $data = $data[0];
+                $data['folio'] = str_pad($data['id'], 6, 0, STR_PAD_LEFT);
+                $data['noches'] = Carbon::parse($data['fechaInicio'])->diffInDays(Carbon::parse($data['fechaFin']));
+                $data['total'] = 0;
+                $fechaRegistro  = Carbon::parse($data['created_at']);
+                $fechaInicio    = Carbon::parse($data['fechaInicio']);
+                $fechaFin       = Carbon::parse($data['fechaFin']);
+                $data['fechaRegistro']  = ucfirst($fechaRegistro->isoFormat('dddd')) . ' - ' . $fechaRegistro->format('d/m/Y');
+                $data['fechaInicio']    = ucfirst($fechaInicio->isoFormat('dddd')) . ' - ' . $fechaInicio->format('d/m/Y');
+                $data['fechaFin']       = ucfirst($fechaFin->isoFormat('dddd')) . ' - ' . $fechaFin->format('d/m/Y');
+                $tmpHab = [];
+                foreach ($data['habitaciones'] as $item) {
+                    $item   = $item['habitacion'];
+                    $tmp    = str_replace(["$", ","], "", $item['tarifa']);
+                    $tmp    = floatval($tmp);
+                    $item['tarifa'] = number_format(($tmp), 2, '.', ',');;
+                    $item['total']  = number_format(($data['noches'] * $tmp), 2, '.', ',');;
+                    $data['total']  = $data['total'] + ( $data['noches'] * $tmp);
+                    array_push($tmpHab,$item);
+                };
+                $data['habitaciones'] = $tmpHab;
+                $data['totalMoney'] = number_format($data['total'], 2, '.', ',');
+                // dd($data);
+                $view = view('pdf.template', $data)->render();
+                $pdf = PDF::loadHtml($view);
+                return $pdf->output();
+            }else{
+                return array(
+                    'file'      => null,
+                    'nombre'    => null,
+                    'status'    => false,
+                    'message'   => 'Problemas con la resevación',
+                );
+                return array(
+                    'file'      => null,
+                    'nombre'    => null,
+                    'status'    => false,
+                    'message'   => 'Problemas con la resevación',
+                );
+            }
+        }
+    }
+    public function generatePDF(Request $request){
+        $payload = $request->all();
+        // $payload = array('reservacion_id' =>220);
+        $pdfContent = ReservacionesController::generarPapeleta($payload);
+        if (isset($pdfContent['status']) && !$pdfContent['status']) {
+            return self::responsee(
+                $pdfContent['message'],
+                $pdfContent['status'],
+               [] ,
+            );
+        } else {
+            $response = response($pdfContent, 200, [ 'Content-Type' => 'application/pdf', ]);
+            return $response;
+        }
     }
 }

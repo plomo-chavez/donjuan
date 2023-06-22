@@ -25,7 +25,7 @@
 
   <table width="100%">
     <tr>
-        <td valign="top"><img src="{{asset('images/meteor-logo.png')}}" alt="" width="150"/></td>
+        <!-- <td valign="top"><img src="{{asset('images/meteor-logo.png')}}" alt="" width="150"/></td> -->
         <td align="right">
             <h3>Shinra Electric power company</h3>
             <pre>

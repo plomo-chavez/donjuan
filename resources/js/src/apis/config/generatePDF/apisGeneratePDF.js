@@ -10,6 +10,6 @@ export default class apiPeticiones {
     this.apisConfig = { ...this.apisConfig, ...jwtOverrideConfig }
   }
   pruebas(...args) {
-    return this.axiosIns.post(this.apisConfig.apiGeneratePruebas, ...args)
+    return this.axiosIns.post(this.apisConfig.apiGeneratePruebas, ...args, { responseType: 'blob' })
   }
 }

@@ -154,37 +154,31 @@ import { useNetwork } from '@vueuse/core'
                 
             // },
             generatePapeleta(){
-                // axios({
-                //     url: '/api/generate/pruebas',
-                //     responseType: 'blob', // important
-                // }).then((response) => {
-                //     const url = window.URL.createObjectURL(new Blob([response.data]));
-                //     const link = document.createElement('a');
-                //     link.href = url;
-                //     link.setAttribute('download', 'file.pdf');
-                //     document.body.appendChild(link);
-                //     link.click();
-                // });
-
-                
-                axios.post('/api/generate/pruebas', {
-                    responseType: 'blob',
-                })
+                this.loading();
+                generatePDF
+                .pruebas({reservacion_id : this.data.id })
                 .then(response => {
-                    const url = window.URL.createObjectURL(new Blob([response.data]));
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', 'archivo.pdf');
-                    document.body.appendChild(link);
-                    link.click();
-                    window.URL.revokeObjectURL(url);
-                    document.body.removeChild(link);
+                    if (response.data.type == 'application/json'){
+                        this.loading(false)
+                        console.log(response)
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            const result = event.target.result;
+                            const obj = JSON.parse(result);
+                            this.messageSweet({
+                                message: obj.message,
+                                icon: 'warning',
+                            });
+                        };
+
+                        reader.readAsText(response.data);
+                    } else{
+                        this.descargarPDF(response,this.data.id)
+                    }
                 })
                 .catch(error => {
                     console.error(error);
                 });
-
-
             },
         }
     }
