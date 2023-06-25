@@ -1,0 +1,20 @@
+<?php
+namespace App\Http\Controllers\Configuracion\Modelos;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class ReservacionAcompaniantes extends Model
+{
+    use HasFactory;
+    protected $table        = "reservacion_acompaniantes";
+    protected $primaryKey   = "id";
+
+    protected $fillable = [
+        'persona_id',
+        'reservacion_id',
+    ];
+    public function persona() {
+        return $this->hasOne(Persona::class,'id','persona_id');
+    }
+}

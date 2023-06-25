@@ -21,8 +21,8 @@ class Reservacion extends Model
     }
 
     public function acompaniantes() {
-        return $this->hasMany(ReservacionAcompañantes::class,'reservacion_id','id');
-        // return $this->hasOne(ReservacionAcompañantes::class,'persona_id','id');
+        return $this->hasMany(ReservacionAcompaniantes::class,'reservacion_id','id');
+        // return $this->hasOne(ReservacionAcompaniantes::class,'persona_id','id');
     }
 
     public function habitaciones() {

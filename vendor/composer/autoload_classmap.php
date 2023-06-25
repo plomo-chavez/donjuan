@@ -21,7 +21,7 @@ return array(
     'App\\Http\\Controllers\\Configuracion\\Modelos\\HabitacionEstatus' => $baseDir . '/app/Http/Controllers/Configuracion/Modelos/HabitacionEstatus.php',
     'App\\Http\\Controllers\\Configuracion\\Modelos\\Persona' => $baseDir . '/app/Http/Controllers/Configuracion/Modelos/Persona.php',
     'App\\Http\\Controllers\\Configuracion\\Modelos\\Reservacion' => $baseDir . '/app/Http/Controllers/Configuracion/Modelos/Reservacion.php',
-    'App\\Http\\Controllers\\Configuracion\\Modelos\\ReservacionAcompañantes' => $baseDir . '/app/Http/Controllers/Configuracion/Modelos/ReservacionAcompañantes.php',
+    'App\\Http\\Controllers\\Configuracion\\Modelos\\ReservacionAcompaniantes' => $baseDir . '/app/Http/Controllers/Configuracion/Modelos/ReservacionAcompaniantes.php',
     'App\\Http\\Controllers\\Configuracion\\Modelos\\ReservacionHabitaciones' => $baseDir . '/app/Http/Controllers/Configuracion/Modelos/ReservacionHabitaciones.php',
     'App\\Http\\Controllers\\Configuracion\\Modelos\\TemplateEmail' => $baseDir . '/app/Http/Controllers/Configuracion/Modelos/TemplateEmail.php',
     'App\\Http\\Controllers\\Configuracion\\OutController' => $baseDir . '/app/Http/Controllers/Configuracion/OutController.php',

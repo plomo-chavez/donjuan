@@ -13,10 +13,11 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   scrollBehavior() { return { x: 0, y: 0 } },
   routes: [
-    ...routesDefault,
-    ...administracion,
-    ...uiElements,
-    { path: '*', redirect: 'error-404', },
+      ...routesDefault,
+      ...administracion,
+      ...uiElements,
+      { path: '/', redirect: { name: 'home' } },
+      { path: '*', redirect: 'error-404', },
   ],
 })
 router.beforeEach(async (to, _, next) => {
@@ -24,25 +25,24 @@ router.beforeEach(async (to, _, next) => {
     let validUser = !(to.meta?.isOut) ?? true;
     console.log('validUser -> ',validUser)
     console.log('isLoggedIn -> ',isLoggedIn)
-    if (to.meta.redirectIfLoggedIn && isLoggedIn) { 
-      console.log(' if (to.meta.redirectIfLoggedIn && isLoggedIn) { ')
-      next({ name: 'home' }); 
-    } else if (validUser) {
-      if (isLoggedIn === null) {
-        console.log('      if (isLoggedIn === null) {          ')
-        next({ name: 'auth-login' });
-      } else {
-        try {
-          const response = await useJwt.validateUser({ tk: store.state.app.userData.token });
-          if (!response.data.data) {
-            console.log('response.data.data  ',response.data.data)
-            console.log('if (!response.data.data) { ')
-            // goToLogout();
-          }
-        } catch (error) { console.log(error); }
-      }
+    if (validUser) {
+      try {
+        console.log(" validateUser ")
+        const response = await useJwt.validateUser({ tk: store.state.app.userData.token });
+        console.log(response, " response ")
+        console.log(response.data.data == false, " response.data.data == false ")
+        if (response.data.data == false) {
+          console.log('response.data.data  ',response.data.data)
+          console.log('if (!response.data.data) { ')        
+          setTimeout(() => {
+            next();
+          }, 100000000);
+        }
+      } catch (error) { console.log(error); }
     }
-    next();
+    setTimeout(() => {
+      next();
+    }, 10000);
   });
 router.afterEach(() => {
   const appLoading = document.getElementById('loading-bg')

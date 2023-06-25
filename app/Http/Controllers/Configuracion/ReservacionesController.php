@@ -2,8 +2,8 @@
 namespace App\Http\Controllers\Configuracion;
 
 use App\Http\Controllers\Configuracion\Modelos\Reservacion as Modelo;
-use App\Http\Controllers\Configuracion\Modelos\ReservacionHabitaciones as Habs;
-use App\Http\Controllers\Configuracion\Modelos\ReservacionAcompañantes as Acompaniantes;
+// use App\Http\Controllers\Configuracion\Modelos\ReservacionHabitaciones as Habs;
+// use App\Http\Controllers\Configuracion\Modelos\ReservacionAcompaniantes as Acompaniantes;
 use App\Http\Controllers\Configuracion\Modelos\Persona;
 use App\Http\Controllers\BaseController;
 use Illuminate\Database\Eloquent\Model;
@@ -24,25 +24,16 @@ class ReservacionesController extends BaseController
     }
 
     public function handleReservacionesCalendario(Request $request){
-        // Obtén la fecha de inicio (un mes antes de la fecha actual)
         $fechaInicio = Carbon::now()->subMonth();
-
-        // Obtén la fecha de fin (4 meses después de la fecha actual)
         $fechaFin = Carbon::now()->addMonths(4);
-
-        // Realiza la consulta utilizando whereBetween en ambas columnas de fecha
         $data = self::select(array('fechaInicio' => $fechaInicio,'fechaFin' => $fechaFin,));
-
-
-        // $data = Modelo::orderBy('id',"asc")
-        //     // ->with('estatus')
-        //     ->get();
         return self::responsee(
             'Consulta realizada con exito.',
             true,
             $data,
         );
     }
+
     public static function select($filtro){
         $data = Modelo::where('id',20)->get();
         $data = Modelo::where(function ($query) use ($filtro) {
@@ -83,6 +74,7 @@ class ReservacionesController extends BaseController
             $data,
         );
     }
+
     public function administrar(array $payload = [], Model $modelo = null) {
         if (isset($payload['accion'])) {
             switch($payload['accion']){
@@ -104,49 +96,50 @@ class ReservacionesController extends BaseController
     }
 
     public function insertar($payload, $modelo) {
-        $reservacionPayload = array(
-            'fechaInicio' => $payload['fechaInicio'] ,
-            'fechaFin' => $payload['fechaFin'] ,
-            'persona_id' => $payload['person']['id'],
-        );
-        $reservacion = $modelo::create($reservacionPayload);
+        // $reservacionPayload = array(
+        //     'fechaInicio' => $payload['fechaInicio'] ,
+        //     'fechaFin' => $payload['fechaFin'] ,
+        //     'persona_id' => $payload['person']['id'],
+        // );
+        // $reservacion = $modelo::create($reservacionPayload);
 
-        if (isset($payload['habitaciones'] )) {
-            foreach ($payload['habitaciones'] as $key => $value) {
-                Habs::create(array(
-                    'fechaInicio' => $payload['fechaInicio'] ,
-                    'fechaFin' => $payload['fechaFin'] ,
-                    'habitacion_id' => $value['id'],
-                    'reservacion_id' => $reservacion->id,
-                ));
-            }
-        }
-        if (isset($payload['acompaniantes'] )) {
-            foreach ($payload['acompaniantes'] as $key => $value) {
-                $count = DB::table('personas')
-                    ->orWhere('telefono', '=', $value['telefono'])
-                    ->orWhere('correo', '=', $value['correo'])
-                    ->count();
-                if ($count == 0) {
-                    $persona = Persona::create($value);
-                } else {
-                    $tmp = DB::table('personas')
-                    ->orWhere('telefono', '=', $value['telefono'])
-                    ->orWhere('correo', '=', $value['correo'])
-                    ->get();
+        // if (isset($payload['habitaciones'] )) {
+        //     foreach ($payload['habitaciones'] as $key => $value) {
+        //         Habs::create(array(
+        //             'fechaInicio' => $payload['fechaInicio'] ,
+        //             'fechaFin' => $payload['fechaFin'] ,
+        //             'habitacion_id' => $value['id'],
+        //             'reservacion_id' => $reservacion->id,
+        //         ));
+        //     }
+        // }
+        // if (isset($payload['acompaniantes'] )) {
+        //     foreach ($payload['acompaniantes'] as $key => $value) {
+        //         $count = DB::table('personas')
+        //             ->orWhere('telefono', '=', $value['telefono'])
+        //             ->orWhere('correo', '=', $value['correo'])
+        //             ->count();
+        //         if ($count == 0) {
+        //             $persona = Persona::create($value);
+        //         } else {
+        //             $tmp = DB::table('personas')
+        //             ->orWhere('telefono', '=', $value['telefono'])
+        //             ->orWhere('correo', '=', $value['correo'])
+        //             ->get();
 
-                    if (sizeof($tmp) == 1) {
-                        $persona = $tmp[0];
-                    }
-                }
-                Acompaniantes::create(array(
-                    'persona_id' => $persona->id,
-                    'reservacion_id' => $reservacion->id,
-                ));
-            }
-        }
+        //             if (sizeof($tmp) == 1) {
+        //                 $persona = $tmp[0];
+        //             }
+        //         }
+        //         Acompaniantes::create(array(
+        //             'persona_id' => $persona->id,
+        //             'reservacion_id' => $reservacion->id,
+        //         ));
+        //     }
+        // }
         return self::responsee('Reservación registrado con exito.', true);
     }
+
     public static function generarPapeleta($payload) {
         \Carbon\Carbon::setLocale('es');
         if (!($payload['reservacion_id'] ?? false)) {
@@ -201,6 +194,7 @@ class ReservacionesController extends BaseController
             }
         }
     }
+
     public function generatePDF(Request $request){
         $payload = $request->all();
         // $payload = array('reservacion_id' =>220);
