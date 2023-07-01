@@ -1,23 +1,21 @@
 <?php
-namespace App\Http\Controllers\Auth\Resources;
+namespace App\Http\Middleware;
+use App\Http\Controllers\BaseController;
+use App\Http\Controllers\Auth\Resources\AuthResources;
+use Closure;
+use Illuminate\Http\Request;
 
-use App\Http\Controllers\Auth\Models\PersonalAccessToken;
-use App\Http\Controllers\Auth\Models\User;
-use Carbon\Carbon;
-use DateTime;
-
-class AuthResources {
-    public static function validateSession($token){
-        $response = false;
-        $accessToken = PersonalAccessToken::where('tokenFront', 'like', '%' . $token . '%')->get();
-        if (sizeof($accessToken = PersonalAccessToken::where('tokenFront', 'like', '%' . $token . '%')->get()) == 1) {
-            $accessToken = $accessToken[0];
-            $now = Carbon::now();
-            $date = Carbon::parse($accessToken->expires_at);
-            if($now->lessThan($date)){
-                $response =  true;
-            }
+class UserAuthentication{
+    public function handle(Request $request, Closure $next)
+    {
+        $response = BaseController::response();
+        $response['result']  = 'SinAutorizacion';
+        $response['message'] = 'Sin autorizaci贸n';
+        $headers = getallheaders();  
+        $tk = isset($headers['Tk']) ? $headers['Tk'] : (isset($headers['tk']) ? $headers['tk'] :  null);
+        if($tk != null  && AuthResources::validateSession($tk)){
+            return $next($request);
         }
-        return $response;
+        return response()->json($response);
     }
 }

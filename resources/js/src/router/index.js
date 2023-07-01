@@ -23,26 +23,22 @@ const router = new VueRouter({
 router.beforeEach(async (to, _, next) => {
     const isLoggedIn = isUserLoggedIn();
     let validUser = !(to.meta?.isOut) ?? true;
-    console.log('validUser -> ',validUser)
-    console.log('isLoggedIn -> ',isLoggedIn)
     if (validUser) {
-      try {
-        console.log(" validateUser ")
-        const response = await useJwt.validateUser({ tk: store.state.app.userData.token });
-        console.log(response, " response ")
-        console.log(response.data.data == false, " response.data.data == false ")
-        if (response.data.data == false) {
-          console.log('response.data.data  ',response.data.data)
-          console.log('if (!response.data.data) { ')        
-          setTimeout(() => {
-            next();
-          }, 100000000);
-        }
-      } catch (error) { console.log(error); }
+      if (isLoggedIn === null) {
+        next({ name: 'auth-login' });
+      } else {
+        try {
+          const response = await useJwt.validateUser({ tk: store.state.app.userData.token });
+          if (!response.data.data) {
+            goToLogout();
+          }
+        } catch (error) { console.log(error); }
+      }
     }
-    setTimeout(() => {
-      next();
-    }, 10000);
+    if (to.meta.redirectIfLoggedIn && isLoggedIn) { 
+      next({ name: 'home' }); 
+    }
+    next();
   });
 router.afterEach(() => {
   const appLoading = document.getElementById('loading-bg')
