@@ -16,6 +16,7 @@ mix
   .webpackConfig({
     resolve: {
       alias: {
+        '@out'                : path.resolve(__dirname, 'resources/js/src/views/out'),
         '@currentComponents'  : path.resolve(__dirname, 'resources/js/src/views/currentComponents'),
         '@themeConfig'        : path.resolve(__dirname, 'resources/js/themeConfig.js'),
         '@validations'        : path.resolve(__dirname, 'resources/js/src/@core/utils/validations/validations.js'),
