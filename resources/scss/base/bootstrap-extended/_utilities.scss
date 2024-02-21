@@ -73,6 +73,8 @@ $sizes-per: (
 .ww-100A  { width: calc(100% - 100px)!important; }
 .ww-1000  { width: 1000px!important; }
 .ww-1000A { width: calc(100% - 1000px)!important; }
+.ww-150   { width: 150px!important; }
+.ww-150A  { width: calc(100% - 150px)!important; }
 .ww-200  { width: 200px!important; }
 .ww-200A { width: calc(100% - 200px)!important; }
 .ww-300  { width: 300px!important; }
@@ -83,6 +85,7 @@ $sizes-per: (
 .ww-500A { width: calc(100% - 500px)!important; }
 .ww-600  { width: 600px!important; }
 .ww-600A { width: calc(100% - 600px)!important; }
+.ww-full  { width: 100%!important; }
 //--------------- Text ---------------
 //------------------------------------
 

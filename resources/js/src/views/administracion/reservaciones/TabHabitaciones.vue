@@ -1,7 +1,7 @@
 <template>
-    <div >
+    <div class="d-flex flex-wrap justify-content-between">
         <detailsRoom
-            class="ww-300"
+            class="ww-300 p-1"
             v-for="(habitacion, index) in habitaciones"
             :key="'hab' + index"
             :habitacion="habitacion"

@@ -5,25 +5,32 @@
 
             <div v-if="person == null" class=" col d-flex align-items-end flex-wrap">
                 <customSelect
-                    class="ww-50A"
+                    class="ww-100A"
                     :input="{...config, label : label}"
                     @changeData="changeValue"
                     :formValue="person"
                 />
-                <div class="ww-50 text-center">
-                    <b-button
-                        variant="outline-primary"
-                        class=" pp-custom m-0 rounded-circle"
-                        style=" margin-bottom: 10px!important;"
-                        @click="handleViewForm"
-                    >
-                        <feather-icon
-                            icon="PlusIcon"
-                            size="15"
-                            class="text-primary font-weight-bold stroke-current"
-                        />
-                    </b-button>
+                <div class="ww-100 text-center pp-custom d-flex align-items-center justify-content-center" style="height: 100%;" @click="handleViewForm">
+                    <template v-if="addTxt != null">
+                        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="outline-secondary" class="col btn btn-icon">
+                            {{ addTxt }}
+                        </b-button>
+                    </template>
+                    <template v-else>
+                        <b-button
+                            variant="outline-primary"
+                            class="pp-custom m-0 rounded-circle"
+                            style="margin-bottom: 10px!important;"
+                        >
+                            <feather-icon
+                                icon="PlusIcon"
+                                size="15"
+                                class="text-primary font-weight-bold stroke-current"
+                            />
+                        </b-button>
+                    </template>
                 </div>
+
             </div>
             <div v-else>
                 <div class="d-flex flex-wrap co-12 mt-1">
@@ -104,7 +111,7 @@ export default {
                     type        : 'input-text',
                     name        : 'nombre',
                     value       : 'nombre',
-                    label       : 'Nombre',
+                    label       : 'Nombre(s)',
                     placeholder : 'Introduce un nombre',
                     rules       : 'required',
                 },
@@ -150,6 +157,10 @@ export default {
         label: {
             type    : String,
             default : '¿Quien reserva?'
+        },
+        addTxt: {
+            type    : String,
+            default : null
         },
         reservacion: {
             type    : Object,
@@ -200,7 +211,7 @@ export default {
             .catch(error   => { console.log(error); })
         },
         handleCancelar(){
-            this.person = {};
+            this.person = null;
             this.viewForm = false;
         },
     },

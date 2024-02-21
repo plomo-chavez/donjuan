@@ -66,7 +66,7 @@
         },
         beforeMount() {
             this.getEvents();
-            this.loading();
+            // this.loading();
         },
         watch:{
             showModalReservacion(value){
@@ -83,6 +83,7 @@
                 this.getEvents();
             },
             getEvents(){
+                this.loading();
                 peticiones
                     .getReservacionesCalendario({ })
                     .then(response => {
@@ -101,7 +102,7 @@
                         this.reservaciones = this.copyObject(eventsTmp)
                     })
                     .catch(error   => { console.log(error); })
-                        this.loading(false);
+                    this.loading(false);
             },
             showReservacion(reservacion){
                 this.currentReservacion = reservacion

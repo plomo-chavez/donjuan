@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="col">
-            <p class="pb-0 mb-0 font-weight-bolder text-black">Fechas de la reservación:</p>
+            <p class="pb-0 mb-0 font-weight-bolder text-black">Fecha de Hospedaje:</p>
             <date-range-picker
                 class="col-12 p-0 m-0 text-center"
                 :ranges="false"
@@ -11,6 +11,7 @@
             />
         </div>
         <customPerson
+            :addTxt="'Nuevo huesped'"
             :reservacion="reservacion"
             @changeReservacion="handleChangeReservacion"
         />
