@@ -22,8 +22,11 @@
                     <small class="fa fa-star text-primary"></small>
                 </div>
                 <p>{{ habitacion.descripcion }}</p>
+                <div class="d-flex justify-content-center mb-1">
+                    <button class="btn btn-sm btn-secondary px-3 border-end" @click="handleShowModal(habitacion)" style="border-radius: 30px;">Más información</button>
+                </div>
                 <div class="d-flex justify-content-center mb-2">
-                    <button class="btn btn-sm btn-primary px-3 border-end" @click="handleShowModal(habitacion)" style="border-radius: 30px;">Read More</button>
+                    <button class="btn btn-sm btn-primary px-3 border-end" @click="handleShowModal(habitacion)" style="border-radius: 30px;">Seleccionar</button>
                 </div>
             </div>
         </div>

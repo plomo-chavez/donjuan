@@ -5,7 +5,9 @@
             <img class="img-fluid" :src="require('@/assets/images/habitaciones/default.jpg')" alt="">
         </div>
         <div class="col-8 m-0 p-0">
-            <feather-icon size="18" :icon="`XIcon`" class="cursor-pointer text-danger font-weight-bolder ml-auto" @click="handleCancel"/>
+            <div class="col d-flex  align-items-end">
+                <feather-icon size="18" :icon="`XIcon`" class="cursor-pointer text-danger font-weight-bolder ml-auto" @click="handleCancel"/>
+            </div>
             <h3 class="mb-0">{{ extraInformation.nombre }}</h3>
             <h3 class="mb-0">{{ extraInformation.tarifa }}</h3>
             <h6 class="mb-0">{{ extraInformation.capacidad }} personas</h6>

@@ -66,7 +66,7 @@
                 acompaniantes:[],
                 formSchema: [
                     {
-                        classContainer:' col-md-4 col-lg-4 col-12 ',
+                        classContainer:' col-md-3 col-lg-3 col-12 ',
                         type        : 'input-text',
                         name        : 'nombre',
                         value       : 'nombre',
@@ -75,7 +75,7 @@
                         rules       : 'required',
                     },
                     {
-                        classContainer:' col-md-4 col-lg-4 col-12 ',
+                        classContainer:' col-md-3 col-lg-3 col-12 ',
                         type        : 'input-text',
                         name        : 'primerApellido',
                         value       : 'primerApellido',
@@ -83,14 +83,14 @@
                         rules       : 'required',
                     },
                     {
-                        classContainer:' col-md-4 col-lg-4 col-12 ',
+                        classContainer:' col-md-3 col-lg-3 col-12 ',
                         type        : 'input-text',
                         name        : 'segundoApellido',
                         value       : 'segundoApellido',
                         label       : 'Segundo apellido',
                     },
                     {
-                        classContainer:'col-2',
+                        classContainer:' col-md-3 col-lg-3 col-12 ',
                         type        : 'input-number',
                         name        : 'edad',
                         value       : 'edad',
@@ -98,25 +98,6 @@
                         placeholder : 'Introduce una edad',
                         rules       : 'required',
                         prefix      : '',
-                    },
-                    {
-                        classContainer:'col-lg-5 col-md-5 col-12',
-                        type        : 'input-phone',
-                        name        : 'telefono',
-                        value       : 'telefono',
-                        label       : 'Telefono',
-                        rules       : 'required',
-                        placeholder: 'Introduce un telefono celular',
-                    },
-                    {
-                        classContainer:'col-lg-5 col-md-5 col-12',
-                        type        : 'email',
-                        name        : 'correo',
-                        value       : 'correo',
-                        prefixIcon  : 'MailIcon',
-                        rules       : 'required|email',
-                        label       : 'Correo electronico',
-                        placeholder : 'Introduce un correo electronico',
                     },
                 ],
             }
