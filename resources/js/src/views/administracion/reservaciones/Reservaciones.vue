@@ -1,9 +1,6 @@
 <template>
     <div>
-        <BCard
-            v-if="showCalendario"
-            class="col-12 p-2"
-        >
+        <BCard v-if="showCalendario" class="col-12 p-2" >
             <b-button
               size="sm"
               class="mb-2"
@@ -102,9 +99,9 @@
                             })
                         })
                         this.reservaciones = this.copyObject(eventsTmp)
-                        this.loading(false);
                     })
                     .catch(error   => { console.log(error); })
+                        this.loading(false);
             },
             showReservacion(reservacion){
                 this.currentReservacion = reservacion

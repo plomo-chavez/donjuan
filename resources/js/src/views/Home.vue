@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="hidden">
+        <!-- <div class="hidden">
             <b-button
             size="sm"
             variant="primary"
@@ -13,11 +13,11 @@
             variant="primary"
             class="btn-tour-finish"
             @click="callApi()"
-            >Sin headers</b-button>
+            >Sin headers</b-button> -->
             <!-- <ModalValidSession :openModal="openModal" /> -->
-        </div>
+        <!-- </div>
         <Scann
-        />
+        /> -->
     </div>
     </template>
 

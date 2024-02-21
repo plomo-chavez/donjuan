@@ -137,10 +137,14 @@ class AuthController extends Controller{
         // dd($tmp);
     }
     public function verificar(Request $request){
-        $response = BaseController::response();
-        $payload = $request->all();
-        $token = $payload['tk'] ?? null;
+        $response   = BaseController::response();
+        $payload    = $request->all();
+        $token      = $payload['tk'] ?? null;
         $response['data'] = AuthResources::validateSession($token);
+        if($response['data']){
+            $response['message'] = 'Validación con éxito';
+            $response['result'] = true;
+        }
         return response()->json($response, 200);
     }
 }

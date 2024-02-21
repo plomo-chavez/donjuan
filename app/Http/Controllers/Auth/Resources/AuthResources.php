@@ -1,21 +1,18 @@
 <?php
-namespace App\Http\Middleware;
+namespace App\Http\Controllers\Auth\Resources;
 use App\Http\Controllers\BaseController;
-use App\Http\Controllers\Auth\Resources\AuthResources;
+use App\Http\Controllers\Auth\Models\PersonalAccessToken;
 use Closure;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class UserAuthentication{
-    public function handle(Request $request, Closure $next)
-    {
-        $response = BaseController::response();
-        $response['result']  = 'SinAutorizacion';
-        $response['message'] = 'Sin autorizaci贸n';
-        $headers = getallheaders();  
-        $tk = isset($headers['Tk']) ? $headers['Tk'] : (isset($headers['tk']) ? $headers['tk'] :  null);
-        if($tk != null  && AuthResources::validateSession($tk)){
-            return $next($request);
-        }
-        return response()->json($response);
+class AuthResources{
+    
+    public static function validateSession($token){
+        // Busca el primer registro que coincida con el criterio
+        $token = PersonalAccessToken::where('tokenFront', 'LIKE', '%'.$token)->first();
+    
+        // Retorna true si el token existe y aún no ha expirado; de lo contrario, retorna false
+        return $token !== null && $token->expires_at > Carbon::now();
     }
 }

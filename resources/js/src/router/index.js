@@ -29,6 +29,7 @@ router.beforeEach(async (to, _, next) => {
       } else {
         try {
           const response = await useJwt.validateUser({ tk: store.state.app.userData.token });
+          console.log('useJwt.validateUser => ',response.data.data);
           if (!response.data.data) {
             goToLogout();
           }
