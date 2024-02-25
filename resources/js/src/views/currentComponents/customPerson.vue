@@ -162,7 +162,7 @@ export default {
             type    : String,
             default : null
         },
-        reservacion: {
+        data: {
             type    : Object,
             default : {}
         },
@@ -180,6 +180,9 @@ export default {
         },
     },
     beforeMount(){
+        if(this.data.person) {
+            this.person = { ... this.data.person}
+        }
     },
     methods: {
         changePerson(){
@@ -195,20 +198,20 @@ export default {
         handleSubmit(data){
             let payload = data
             payload.accion = 1;
-        peticiones
-            .administrarPersonas({
-                'payload' : payload,
-            })
-            .then(response => {
-                this.messageSweet({
-                    message: response.data.message,
-                    icon: response.data.result ? 'success' : 'error',
-                });
-                if (response.data.result ) {
-                    this.viewForm = false
-                }
-            })
-            .catch(error   => { console.log(error); })
+            peticiones
+                .administrarPersonas({
+                    'payload' : payload,
+                })
+                .then(response => {
+                    this.messageSweet({
+                        message: response.data.message,
+                        icon: response.data.result ? 'success' : 'error',
+                    });
+                    if (response.data.result ) {
+                        this.viewForm = false
+                    }
+                })
+                .catch(error   => { console.log(error); })
         },
         handleCancelar(){
             this.person = null;

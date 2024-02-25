@@ -38,6 +38,7 @@
                             v-if="step == 1"
                             :reservacion="reservacion"
                             @changeReservacion="handleChangeReservacion"
+                            @showButtons="showButtonsActions = !showButtonsActions"
                         />
                     </tab-content>
 
@@ -63,10 +64,11 @@
                             v-if="step == 3"
                             :reservacion="reservacion"
                             @changeReservacion="handleChangeReservacion"
+                            @handleGoToCalendario="()=>{$emit('handleCancel')}"
                         />
                     </tab-content>
                 </form-wizard>
-                <div class="col-12 d-flex justify-content-between">
+                <div v-if="showButtonsActions" class="col-12 d-flex justify-content-between">
                     <b-button
                         v-if="step != 0"
                         size="sm"
@@ -77,6 +79,7 @@
                         <span class="mr-25 align-middle">Atrás</span>
                     </b-button>
                     <b-button
+                        v-if="step < 3"
                         size="sm"
                         class="ml-auto"
                         variant="primary"
@@ -113,6 +116,7 @@
     import peticiones from '@/apis/usePeticiones'
 
   export default {
+    name:"StepsReservacionComponente",
     components: {
 
         BButton,
@@ -138,7 +142,8 @@
     data() {
       return {
         step : 0,
-        reservacion:{}
+        reservacion:{},
+        showButtonsActions : true,
       }
     },
     watch:{
@@ -146,18 +151,19 @@
             console.log(newValor)
         }
     },
-    mounted() {
-    },
+    mounted() {},
     methods: {
         handleChangeReservacion(data){
-            console.log('reservacion -> ', data)
-            this.reservacion = this.copyObject(data)
+            console.log('StepsReservacionComponente => reservacion -> ', data)
+            this.reservacion = this.copyObject({...this.reservacion,...data})
         },
         prevStep(){
+            console.log('prevStep => reservacion => ', this.reservacion)
             this.$refs.wizard.prevTab()
             this.step = this.$refs.wizard.activeTabIndex;
         },
         async nextStep(data = null){
+            console.log('nextStep => reservacion => ', this.reservacion)
             if (this.step == 3) {
                 this.handleSubmit()
             } else {
@@ -188,23 +194,32 @@
                     }
                 }
                 if (this.step == 2) {
+                    // Llamada a getAcompaniantes para obtener los acompañantes o false si no son válidos o no hay suficientes
                     let response = await this.$refs.tabAcompaniantes.getAcompaniantes();
-                    if (response != false) {
-                        this.reservacion.acompaniantes = response
-                    }
-                    if ((typeof this.reservacion.acompaniantes == 'undefined' ? 0 : this.reservacion.acompaniantes.length) == 0) {
-                        this.messageConfirm({
-                            message:'No hay acompañastes registrados',
-                            title:'¿Desea continuar con el proceso?',
-                            icon:'warning',
-                            confirmButtonText: 'Si, continuar',
-                            confirmFunction: () => { this.next() },
-                            messageCancel : false
-                        })
-                    } else {
-                        next = true;
-                    }
+
+                    if (response !== false) {
+                        // Si hay acompañantes válidos y más de uno, actualiza la reservación con los acompañantes
+                        this.reservacion.acompaniantes = response;
+                        // Verifica si no hay acompañantes registrados después de la validación
+                        if ((!this.reservacion.acompaniantes || (this.reservacion.acompaniantes.length === 0))) {
+                            // Muestra un mensaje de confirmación para continuar sin acompañantes
+                            this.messageConfirm({
+                                message: 'No hay acompañantes registrados.',
+                                title: '¿Desea continuar con el proceso?',
+                                icon: 'warning',
+                                confirmButtonText: 'Si, continuar',
+                                confirmFunction: () => { this.next(); },
+                                messageCancel: false
+                            });
+                        }
+                         else {
+                            // Si hay acompañantes, se asume que se puede proceder al siguiente paso
+                            this.next();
+                        }
+                    } 
+
                 }
+
                 if (next) {
                     if (typeof  data == 'object')
                         this.next()

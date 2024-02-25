@@ -25,6 +25,30 @@ export default {
         if (!value) return "";
         return value.charAt(0).toUpperCase() + value.slice(1);
     },
+    buscarPorPropiedad(array, propiedad, valor) {
+      if (!array || array.length === 0) { // Verifica si el array es nulo/undefined o está vacío
+        return false;
+      } else {
+          return !!array.find(elemento => elemento[propiedad] === valor); // Usa !! para convertir el resultado a booleano
+      }
+    },
+    eliminarElemento(array, criterio, valor) {
+      // criterio =  si es indice o la propiedad
+      // valor =  es para cuando es por propiedad y es para validar el valor de la propiedad a buscar
+      let indice;
+  
+      // Determinar si el criterio es un índice numérico o el nombre de una propiedad
+      if (typeof criterio === "number") {
+          indice = criterio;
+      } else {
+          indice = array.findIndex(elemento => elemento[criterio] === valor);
+      }
+  
+      // Si se encontró un índice válido, eliminar el elemento
+      if (indice !== -1 && indice < array.length) {
+          array.splice(indice, 1);
+      }
+    },
     messageSweet ({
         message='',
         color='success',
@@ -99,7 +123,7 @@ export default {
     },
     formatoFechaYMD(value){
         const fecha = new Date(value);
-        const fechaFormateada = fecha.toISOString().slice(0,10).replace(/-/g,"/");
+        let fechaFormateada = value != null ? fecha.toISOString().slice(0,10).replace(/-/g,"/") : null;
         return fechaFormateada
     },
     formatoFechaBD(value){

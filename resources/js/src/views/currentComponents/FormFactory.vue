@@ -320,6 +320,38 @@
                               <p class="m-0 p-0"><small v-if="errorsPersonalizados[input.name]" class="m-0 p-0 font-weight-bolder text-danger col-12">{{ errorsPersonalizados[input.name] }}</small></p>
                           </validation-provider>
                       </div>
+                  <!-- input input-edad -->
+                  <div v-if="input.type === 'input-edad'">
+                          <!-- Provider de validación -->
+                          <validation-provider
+                              #default="{ errors }"
+                              :name=" (typeof input.name  != 'undefined'?input.name:'')"
+                              :rules="(typeof input.rules != 'undefined'?  input.rules + '' : '' )"
+                          >                <!-- Label -->
+                              <p
+                                  :for="input.name"
+                                  :class="(typeof input.classLabel != 'undefined'?input.classLabel + ' m-0 p-0 ':'') + ' font-weight-bolder p-0 m-0' "
+                              >{{(typeof input.label != 'undefined'?input.label:'')}}</p>
+                              <!-- input -->
+
+                              <cleave
+                                :id="input.name"
+                                :ref="input.name"
+                                :name="input.name"
+                                :value="form[input.value]"
+                                @input="changeData(input.value, $event)"
+                                class="bg-white w-100 char-textarea form-control"
+                                :disabled="formDisabled || Boolean(input.disabled)"
+                                :placeholder="input.placeholder || ''"
+                                :raw="false"
+                                :options="optionsInputEdad"
+                            />
+
+                              <!-- Errores de validación -->
+                              <p class="m-0 p-0" v-if="errors[0]"><small class=" m-0 p-0 font-weight-bolder text-danger col-12">{{ errors[0] }}</small></p>
+                              <p class="m-0 p-0"><small v-if="errorsPersonalizados[input.name]" class="m-0 p-0 font-weight-bolder text-danger col-12">{{ errorsPersonalizados[input.name] }}</small></p>
+                          </validation-provider>
+                      </div>
                   <!-- input input-select -->
                       <div v-if="input.type === 'input-select'">
                         <customSelect
@@ -508,10 +540,17 @@
             },
             optionsInputNumerico : {
                 // Configuramos el bloque de dígitos enteros
-                blocks: [1],
+                blocks: [2],
                 // Permitimos solo valores numéricos
                 numericOnly: true,
                 // Establecemos el valor mínimo y máximo
+            },
+            optionsInputEdad: {
+                numeral: true,
+                numeralPositiveOnly: true,
+                numeralThousandsGroupStyle: 'none',
+                delimiter: '',
+                numeralIntegerScale: 3, // Máximo de dígitos enteros permitidos, ajusta según necesidad
             },
         }
     },
@@ -652,19 +691,52 @@
             })
             return hayErrores;
         },
-        validationForm() {
-            this.$refs.simpleRules.validate().then(success => {
-                let hayErrores = this.validacionesExternas();
-                if (hayErrores == false && success) {
-                    this.$emit('formExport',this.form);
+        async validationForm() {
+            try {
+                // Espera a que la validación se complete y obtén el resultado
+                const success = await this.$refs.simpleRules.validate();
+
+                // Ejecuta tus validaciones externas
+                const hayErrores = this.validacionesExternas();
+
+                // Si no hay errores y la validación fue exitosa, emite el evento formExport
+                if (!hayErrores && success) {
+                    
+                    this.$emit('formExport', this.form);
+                    console.log('formExport', this.form);
+                    return true
+
                 } else {
+                    // Si hay errores, muestra un mensaje
                     this.messageSweet({
                         message: 'Faltan campos por rellenar o hay un error con el formulario, revisalo',
                         icon: 'warning',
                     });
+                    return false
                 }
-            })
+            } catch (error) {
+                // Manejo de errores de la promesa, por si acaso
+                console.error('Error durante la validación del formulario:', error);
+                // Opcional: Puedes mostrar un mensaje de error genérico aquí
+            }
         },
+        async onlyValidationForm() {
+            try {
+                // Espera a que la validación se complete y obtén el resultado
+                const success = await this.$refs.simpleRules.validate();
+
+                // Ejecuta tus validaciones externas
+                const hayErrores = this.validacionesExternas();
+
+                // Si no hay errores y la validación fue exitosa, emite el evento formExport
+                return (!hayErrores && success) 
+            } catch (error) {
+                // Manejo de errores de la promesa, por si acaso
+                console.error('Error durante la validación del formulario:', error);
+                return false 
+            }
+        },
+
     },
   }
   </script>

@@ -147,6 +147,7 @@
 <script>
 /* eslint-disable global-require */
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import customHelpers  from '@helpers/customHelpers'
 import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
   BRow,
@@ -196,7 +197,7 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-  mixins: [togglePasswordVisibility],
+  mixins: [togglePasswordVisibility,customHelpers],
   data() {
     return {
       status: '',
@@ -224,6 +225,7 @@ export default {
   },
   methods: {
     login() {
+      this.loading();
       this.$refs.loginForm.validate().then(success => {
         if (success) {
           useJwt
@@ -243,20 +245,24 @@ export default {
                 localStorage.setItem('tk', data.data.user.token)
                 this.$ability.update(userData.ability)
                 console.log(getHomeRouteForLoggedInUser(userData.role))
+
+                // this.loading(false);
                 this.$router.replace(getHomeRouteForLoggedInUser(userData.role)).then(() => {
                   this.$toast({
                     component: ToastificationContent,
                     position: 'top-right',
                     props: {
-                      title: `Welcome `,
+                      title: `Bienvenido `,
                       // title: `Welcome ${userData.fullName || userData.username}`,
                       icon: 'CoffeeIcon',
                       variant: 'success',
-                      text: `You have successfully logged in as ${userData.role}. Now you can start to explore!`,
+                      text: `Ha iniciado sesión exitosamente como ${userData.role}. ¡Ahora puedes empezar a explorar!`,
                     },
                   })
                 })
               }else{
+
+                  this.loading(false); 
                   this.$toast({
                     component: ToastificationContent,
                     position: 'top-right',

@@ -34,7 +34,10 @@
         <ModalReservacion
             :reservacion="currentReservacion"
             :showModal="showModalReservacion"
-            @handleCancel="() => { currentReservacion = null }"
+            @handleCancel="() => { 
+                currentReservacion = null;
+                showCalendario = true;
+            }"
         />
     </div>
 </template>

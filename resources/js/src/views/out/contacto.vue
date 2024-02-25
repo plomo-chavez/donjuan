@@ -15,7 +15,7 @@
             </div>
             <div class="row">
                 <div :class="screenWidth < 1200 ? 'col-12' : 'col-6'" class="mb-3 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="d-flex align-items-center mb-4">
+                    <div class="d-flex align-items-center mb-4" @click="abrirGoogleMaps">
                         <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary" style="width: 50px; height: 50px;">
                             <i class="fa fa-map-marker-alt text-white"></i>
                         </div>
@@ -24,16 +24,16 @@
                             <p class="mb-0">Matamoros y Niños Héroes No. 12, Cabo San Lucas, Mexico</p>
                         </div>
                     </div>
-                    <div class="d-flex align-items-center mb-4">
+                    <div class="d-flex align-items-center mb-4"  @click="enviarWhatsApp">
                         <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary" style="width: 50px; height: 50px;">
                             <i class="fa fa-phone-alt text-white"></i>
                         </div>
                         <div class="ms-3 ml-2">
-                            <h5 class="text-primary text-left">Telefono</h5>
+                            <h5 class="text-primary text-left">Teléfono</h5>
                             <p class="mb-0">+52 624 143 7395</p>
                         </div>
                     </div>
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center"  @click="enviarCorreo">
                         <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary" style="width: 50px; height: 50px;">
                             <i class="fa fa-envelope-open text-white"></i>
                         </div>
@@ -219,6 +219,23 @@
                             }, 100);
                         })
                         .catch(error   => { console.log(error); })
+                },
+                abrirGoogleMaps() {
+                    const url = "https://www.google.com/maps/place/Donjuan+By+Melida+Hotel/@22.885576,-109.9196662,17z/data=!3m1!4b1!4m9!3m8!1s0x86af4aefee6ca401:0xe9e9a9d9cab46bc6!5m2!4m1!1i2!8m2!3d22.8855761!4d-109.9147953!16s%2Fg%2F1td614yw?entry=ttu";
+                    window.open(url, '_blank');
+                },
+                enviarWhatsApp() {
+                    const telefono = '+526241437395'; // Número al que deseas enviar el mensaje
+                    const mensaje = encodeURIComponent('Hola, quiero más información.'); // Mensaje URL-encoded
+                    const urlWhatsApp = `https://wa.me/${telefono}?text=${mensaje}`;
+                    window.open(urlWhatsApp, '_blank');
+                },
+                enviarCorreo() {
+                    const destinatario = 'info@donjuanbymelida.com'; // Correo del destinatario
+                    const asunto = encodeURIComponent('Informacion sobre el Hotel DonJuan by Melida'); // Asunto URL-encoded
+                    const cuerpoCorreo = encodeURIComponent('Hola, estoy interesado en obtener más información.'); // Cuerpo del correo URL-encoded
+                    const urlCorreo = `mailto:${destinatario}?subject=${asunto}&body=${cuerpoCorreo}`;
+                    window.location.href = urlCorreo;
                 },
             },
         }

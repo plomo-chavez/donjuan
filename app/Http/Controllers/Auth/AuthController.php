@@ -86,7 +86,7 @@ class AuthController extends Controller{
             }
 
             if(!Auth::attempt($request->only(['email', 'password']))){
-                $response['message'] = 'Email & Password does not match with our record.';
+                $response['message'] = 'El correo electrónico y la contraseña no coinciden con nuestro registro.';
                 return response()->json($response, 200);
             }
 
@@ -114,7 +114,7 @@ class AuthController extends Controller{
             ];
             $response['result']    = true;
             $response['data']      = $data;
-            $response['message']      =  'User Logged In Successfully';
+            $response['message']      =  'El usuario inició sesión correctamente';
             return response()->json($response, 200);
         } catch (\Throwable $th) {
             return response()->json([

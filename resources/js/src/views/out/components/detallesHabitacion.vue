@@ -25,8 +25,8 @@
                 <div class="d-flex justify-content-center mb-1">
                     <button class="btn btn-sm btn-secondary px-3 border-end" @click="handleShowModal(habitacion)" style="border-radius: 30px;">Más información</button>
                 </div>
-                <div class="d-flex justify-content-center mb-2">
-                    <button class="btn btn-sm btn-primary px-3 border-end" @click="handleShowModal(habitacion)" style="border-radius: 30px;">Seleccionar</button>
+                <div v-if="!this.isSelected" class="d-flex justify-content-center mb-2">
+                    <button class="btn btn-sm btn-primary px-3 border-end" @click="handleSelecionar(habitacion)" style="border-radius: 30px;">Seleccionar</button>
                 </div>
             </div>
         </div>
@@ -88,6 +88,10 @@
             habitacion: {
                 type    : Object,
                 default : null
+            },
+            isSelected:{
+                type    : Boolean,
+                default : false
             },
         },
         data() {
@@ -154,6 +158,9 @@
             // },
             handleShowModal(data){
                 this.$emit('viewDetails', this.habitacion);
+            },
+            handleSelecionar(data){
+                this.$emit('seleccionar', this.habitacion);
             },
             resetModal(){
                 this.showModal = false;

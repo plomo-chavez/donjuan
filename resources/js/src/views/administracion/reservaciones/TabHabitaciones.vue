@@ -3,7 +3,7 @@
         <template v-if="dataActive != null" >
             <extraDetailsRoom
                 :extraInformation="dataActive"
-                @cancel="dataActive = null"
+                @cancel="handleCancelViewDetails"
             />
         </template>
         <template v-else> 
@@ -12,6 +12,7 @@
                 v-for="(habitacion, index) in habitaciones"
                 :key="'hab' + index"
                 :habitacion="habitacion"
+                :isSelected="handleIsSelected(habitacion)"
                 @seleccionar="handleSeleccionarHabitacion"
                 @viewDetails="handleViewDetails"
             />
@@ -47,7 +48,15 @@
             this.getHabitaciones()
         },
         methods:{
+            handleIsSelected(data = null){
+                let tmp =  false;
+                if (data != null) {
+                    tmp = this.buscarPorPropiedad(this.reservacion.habitaciones,'id',data.id);
+                }
+                return tmp ? true : false;
+            },
             handleSeleccionarHabitacion(data) {
+                console.log(data)
                 const hbs = typeof this.reservacion.habitaciones != 'undefined' ? [...this.reservacion.habitaciones,data] : [data]
                 this.$emit('changeReservacion', {
                     ...this.reservacion,
@@ -57,6 +66,11 @@
             handleViewDetails(data) {
                 console.log('handleViewDetails')
                 this.dataActive = this.copyObject(data)
+                this.$emit('showButtons')
+            },
+            handleCancelViewDetails(data) {
+                this.dataActive = null
+                this.$emit('showButtons')
             },
             getHabitaciones(){
                 let filtros = {
