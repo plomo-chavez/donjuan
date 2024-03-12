@@ -12,6 +12,9 @@
                 <p class="text-center ">Lo sentimos, no hay habitaciones disponibles del <strong>{{reservacion.fechaInicio}}</strong> al <strong>{{reservacion.fechaFin}}</strong>. Te recomendamos seleccionar nuevas fechas de búsqueda o explorar otras categorías de habitaciones.</p>
                 <p class="text-center ">¡Estamos aquí para ayudarte a encontrar la estancia perfecta!</p>
             </div>
+            <div v-else class="col-12 p-0 m-0">
+                <p>Habitaciones seleccionadas: {{ lengthHabitaciones }}</p>
+            </div>
             <detallesHabitacion
                 class="col-lg-4 col-md-6 col-sm-12"
                 v-for="(habitacion, index) in habitaciones"
@@ -50,6 +53,11 @@
                 default : {}
             },
         },
+        computed:{
+            lengthHabitaciones(){
+                return this.reservacion.habitaciones?.length ?? 0
+            },
+        },
         beforeMount(){
             this.getHabitaciones()
         },
@@ -78,7 +86,24 @@
                 this.dataActive = null
                 this.$emit('showButtons')
             },
+
+            sincronizarHabitaciones(habitacionesDisponibles) {
+                console.log('sincronizarHabitaciones')
+                let tmp = [];
+                if (this.reservacion.habitaciones){
+                    tmp = this.reservacion.habitaciones.filter(habitacionSeleccionada =>
+                        habitacionesDisponibles.some(habitacionDisponible => 
+                            habitacionDisponible.id === habitacionSeleccionada.id)
+                    );
+                    console.log(tmp)
+                    this.$emit('changeReservacion', {
+                    ...this.reservacion,
+                    habitaciones: tmp
+                });
+                }
+            },
             getHabitaciones(){
+                this.loading();
                 let filtros = {
                     fechaInicio : this.reservacion?.fechaInicio ?? null,
                     fechaFin    : this.reservacion?.fechaFin    ?? null,
@@ -94,7 +119,9 @@
                             item.camas      = typeof item.camas != 'string'      ? item.camas : JSON.parse(item.camas)
                             item.amenidades = typeof item.amenidades != 'string' ? item.amenidades : JSON.parse(item.amenidades)
                         })
+                        this.sincronizarHabitaciones(tmp)
                         this.habitaciones = this.copyObject(tmp)
+                        this.loading(false);
                     })
                     .catch(error   => { console.log(error); })
 

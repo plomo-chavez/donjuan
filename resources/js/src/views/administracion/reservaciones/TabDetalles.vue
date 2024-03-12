@@ -9,22 +9,23 @@
                 v-model="dateRange"
                 :min-date="new Date()"
             />
+            <customPerson
+                class="col p-0 m-0"
+                :addTxt="'Nuevo huesped'"
+                :data="reservacion"
+                @changeReservacion="handleChangeReservacion"
+            />
+            <customSelect
+                class="col p-0 m-0"
+                :input="configSelect"
+                @changeData="(data) => {
+                    let tmp = {};
+                    tmp[data.field] = data.value
+                    handleChangeReservacion(tmp)
+                }"
+                :formValue="reservacion.motivoViaje"
+            />
         </div>
-        <customPerson
-            :addTxt="'Nuevo huesped'"
-            :data="reservacion"
-            @changeReservacion="handleChangeReservacion"
-        />
-        <customSelect
-            class="ww-100A"
-            :input="configSelect"
-            @changeData="(data) => {
-                let tmp = {};
-                tmp[data.field] = data.value
-                handleChangeReservacion(tmp)
-            }"
-            :formValue="reservacion.motivoViaje"
-        />
     </div>
   </template>
 

@@ -35,33 +35,38 @@ class ReservacionesController extends BaseController
     }
 
     public static function select($filtro){
-        $data = Modelo::where('id',20)->get();
-        $data = Modelo::where(function ($query) use ($filtro) {
-            if ($filtro['reservacion_id'] ?? false) {
-                $query->where('id', $filtro['reservacion_id']);
-            } else {
-                $query->whereBetween('fechaInicio', [$filtro['fechaInicio'],$filtro['fechaFin']])
-                    ->orWhereBetween('fechafin', [$filtro['fechaInicio'],$filtro['fechaFin']]);
-            }
-        });
-        $data->with([
-                'reserva' => function ($query) {
-                    $query->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo', 'nacionalidad', 'ciudad', 'pais');
-                },
-                'habitaciones' => function ($query) {
-                    $query->select('habitacion_id', 'reservacion_id', 'id');
-                },
-                'habitaciones.habitacion' => function ($query) {
-                    $query->select('id', 'nombre', 'descripcion', 'tarifa', 'amenidades', 'camas', 'puedeFumar', 'capacidad');
-                },
-                'acompaniantes' => function ($query) {
-                    $query->select('id', 'reservacion_id', 'persona_id');
-                },
-                'acompaniantes.persona' => function ($query) {
-                    $query->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo', 'edad');
-                },
-            ]);
-        return $data->get();
+        // Comenzando la consulta principal sin carga inmediata
+        $query = Modelo::query();
+    
+        // Aplicando filtros según el caso
+        if ($filtro['reservacion_id'] ?? false) {
+            $query->where('id', $filtro['reservacion_id']);
+        } else {
+            $query->whereBetween('fechaInicio', [$filtro['fechaInicio'], $filtro['fechaFin']])
+                  ->orWhereBetween('fechafin', [$filtro['fechaInicio'], $filtro['fechaFin']]);
+        }
+    
+        // Aplicando carga adelantada (Eager Loading) de manera eficiente
+        $query->with([
+            'reserva' => function ($q) {
+                $q->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo', 'nacionalidad', 'ciudad', 'pais');
+            },
+            'habitaciones' => function ($q) {
+                $q->select('habitacion_id', 'reservacion_id', 'id');
+            },
+            'habitaciones.habitacion' => function ($q) {
+                $q->select('id', 'nombre', 'descripcion', 'tarifa', 'amenidades', 'camas', 'puedeFumar', 'capacidad');
+            },
+            'acompaniantes' => function ($q) {
+                $q->select('id', 'reservacion_id', 'persona_id');
+            },
+            'acompaniantes.persona' => function ($q) {
+                $q->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo', 'edad');
+            },
+        ]);
+    
+        // Devolviendo los resultados finales
+        return $query->get();
     }
 
     public function handleListar(Request $request){

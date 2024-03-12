@@ -5,7 +5,7 @@
               size="sm"
               class="mb-2"
               variant="primary"
-              @click="handleCancel"
+              @click="newReservation"
             >
               <span class="mr-25 align-middle">Nueva reservación</span>
             </b-button>
@@ -23,12 +23,12 @@
             <b-button
               size="sm"
               variant="outline-danger"
-              @click="showCalendario = true"
+              @click="handleCancel"
             >
               <span class="mr-25 align-middle">Atrás</span>
             </b-button>
             <FormReservacion
-                @handleCancel="() => { showCalendario = true }"
+                @handleCancel="handleCancel"
             />
         </div>
         <ModalReservacion
@@ -82,10 +82,15 @@
         },
         methods:{
             handleCancel(){
-                this.showCalendario = false
+                this.showCalendario = true
                 this.getEvents();
             },
+            newReservation(){
+                this.showCalendario = false
+            },
             getEvents(){
+                this.loading();
+                setTimeout(() => {}, 5);
                 peticiones
                     .getReservacionesCalendario({ })
                     .then(response => {
@@ -95,16 +100,19 @@
                             eventsTmp.push({
                                 ...item,
                                 id:item.id,
-                                title: 'Reservacion',
+                                title: 'Reservación ' + item.id.toString().padStart(3, "0"),
                                 allDay: true,
                                 start: item.fechaInicio,
                                 end: item.fechaFin,
                             })
                         })
                         this.reservaciones = this.copyObject(eventsTmp)
+                        this.loading(false);
                     })
-                    .catch(error   => { console.log(error); })
-                    this.loading(false);
+                    .catch(error   => { 
+                        this.loading(false); 
+                        console.log(error); 
+                    })
             },
             showReservacion(reservacion){
                 this.currentReservacion = reservacion

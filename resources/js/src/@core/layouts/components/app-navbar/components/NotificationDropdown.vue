@@ -4,7 +4,7 @@
     menu-class="dropdown-menu-media"
     right
   >
-    <template #button-content>
+    <!-- <template #button-content>
       <feather-icon
         badge="6"
         badge-classes="bg-danger"
@@ -100,7 +100,7 @@
       variant="primary"
       block
     >Read all notifications</b-button>
-    </li>
+    </li> -->
   </b-nav-item-dropdown>
 </template>
 

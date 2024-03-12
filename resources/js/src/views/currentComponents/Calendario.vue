@@ -9,7 +9,6 @@
                 ...config,
                 viewRender: handleChangeMonth,
                 eventClick: handleSelect,
-
             }"
             :events="fechas"
         />

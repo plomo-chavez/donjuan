@@ -76,6 +76,7 @@ class CatalogosController extends BaseController
             });
         })->get(['habitacion_id']);
         $data = Habitacion::whereNotIn('id', $reservaciones_ids)
+                ->where('estatus_id',3)
                 ->orderBy('nombre',"asc")
                 ->with('estatus')
                 ->get();

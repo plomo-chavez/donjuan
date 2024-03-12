@@ -3,7 +3,7 @@
     <div>
         <div v-if="!viewForm" >
 
-            <div v-if="person == null" class=" col d-flex align-items-end flex-wrap">
+            <div v-if="person == null" class=" col p-0 m-0 d-flex align-items-end flex-wrap">
                 <customSelect
                     class="ww-100A"
                     :input="{...config, label : label}"
@@ -33,9 +33,11 @@
 
             </div>
             <div v-else>
-                <div class="d-flex flex-wrap co-12 mt-1">
-                    <p class="col col-11 font-weight-bolder text-black mmb-4">¿Quien registra?:</p>
-                    <feather-icon size="18" :icon="`XIcon`" class="cursor-pointer text-danger font-weight-bolder mmb-4" @click="() => { person = null }"/>
+                <div class="d-flex flex-wrap col p-0 m-0 mt-1">
+                    <div class="d-flex flex-wrap col p-0 m-0 justify-content-between">
+                        <p class="col col-11 font-weight-bolder text-black mmb-4">¿Quien registra?:</p>
+                        <feather-icon size="18" :icon="`XIcon`" class="cursor-pointer text-danger font-weight-bolder mmb-4" @click="() => { person = null }"/>
+                    </div>
                     <p class="col col-12 font-weight-bolder text-black mmb-2">Nombre: <span class="font-weight-normal">{{ person.nombre }}</span></p>
                     <p class="col col-6 font-weight-bolder text-black">Correo electronico: <span class="font-weight-normal">{{ person.correo }}</span></p>
                     <p class="col col-6 font-weight-bolder text-black">Telefono: <span class="font-weight-normal">{{ person.telefono }}</span></p>
@@ -198,6 +200,7 @@ export default {
         handleSubmit(data){
             let payload = data
             payload.accion = 1;
+            payload.tipo = 1 
             peticiones
                 .administrarPersonas({
                     'payload' : payload,

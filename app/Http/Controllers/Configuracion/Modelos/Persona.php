@@ -19,6 +19,7 @@ class Persona extends Model
         'telefono',
         'correo',
         'edad',
+        'tipo',
     ];
 
     public function getNombreCompletoAttribute()
