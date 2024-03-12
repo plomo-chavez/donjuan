@@ -12,6 +12,23 @@
     background-size: cover;
     height: 500px;
     position: relative;
+}.bg-video {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+}
+
+.bg-video video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: auto;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    z-index: -100;
+    background-size: cover;
 }
 
 .bg-opacity {
@@ -133,6 +150,12 @@
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     margin-right: 10px;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    /* Estilos adicionales para tu contenido */
 }
 
 .footer .btn.btn-link:hover {

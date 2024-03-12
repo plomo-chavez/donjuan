@@ -1,24 +1,6 @@
 <template>
     <div>
-        <div v-if="showMessageConfirm" class="col-10 my-auto mx-auto">
-            <h3 class="col-12 text-center font-weigth-bolder mb-3">¡Tu lugar está apartado y esperando por ti.!</h3>
-            <h6 class="col-12 font-weigth-bold mb-1">Recibirás una confirmación de tu reservación. Si necesitas ayuda o tienes alguna pregunta, estamos aquí para asistirte en todo momento.</h6>
-            <h6 class="col-12 mb-1"><strong>¡Nos emociona ser parte de tu próxima experiencia!</strong></h6>
-
-            <div class="col-12 d-flex justify-content-between">
-                <b-button
-                size="sm"
-                class="my-auto mx-auto fw-bolder"
-                variant="secondary"
-                @click="handlegoToReservaciones"
-            >
-                <feather-icon icon="HomeIcon" size="16" />
-                <span>Ir al inicio</span>
-            </b-button>
-
-            </div>
-        </div>
-        <div v-else class="col-10 my-auto mx-auto">
+        <div class="col-10 my-auto mx-auto">
             <h3 class="col-12 text-center font-weigth-bolder mb-3">¡Estás a un paso de asegurar tu aventura con nosotros!</h3>
             <h6 class="col-12 font-weigth-bold mb-1">Tu reservación está casi lista, solo falta definir cómo deseas realizar el pago para finalizar el proceso. Aquí tienes dos opciones fáciles y seguras para elegir:</h6>
             <h6 class="col-12 mb-1"><strong>Pago en Línea:</strong> Completa tu pago ahora con solo unos clics. Es rápido, seguro y podrás confirmar tu reservación de inmediato.</h6>
@@ -71,9 +53,11 @@
         mounted() {},
         methods: {
             handleShowMessageConfirm(){
-                this.showMessageConfirm = true;
+                this.$emit('handleGoToCalendario');
             },
             handleSaveReservation(){
+
+                this.loading();
                 peticiones.administrarReservaciones({
                     'payload' : {
                         ...this.reservacion,
@@ -86,12 +70,13 @@
                         message: response.data.message,
                         icon: response.data.result ? 'success' : 'error',
                     });
-                    this.handleShowMessageConfirm();
+                    if (response.data.result){
+                        this.handleShowMessageConfirm();
+                    } 
+
+                    this.loading(false);
                 })
                 .catch(error   => { console.log(error); })
-            },
-            handlegoToReservaciones(){
-                this.$emit('handleGoToCalendario')
             },
         },
     }

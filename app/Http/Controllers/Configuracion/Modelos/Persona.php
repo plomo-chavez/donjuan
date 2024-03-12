@@ -18,6 +18,7 @@ class Persona extends Model
         'nacionalidad',
         'telefono',
         'correo',
+        'edad',
     ];
 
     public function getNombreCompletoAttribute()

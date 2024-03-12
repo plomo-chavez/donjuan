@@ -72,7 +72,7 @@
         <td style="" colspan="3"><strong>NOMBRE COMPLETO / FULL NAME</strong></td>
       </tr>
       <tr class="">
-        <td  class="textCenter" colspan="3">{{ $reserva['nombre'] }} {{ $reserva['primerApellido'] }} {{ $reserva['segundoApellido'] }}</td>
+        <td  class="textCenter" colspan="3">{{ $reserva['nombre'] ?? '' }} {{ $reserva['primerApellido'] ?? '' }} {{ $reserva['segundoApellido']  ?? ''}}</td>
       </tr>
       <tr class="trHead">
         <td style=" "><strong>LLEGADA / ARRIVAL</strong></td>
@@ -80,9 +80,9 @@
         <td style=" "><strong> NOCHES/NIGHTS </strong></td>
       </tr>
       <tr class="">
-        <td  class="textCenter">{{ $fechaInicio }}</td>
-        <td  class="textCenter">{{ $fechaFin }}</td>
-        <td  class="textCenter">{{ $noches }}</td>
+        <td  class="textCenter">{{ $fechaInicio ?? '' }}</td>
+        <td  class="textCenter">{{ $fechaFin ?? '' }}</td>
+        <td  class="textCenter">{{ $noches ?? '' }}</td>
       </tr>
       <tr class="trHead">
         <td  class="textCenter"><strong>TEL / PHONE NUMBER</strong></td>
@@ -90,16 +90,16 @@
         <td  class="textCenter"><strong>MOTIVO DE VIAJE / PURPOSE OF TRIP</strong></td>
       </tr>
       <tr class="">
-        <td  class="textCenter">{{ $reserva['telefono'] }}</td>
-        <td  class="textCenter">{{ $reserva['correo'] }}</td>
-        <td  class="textCenter">Falta</td>
+        <td  class="textCenter">{{ $reserva['telefono'] ?? '' }}</td>
+        <td  class="textCenter">{{ $reserva['correo'] ?? '' }}</td>
+        <td  class="textCenter">{{ $motivoViaje ?? '' }}</td>
       </tr>
-      <tr class="trHead">
+      <!-- <tr class="trHead">
         <td style="" colspan="3"><strong>DIRECCI&Oacute;N / ADDRESS</strong></td>
       </tr>
       <tr class="">
         <td style="" colspan="3">Falta</td>
-      </tr>
+      </tr> -->
     </tbody>
   </table>
   <table border="1" style="border-collapse: collapse; width: 100%;">
@@ -110,9 +110,9 @@
         <td style=""><strong>NACIONALIDAD / NACIONALITY</strong></td>
       </tr>
       <tr class="">
-        <td style=""></td>
-        <td style=""></td>
-        <td style=""></td>
+        <td  class="textCenter">{{ $reserva['ciudad'] ?? '' }}</td>
+        <td  class="textCenter">{{ $reserva['pais'] ?? '' }}</td>
+        <td  class="textCenter">{{ $reserva['nacionalidad'] ?? '' }}</td>
       </tr>
     </tbody>
   </table>
@@ -124,7 +124,14 @@
       @if ($acompaniantes)
         @foreach ($acompaniantes as $item)
           <tr class="">
-            <td>Con acompañantes</td>
+          <td>
+              {{ $item['persona']['nombre'] ?? '' }}
+              {{ $item['persona']['primerApellido'] ?? '' }}
+              {{ $item['persona']['segundoApellido'] ?? '' }}
+              @if(isset($item['persona']['edad']))
+                ({{ $item['persona']['edad'] }} años)
+              @endif
+          </td>
           </tr>
         @endforeach
       @else
@@ -142,7 +149,7 @@
       <tr class="trHead">
         <td style="width:50%!important;"><strong>HABITACI&Oacute;N</strong></td>
         <td style="width:25%!important;"><strong>TARIFA</strong></td>
-        <td style="width:25%!important;"><strong>TOTAL</strong></td>
+        <td style="width:25%!important;"><strong>SUBTOTAL</strong></td>
       </tr>
       @if ($habitaciones)
         @foreach ($habitaciones as $item)
@@ -158,7 +165,7 @@
       </tr>
       @endif
       <tr class="">
-        <td colspan="2"class="trHead"><strong>SUBTOTAL</strong></td>
+        <td colspan="2"class="trHead"><strong>TOTAL</strong></td>
         <td class="textCenter"><strong>$ {{$totalMoney}}</strong></td>
       </tr>
     </tbody>

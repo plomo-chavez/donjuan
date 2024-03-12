@@ -68,8 +68,8 @@
             }
         },
         beforeMount() {
+            this.loading();
             this.getEvents();
-            // this.loading();
         },
         watch:{
             showModalReservacion(value){
@@ -86,7 +86,6 @@
                 this.getEvents();
             },
             getEvents(){
-                this.loading();
                 peticiones
                     .getReservacionesCalendario({ })
                     .then(response => {

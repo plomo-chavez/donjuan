@@ -1,5 +1,15 @@
 <template>
-<div class="bg-image">
+<!-- <div class="bg-image">
+    <div class="bg-opacity">
+        <h1 class="fw-bolder display-2 text-white txtTitle">¿Qué esperas?</h1>
+        <p>Reserva con nosotros dando click en el siguiente enlace</p>
+        <a class="btn btn-secondary p-2" href="/reservar">Ver disponibilidad</a>
+    </div>
+</div> -->
+<div class="bg-video">
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+        <source :src="video" type="video/mp4">
+    </video>
     <div class="bg-opacity">
         <h1 class="fw-bolder display-2 text-white txtTitle">¿Qué esperas?</h1>
         <p>Reserva con nosotros dando click en el siguiente enlace</p>
@@ -25,6 +35,11 @@
             BButton,
             BNavItemDropdown,
             BDropdownItem
+        },
+        data() {
+            return {
+                video: require('@/assets/clip_donjuan.mp4'),
+            }
         },
     }
 </script>

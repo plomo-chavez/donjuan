@@ -47,9 +47,18 @@ mix
           loaders: {
             loader: 'file-loader',
             options: {
-              name: 'images/[path][name].[ext]',
+              name: 'assets/images/[path][name].[ext]',
               context: '../vuexy-vuejs-bootstrap-vue-template/src/assets/images',
               //   context: 'frontend/src/assets/images'
+            },
+          },
+        },
+        {
+          test: /\.(mp4|webm)$/,
+          use: {
+            loader: 'file-loader',
+            options: {
+              name: 'assets/videos/[name].[ext]',
             },
           },
         },

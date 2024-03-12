@@ -131,6 +131,8 @@ export default {
                     this.errorCatalogo = 'No se encontro ningun catalogo';
                     break;
             }
+        } else {
+            this.opciones =  this.input.catalogo
         }
     }
   },

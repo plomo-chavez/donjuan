@@ -3,90 +3,111 @@
         <b-card class="p-2">
             <!-- <pre>{{ reservacion }}</pre> -->
             <b-card-title>Registro de reservación</b-card-title>
+            
             <b-card-body class="p-0 m-0">
-                <form-wizard
-                    ref="wizard"
-                    :hideButtons="true"
-                    :title="null"
-                    :subtitle="null"
-                    :startIndex="step"
-                    :disable-navigation="true"
-                    finish-button-text="Guardar"
-                    back-button-text="Anterior"
-                    next-button-text="Siguiente"
-                    class="steps-transparent m-0 p-0"
-                >
-                    <!-- @update:startIndex="nextStep" -->
-                    <!-- Detalles de la reservacion -->
-                    <tab-content
-                        title="Detalles de reservación"
-                        icon="feather icon-calendar"
-                    >
-                        <tabDetalles
-                            v-if="step == 0"
-                            :reservacion="reservacion"
-                            @changeReservacion="handleChangeReservacion"
-                        />
-                    </tab-content>
+                <div v-if="showMessageConfirm" class="col-10 my-auto mx-auto">
+                    <h3 class="col-12 text-center font-weigth-bolder mb-3">¡Tu lugar está apartado y esperando por ti.!</h3>
+                    <h6 class="col-12 font-weigth-bold mb-1">Recibirás una confirmación de tu reservación. Si necesitas ayuda o tienes alguna pregunta, estamos aquí para asistirte en todo momento.</h6>
+                    <h6 class="col-12 mb-1"><strong>¡Nos emociona ser parte de tu próxima experiencia!</strong></h6>
 
-                    <!-- Habitaciones -->
-                    <tab-content
-                        title="Habitaciones"
-                        icon="feather icon-airplay"
-                    >
-                        <TabHabitaciones
-                            v-if="step == 1"
-                            :reservacion="reservacion"
-                            @changeReservacion="handleChangeReservacion"
-                            @showButtons="showButtonsActions = !showButtonsActions"
-                        />
-                    </tab-content>
-
-                    <!-- Acompañantes -->
-                    <tab-content
-                        title="Acompañantes"
-                        icon="feather icon-users"
-                    >
-                        <TabAcompañantes
-                            v-if="step == 2"
-                            ref="tabAcompaniantes"
-                            :reservacion="reservacion"
-                            @changeReservacion="handleChangeReservacion"
-                        />
-                    </tab-content>
-
-                    <!-- Pago -->
-                    <tab-content
-                        title="Pago"
-                        icon="feather icon-credit-card"
-                    >
-                        <TabPago
-                            v-if="step == 3"
-                            :reservacion="reservacion"
-                            @changeReservacion="handleChangeReservacion"
-                            @handleGoToCalendario="()=>{$emit('handleCancel')}"
-                        />
-                    </tab-content>
-                </form-wizard>
-                <div v-if="showButtonsActions" class="col-12 d-flex justify-content-between">
-                    <b-button
-                        v-if="step != 0"
+                    <div class="col-12 d-flex justify-content-between">
+                        <b-button
                         size="sm"
-                        class="mr-auto"
-                        variant="outline-secondary"
-                        @click="prevStep"
+                        class="my-auto mx-auto fw-bolder"
+                        variant="secondary"
+                        @click="()=>{$emit('handleCancel')}"
                     >
-                        <span class="mr-25 align-middle">Atrás</span>
+                        <feather-icon icon="HomeIcon" size="16" />
+                        <span>Ir al inicio</span>
                     </b-button>
-                    <b-button
-                        v-if="step < 3"
-                        size="sm"
-                        class="ml-auto"
-                        variant="primary"
-                        @click="nextStep"
+
+                    </div>
+                </div>
+                <div v-else>
+                    <form-wizard
+                        ref="wizard"
+                        :hideButtons="true"
+                        :title="null"
+                        :subtitle="null"
+                        :startIndex="step"
+                        :disable-navigation="true"
+                        finish-button-text="Guardar"
+                        back-button-text="Anterior"
+                        next-button-text="Siguiente"
+                        class="steps-transparent m-0 p-0"
                     >
-                        <span class="mr-25 align-middle">{{ step < 3 ? 'Siguiente' : 'Reservar' }}</span>
-                    </b-button>
+                        <!-- @update:startIndex="nextStep" -->
+                        <!-- Detalles de la reservacion -->
+                        <tab-content
+                            title="Detalles de reservación"
+                            icon="feather icon-calendar"
+                        >
+                            <tabDetalles
+                                v-if="step == 0"
+                                :reservacion="reservacion"
+                                @changeReservacion="handleChangeReservacion"
+                            />
+                        </tab-content>
+    
+                        <!-- Habitaciones -->
+                        <tab-content
+                            title="Habitaciones"
+                            icon="feather icon-airplay"
+                        >
+                            <TabHabitaciones
+                                v-if="step == 1"
+                                :reservacion="reservacion"
+                                @changeReservacion="handleChangeReservacion"
+                                @showButtons="showButtonsActions = !showButtonsActions"
+                            />
+                        </tab-content>
+    
+                        <!-- Acompañantes -->
+                        <tab-content
+                            title="Acompañantes"
+                            icon="feather icon-users"
+                        >
+                            <TabAcompañantes
+                                v-if="step == 2"
+                                ref="tabAcompaniantes"
+                                :reservacion="reservacion"
+                                @changeReservacion="handleChangeReservacion"
+                            />
+                        </tab-content>
+    
+                        <!-- Pago -->
+                        <tab-content
+                            title="Pago"
+                            icon="feather icon-credit-card"
+                        >
+                            <TabPago
+                                v-if="step == 3"
+                                :reservacion="reservacion"
+                                @changeReservacion="handleChangeReservacion"
+                                @handleGoToCalendario="()=>{showMessageConfirm = true;}"
+                            />
+                        </tab-content>
+                    </form-wizard>
+                    <div v-if="showButtonsActions" class="col-12 d-flex justify-content-between">
+                        <b-button
+                            v-if="step != 0"
+                            size="sm"
+                            class="mr-auto"
+                            variant="outline-secondary"
+                            @click="prevStep"
+                        >
+                            <span class="mr-25 align-middle">Atrás</span>
+                        </b-button>
+                        <b-button
+                            v-if="step < 3"
+                            size="sm"
+                            class="ml-auto"
+                            variant="primary"
+                            @click="nextStep"
+                        >
+                            <span class="mr-25 align-middle">{{ step < 3 ? 'Siguiente' : 'Reservar' }}</span>
+                        </b-button>
+                    </div>
                 </div>
             </b-card-body>
         </b-card>
@@ -144,6 +165,7 @@
         step : 0,
         reservacion:{},
         showButtonsActions : true,
+        showMessageConfirm : false
       }
     },
     watch:{
@@ -244,14 +266,14 @@
                     'payload' : payload,
                 })
                 .then(response => {
-
+                    console.log(response)
                     this.messageSweet({
                         message: response.data.message,
                         icon: response.data.result ? 'success' : 'error',
                     });
                     if (response.data.result ) {
-                        this.handleAtras()
-                        this.$emit('handleCancel')
+                    console.log('Dentro del if')
+                        this.showMessageConfirm = true;
                     }
                 })
                 .catch(error   => { console.log(error); })

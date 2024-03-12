@@ -156,17 +156,9 @@ import { useNetwork } from '@vueuse/core'
             generatePapeleta(){
                 this.loading();
                 generatePDF
-                .pruebas({reservacion_id : this.data.id })
-                .then(response => {
-                    if (response.data.type == 'application/json'){
-                        
-                    } else{
-                        this.descargarPDF(response,this.data.id)
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+                .generatePapeleta({reservacion_id : this.data.id })
+                .then(response => { this.descargarPDF(response,this.data.id) })
+                .catch(error => { console.error(error); });
             },
         }
     }

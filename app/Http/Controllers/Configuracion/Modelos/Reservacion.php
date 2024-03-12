@@ -14,6 +14,7 @@ class Reservacion extends Model
         'persona_id',
         'fechaInicio',
         'fechaFin',
+        'motivoViaje',
     ];
 
     public function reserva() {

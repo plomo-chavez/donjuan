@@ -7,6 +7,11 @@
             />
         </template>
         <template v-else> 
+            <div v-if="habitaciones.length == 0">
+                <h3 class="text-center ">Habitaciones no disponibles</h3>
+                <p class="text-center ">Lo sentimos, no hay habitaciones disponibles del <strong>{{reservacion.fechaInicio}}</strong> al <strong>{{reservacion.fechaFin}}</strong>. Te recomendamos seleccionar nuevas fechas de búsqueda o explorar otras categorías de habitaciones.</p>
+                <p class="text-center ">¡Estamos aquí para ayudarte a encontrar la estancia perfecta!</p>
+            </div>
             <detallesHabitacion
                 class="col-lg-4 col-md-6 col-sm-12"
                 v-for="(habitacion, index) in habitaciones"
@@ -25,6 +30,7 @@
     import extraDetailsRoom from '@currentComponents/../administracion/reservaciones/ExtraDetailsRoom.vue'
     import detallesHabitacion from '@out/components/detallesHabitacion.vue'
     import customHelpers  from '@helpers/customHelpers'
+// import habitaciones from 'src/views/out/components/habitaciones.vue'
 
     export default {
         data () {

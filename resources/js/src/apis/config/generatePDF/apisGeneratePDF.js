@@ -12,4 +12,7 @@ export default class apiPeticiones {
   pruebas(...args) {
     return this.axiosIns.post(this.apisConfig.apiGeneratePruebas, ...args, { responseType: 'blob' })
   }
+  generatePapeleta(...args) {
+    return this.axiosIns.post(this.apisConfig.apiGeneratePapeleta, ...args, { responseType: 'blob' })
+  }
 }

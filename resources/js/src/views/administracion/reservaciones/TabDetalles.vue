@@ -15,18 +15,30 @@
             :data="reservacion"
             @changeReservacion="handleChangeReservacion"
         />
+        <customSelect
+            class="ww-100A"
+            :input="configSelect"
+            @changeData="(data) => {
+                let tmp = {};
+                tmp[data.field] = data.value
+                handleChangeReservacion(tmp)
+            }"
+            :formValue="reservacion.motivoViaje"
+        />
     </div>
   </template>
 
   <script>
-  import DateRangePicker from 'vue2-daterange-picker'
-  import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
-  import customPerson from '@currentComponents/customPerson.vue'
-  import customHelpers  from '@helpers/customHelpers'
+    import DateRangePicker from 'vue2-daterange-picker'
+    import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
+    import customPerson from '@currentComponents/customPerson.vue'
+    import customHelpers  from '@helpers/customHelpers'
+    import customSelect from '@currentComponents/customSelect.vue'
   export default {
     components: {
       DateRangePicker,
-      customPerson
+      customPerson,
+      customSelect,
     },
     data() {
         return {
@@ -45,6 +57,18 @@
             dateRange: {
                 startDate: null,
                 endDate: null,
+            },
+            configSelect : {
+                classContainer:'col-lg-4 col-md-6 col-12',
+                type        : 'input-select',
+                name        : 'motivo de viaje',
+                value       : 'motivoViaje',
+                label       : 'Motivo de viaje',
+                catalogo    : [
+                    {value : 'Negocios', label : 'Negocios'},
+                    {value : 'Turismo', label : 'Turismo'},
+                ],
+                rules       : 'required',
             },
         }
     },

@@ -46,7 +46,7 @@ class ReservacionesController extends BaseController
         });
         $data->with([
                 'reserva' => function ($query) {
-                    $query->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo');
+                    $query->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo', 'nacionalidad', 'ciudad', 'pais');
                 },
                 'habitaciones' => function ($query) {
                     $query->select('habitacion_id', 'reservacion_id', 'id');
@@ -58,7 +58,7 @@ class ReservacionesController extends BaseController
                     $query->select('id', 'reservacion_id', 'persona_id');
                 },
                 'acompaniantes.persona' => function ($query) {
-                    $query->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo');
+                    $query->select('id', 'nombre', 'primerApellido', 'segundoApellido', 'telefono', 'correo', 'edad');
                 },
             ]);
         return $data->get();
@@ -96,48 +96,62 @@ class ReservacionesController extends BaseController
     }
 
     public function insertar($payload, $modelo) {
-        $reservacionPayload = array(
-            'fechaInicio' => $payload['fechaInicio'] ,
-            'fechaFin' => $payload['fechaFin'] ,
-            'persona_id' => $payload['person']['id'],
-        );
-        $reservacion = $modelo::create($reservacionPayload);
-
-        if (isset($payload['habitaciones'] )) {
-            foreach ($payload['habitaciones'] as $key => $value) {
-                Habs::create(array(
-                    'fechaInicio' => $payload['fechaInicio'] ,
-                    'fechaFin' => $payload['fechaFin'] ,
-                    'habitacion_id' => $value['id'],
-                    'reservacion_id' => $reservacion->id,
-                ));
-            }
+        $message = 'Una o varias de las habitaciones están ocupadas.';
+        $result  = false;
+        $rangoFechas = [$payload['fechaInicio'], $payload['fechaFin']];
+        $habitaciones_ids = array_column($payload['habitaciones'] ?? [], 'id');
+    
+        // Comprueba si alguna de las habitaciones seleccionadas está ocupada en el rango de fechas
+        $ocupadas = Habs::whereIn('habitacion_id', $habitaciones_ids)
+                        ->where(function($query) use ($rangoFechas) {
+                            $query->whereBetween('fechaInicio', $rangoFechas)
+                                  ->orWhereBetween('fechaFin', $rangoFechas);
+                        })->exists();
+        if (!$ocupadas) {
+            $reservacionPayload = [
+                'fechaInicio' => $payload['fechaInicio'],
+                'fechaFin' => $payload['fechaFin'],
+                'motivoViaje' => $this->parseMotivoViaje($payload['motivoViaje']),
+                'persona_id' => $payload['person']['id'],
+            ];
+            $reservacion = $modelo::create($reservacionPayload);
+    
+            // Inserción en bloque para habitaciones y acompañantes
+            $this->insertarHabitaciones($payload['habitaciones'], $reservacion->id,$payload);
+            $this->insertarAcompaniantes($payload['acompaniantes'] ?? [], $reservacion->id);
+    
+            $message = 'Reservación registrada con éxito.';
+            $result  = true; 
         }
-        if (isset($payload['acompaniantes'] )) {
-            foreach ($payload['acompaniantes'] as $key => $value) {
-                $count = DB::table('personas')
-                    // ->orWhere('telefono', '=', $value['telefono'])
-                    // ->orWhere('correo', '=', $value['correo'])
-                    ->count();
-                if ($count == 0) {
-                    $persona = Persona::create($value);
-                } else {
-                    $tmp = DB::table('personas')
-                    // ->orWhere('telefono', '=', $value['telefono'])
-                    // ->orWhere('correo', '=', $value['correo'])
-                    ->get();
-
-                    if (sizeof($tmp) == 1) {
-                        $persona = $tmp[0];
-                    }
-                }
-                Acompaniantes::create(array(
-                    'persona_id' => $persona->id,
-                    'reservacion_id' => $reservacion->id,
-                ));
-            }
+    
+        return self::responsee($message, $result);
+    }
+    
+    protected function parseMotivoViaje($motivoViaje) {
+        return is_array($motivoViaje) ? $motivoViaje['value'] : (is_string($motivoViaje) ? $motivoViaje : null);
+    }
+    
+    protected function insertarHabitaciones($habitaciones, $reservacionId,$data) {
+        $habitacionesData = array_map(function($habitacion) use ($reservacionId,$data) {
+            return [
+                'fechaInicio' => $data['fechaInicio'],
+                'fechaFin' => $data['fechaFin'],
+                'habitacion_id' => $habitacion['id'],
+                'reservacion_id' => $reservacionId,
+            ];
+        }, $habitaciones);
+    
+        Habs::insert($habitacionesData); // Asume que la inserción en bloque es soportada
+    }
+    
+    protected function insertarAcompaniantes($acompaniantes, $reservacionId) {
+        foreach ($acompaniantes as $acompaniante) {
+            $persona = Persona::create($acompaniante);
+            Acompaniantes::create([
+                'persona_id' => $persona->id,
+                'reservacion_id' => $reservacionId,
+            ]);
         }
-        return self::responsee('Reservación registrado con exito.', true);
     }
 
     public static function generarPapeleta($payload) {
@@ -174,17 +188,10 @@ class ReservacionesController extends BaseController
                 };
                 $data['habitaciones'] = $tmpHab;
                 $data['totalMoney'] = number_format($data['total'], 2, '.', ',');
-                // dd($data);
-                $view = view('pdf.template', $data)->render();
+                $view = view('pdf.papeletaReservacion', $data)->render();
                 $pdf = PDF::loadHtml($view);
                 return $pdf->output();
             }else{
-                return array(
-                    'file'      => null,
-                    'nombre'    => null,
-                    'status'    => false,
-                    'message'   => 'Problemas con la resevación',
-                );
                 return array(
                     'file'      => null,
                     'nombre'    => null,
