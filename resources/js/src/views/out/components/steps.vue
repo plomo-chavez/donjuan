@@ -3,8 +3,7 @@
     <div class="container-xxl py-5">
         <div class="container-md">
             <div class="text-center pb-4 wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Como reservar</h6>
-                <h1 class="mb-2">3 pasos para disfrutar</h1>
+                <h1 class="mb-2">Reserva en 3 pasos</h1>
             </div>
             <div class="row gy-5 gx-4 justify-content-center">
                 <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.1s">

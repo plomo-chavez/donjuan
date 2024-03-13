@@ -2,7 +2,6 @@
 <div class="container-xxl py-5">
     <div class="container-md">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-            <h6 class="section-title bg-white text-center text-primary px-3">Servicios</h6>
             <h1 class="mb-5">Nuestros servicios</h1>
         </div>
         <div class="row g-4">
@@ -65,27 +64,27 @@
                         titulo  : 'Estacionamiento gratis',
                         text    : '',
                     },
-                    {
-                        icono   : ' fa fa-3x fa-bed ',
-                        delay   : 5,
-                        titulo  : 'Habitaciones para no fumadores',
-                        text    : '',
-                    },
+                    // {
+                    //     icono   : ' fa fa-3x fa-bed ',
+                    //     delay   : 5,
+                    //     titulo  : 'Habitaciones para no fumadores',
+                    //     text    : '',
+                    // },
                     {
                         icono   : ' fa fa-3x fa-broom ',
-                        delay   : 6,
-                        titulo  : 'Servicio diario de limpieza',
+                        delay   : 5,
+                        titulo  : 'Servicio de limpieza',
                         text    : '',
                     },
                     {
                         icono   : ' fa fa-3x fa-utensils ',
-                        delay   : 7,
+                        delay   : 6,
                         titulo  : 'Convenios con restaurantes',
                         text    : '',
                     },
                     {
                         icono   : ' fa fa-3x fa-gamepad ',
-                        delay   : 8,
+                        delay   : 7,
                         titulo  : 'Actividades recreativas',
                         text    : '',
                     },
