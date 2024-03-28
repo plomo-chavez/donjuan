@@ -18,6 +18,7 @@ export default [
     component: () => import('@/views/out/reservar.vue'),
     // component: () => import('@/views/administracion/reservaciones/Reservaciones.vue'),
     meta: {
+      isOut: true,
       layout: 'full',
       resource: 'Auth',
       action: 'read',

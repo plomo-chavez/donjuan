@@ -2,6 +2,7 @@ import Vue from 'vue'
 import { ToastPlugin, ModalPlugin } from 'bootstrap-vue'
 import VueCompositionAPI from '@vue/composition-api'
 
+import screenDimensionsPlugin from './plugins/screenDimensionsPlugin';
 import i18n from '@/libs/i18n'
 import router from './router'
 import store from './store'
@@ -42,6 +43,7 @@ require('@resources/assets/scss/style.scss')
 
 Vue.config.productionTip = false
 
+Vue.use(screenDimensionsPlugin);
 new Vue({
   router,
   store,
