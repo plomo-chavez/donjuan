@@ -42,7 +42,7 @@ export default {
                     id: 1,
                     name: "Full Name 1",
                     designation: "Designation",
-                    imgSrc: require("../img/team-1.jpg"),
+                    imgSrc: require("./img/team-1.jpg"),
                     socialLinks: [
                         { url: "https://facebook.com", iconClass: "fab fa-facebook-f" },
                         { url: "https://twitter.com", iconClass: "fab fa-twitter" },
@@ -53,7 +53,7 @@ export default {
                     id: 2,
                     name: "Full Name 2",
                     designation: "Designation",
-                    imgSrc: "./../img/team-2.jpg",
+                    imgSrc: require("./img/team-2.jpg"),
                     socialLinks: [
                         { url: "https://facebook.com", iconClass: "fab fa-facebook-f" },
                         { url: "https://twitter.com", iconClass: "fab fa-twitter" },
@@ -64,7 +64,7 @@ export default {
                     id: 3,
                     name: "Full Name 3",
                     designation: "Designation",
-                    imgSrc: "./../img/team-3.jpg",
+                    imgSrc: require("./img/team-3.jpg"),
                     socialLinks: [
                         { url: "https://facebook.com", iconClass: "fab fa-facebook-f" },
                         { url: "https://twitter.com", iconClass: "fab fa-twitter" },
@@ -75,7 +75,7 @@ export default {
                     id: 4,
                     name: "Full Name 4",
                     designation: "Designation",
-                    imgSrc: "./../img/team-4.jpg",
+                    imgSrc: require("./img/team-4.jpg"),
                     socialLinks: [
                         { url: "https://facebook.com", iconClass: "fab fa-facebook-f" },
                         { url: "https://twitter.com", iconClass: "fab fa-twitter" },

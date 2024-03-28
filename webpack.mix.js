@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
 const path = require('path');
+const fs = require('fs'); // Importar fs para verificar la existencia de directorios
 
 /*
  |--------------------------------------------------------------------------
@@ -7,12 +8,16 @@ const path = require('path');
  |--------------------------------------------------------------------------
  |
  | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. This setup compiles your CSS and JS,
- | handles asset versioning, and configures BrowserSync for development.
+ | for your Laravel applications. By default, we are compiling the CSS
+ | file for the application as well as bundling up all the JS files.
  |
  */
 
-// Path Aliases
+mix.js('resources/js/app.js', 'public/js')
+  .sass('resources/scss/core.scss', 'public/css')
+  .copy('resources/css/loader.css', 'public/css');
+
+// Configuración de aliases para simplificar las rutas de importación en tus archivos JS
 mix.webpackConfig({
   resolve: {
     alias: {
@@ -44,31 +49,32 @@ mix.webpackConfig({
       },
       {
         test: /(\.(png|jpe?g|gif|webp)$|^((?!font).)*\.svg$)/,
-        loader: 'file-loader',
-        options: {
-          name: 'assets/images/[path][name].[ext]',
-          context: 'resources/assets/images',
+        loaders: {
+          loader: 'file-loader',
+          options: {
+            name: 'assets/images/[path][name].[ext]',
+            context: '../vuexy-vuejs-bootstrap-vue-template/src/assets/images',
+            //   context: 'frontend/src/assets/images'
+          },
         },
       },
       {
         test: /\.(mp4|webm)$/,
-        loader: 'file-loader',
-        options: {
-          name: 'assets/videos/[name].[ext]',
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: 'assets/videos/[name].[ext]',
+          },
         },
       },
     ],
   },
-})
-.sass('resources/scss/core.scss', 'public/css')
-.options({
-  postCss: [require('autoprefixer'), require('postcss-rtl')],
+  output: {
+    chunkFilename: 'js/chunks/[name].[chunkhash].js',
+  },
 });
 
-// Copy static images from resources to public
-mix.copyDirectory('resources/js/src/assets', 'public/assets');
-
-// BrowserSync for live reloading and syncing across devices
+// Habilitar BrowserSync para recargar el navegador automáticamente durante el desarrollo
 mix.browserSync({
   proxy: 'http://localhost:8888/donjuan',
   files: [
@@ -78,14 +84,13 @@ mix.browserSync({
   ]
 });
 
-// Asset Versioning for Cache Busting in Production
+// Verificación y copia condicional de directorio de imágenes
+const imagesDir = 'resources/assets/images';
+if (fs.existsSync(imagesDir)) {
+  mix.copyDirectory(imagesDir, 'public/assets/images');
+}
+
+// Habilitar versionado de archivos en producción para control de caché
 if (mix.inProduction()) {
   mix.version();
 }
-
-// Additional Webpack Configuration if needed
-mix.webpackConfig({
-  output: {
-    chunkFilename: 'js/chunks/[name].[chunkhash].js',
-  },
-});
